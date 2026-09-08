@@ -21,6 +21,12 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      // LP Smart Locker para condominios: HTML estatico em public/condominio, servido na URL limpa
+      { source: '/condominio', destination: '/condominio/index.html' },
+    ];
+  },
   async redirects() {
     return [
       { source: '/produtos/stoom-smart-locker/', destination: '/smart-locker', permanent: true },

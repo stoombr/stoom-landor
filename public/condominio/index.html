@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<!--
+  LP Smart Locker Stoom · v5 · página de venda.
+  Direção (moodboard 05/09/2026): o registro do site da Stoom (navy, palavra em ciano, CTA laranja) com a escala
+  tipográfica da LP FAST e a fotografia grande da Luxer One; estrutura de conversão da ButterflyMX; ritmo de
+  capítulos claro/escuro da Eight Sleep. Copy da boneca aprovada; só o tratamento muda.
+
+  ESPAÇOS RESERVADOS (entram quando a Stoom mandar, sem mexer na estrutura):
+  - Vídeo do hero (8 a 12 s, mudo, loop, <2 MB, poster): descomentar o <video> em .hero-media.
+  - Depoimento do síndico: <section id="tsl"> pronta e oculta (hidden).
+  - Instalações reais: <section id="installs"> pronta e oculta (hidden); 4 a 6 fotos com cidade.
+  - Números de prova (condomínios atendidos, encomendas por mês): comentário em .proof.
+  - HUBSPOT.formGuid vazio: nada é enviado até a Stoom liberar o guid (portal 51547160, marca_do_grupo = Stoom).
+  - Preço "a partir de R$ X" só com assinatura do Luciano; domínio/canonical/OG e retirada do noindex na publicação.
+-->
+<script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});</script>
+<script>function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-S12SFW8SV2');</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window,document);
+fbq('init', '999675166432051'); fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=999675166432051&ev=PageView&noscript=1" /></noscript>
+<script>
+(function(){
+  var S=[['https://www.googletagmanager.com/gtm.js?id=GTM-TLN423QH'],['https://www.googletagmanager.com/gtag/js?id=G-S12SFW8SV2'],['https://connect.facebook.net/en_US/fbevents.js'],['https://js.hs-scripts.com/51547160.js','hs-script-loader']];
+  var done=false;
+  function go(){ if(done) return; done=true; S.forEach(function(x){ var t=document.createElement('script'); t.async=true; t.src=x[0]; if(x[1]) t.id=x[1]; document.head.appendChild(t); }); }
+  ['pointerdown','touchstart','keydown','wheel','scroll','mousemove'].forEach(function(ev){ window.addEventListener(ev, go, {once:true,passive:true,capture:true}); });
+  window.addEventListener('load', function(){ setTimeout(go, 6000); });
+})();
+</script>
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="robots" content="index,follow" />
+<title>Armário inteligente para condomínio | Smart Locker Stoom</title>
+<meta name="description" content="Armário inteligente para condomínio: o entregador deposita, o morador retira 24 horas por dia, sem fila e sem encomenda perdida. Aluguel mensal, homologado pelos Correios. Peça uma proposta." />
+<meta name="theme-color" content="#0b1626" />
+<link rel="canonical" href="https://stoom.com.br/condominio" />
+<meta property="og:url" content="https://stoom.com.br/condominio" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content="Stoom" />
+<meta property="og:title" content="Armário inteligente para condomínio | Smart Locker Stoom" />
+<meta property="og:description" content="O entregador deposita, o morador retira 24 horas por dia. Sem fila e sem encomenda perdida. Aluguel mensal, homologado pelos Correios. Peça uma proposta." />
+<meta property="og:image" content="https://stoom.com.br/condominio/assets/og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Armário inteligente para condomínio | Smart Locker Stoom" />
+<meta name="twitter:description" content="O entregador deposita, o morador retira 24 horas por dia. Sem fila e sem encomenda perdida." />
+<meta name="twitter:image" content="https://stoom.com.br/condominio/assets/og.jpg" />
+<link rel="icon" type="image/png" sizes="64x64" href="/condominio/assets/favicon-64.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/condominio/assets/favicon-180.png" />
+<link rel="preload" href="/condominio/assets/fonts/outfit-600.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/condominio/assets/fonts/roboto-400.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" imagesrcset="/condominio/assets/v5/hero-768.jpg 768w, /condominio/assets/v5/hero-1280.jpg 1280w, /condominio/assets/v5/hero-1920.jpg 1920w" imagesizes="100vw" media="(min-width: 761px)" />
+<link rel="preload" as="image" imagesrcset="/condominio/assets/v5/hero-m-600.jpg 600w, /condominio/assets/v5/hero-m-900.jpg 900w" imagesizes="100vw" media="(max-width: 760px)" />
+<style>
+/* ─── fontes hospedadas (subset latin) + fallbacks de métrica casada ─── */
+@font-face{font-family:'Outfit';font-style:normal;font-weight:500;font-display:swap;src:url(/condominio/assets/fonts/outfit-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Outfit';font-style:normal;font-weight:600;font-display:swap;src:url(/condominio/assets/fonts/outfit-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(/condominio/assets/fonts/roboto-400.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(/condominio/assets/fonts/roboto-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Outfit Fallback';font-style:normal;font-weight:500;src:local('Arial'),local('ArialMT');size-adjust:98.46%;ascent-override:100.60%;descent-override:26.20%;line-gap-override:0%}
+@font-face{font-family:'Outfit Fallback';font-style:normal;font-weight:600;src:local('Arial Bold'),local('Arial-BoldMT');size-adjust:100.00%;ascent-override:100.00%;descent-override:26.00%;line-gap-override:0%}
+@font-face{font-family:'Roboto Fallback';font-style:normal;font-weight:400;src:local('Arial'),local('ArialMT');size-adjust:99.37%;ascent-override:93.30%;descent-override:24.50%;line-gap-override:0%}
+@font-face{font-family:'Roboto Fallback';font-style:normal;font-weight:500;src:local('Arial'),local('ArialMT');size-adjust:99.83%;ascent-override:93.30%;descent-override:24.50%;line-gap-override:0%}
+@font-face{font-family:'Outfit Fallback R';font-style:normal;font-weight:500;src:local('Roboto');size-adjust:99.88%;ascent-override:100.10%;descent-override:26.00%;line-gap-override:0%}
+@font-face{font-family:'Outfit Fallback R';font-style:normal;font-weight:600;src:local('Roboto Medium'),local('Roboto-Medium'),local('Roboto');size-adjust:99.88%;ascent-override:100.10%;descent-override:26.00%;line-gap-override:0%}
+
+/* ─── tokens ─── */
+:root {
+  --ink: #0b1626;          /* chão profundo: hero, prova, fechamento, rodapé */
+  --navy: #0f2842;         /* Azul Stoom: cartões escuros, texto em fundo claro */
+  --paper: #f4f6f8;        /* capítulo claro */
+  --white: #ffffff;
+  --cyan: #4cc9f0;         /* uma palavra por título */
+  --orange: #f97316;       /* só CTA */
+  --orange-2: #e2620b;
+  --on-dark: #eef2f6;
+  --on-dark-2: #a9b6c4;
+  --on-light: #0f2842;
+  --on-light-2: #5b6570;
+  --line-dark: rgba(238,242,246,.14);
+  --line-light: #dbe1e7;
+  --danger: #b42318;
+  --display: 'Outfit', 'Outfit Fallback', 'Outfit Fallback R', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --body: 'Roboto', 'Roboto Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --fs-h1: clamp(42px, 6.2vw, 92px);
+  --fs-h2: clamp(32px, 4.2vw, 58px);
+  --fs-h3: clamp(20px, 1.6vw, 24px);
+  --wrap: 1180px; --gut: clamp(20px, 3vw, 40px);
+  --r: 20px; --r-sm: 12px; --pill: 999px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+/* ─── base ─── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--ink); color: var(--on-dark); font: 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+body.lock { position: fixed; inset-inline: 0; overflow: hidden; width: 100%; }
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; color: inherit; }
+p, h1, h2, h3 { margin: 0; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -.02em; text-wrap: balance; }
+h1 { font-size: var(--fs-h1); line-height: .98; }
+h2 { font-size: var(--fs-h2); line-height: 1.04; }
+h3 { font-size: var(--fs-h3); line-height: 1.25; font-weight: 500; letter-spacing: -.01em; }
+p { text-wrap: pretty; }
+ul { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gut); }
+.sec { padding-block: clamp(64px, 9vw, 128px); }
+.light { background: var(--paper); color: var(--on-light); }
+.light .lead, .light .muted { color: var(--on-light-2); }
+.dark { background: var(--ink); color: var(--on-dark); }
+.dark .lead, .dark .muted { color: var(--on-dark-2); }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 22px; }
+.eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--cyan); }
+.light .eyebrow { color: var(--on-light-2); }
+.dark .eyebrow, .close .eyebrow { color: var(--on-dark-2); }
+.hero .eyebrow { color: var(--on-dark); }
+.lead { font-size: clamp(18px, 1.4vw, 21px); line-height: 1.5; max-width: 56ch; }
+h1 em, h2 em { font-style: normal; color: var(--cyan); text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; text-decoration-color: rgba(76,201,240,.55); }
+.light h2 em { color: var(--navy); text-decoration-color: var(--cyan); }
+.head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px 56px; align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
+.head h2 { max-width: 20ch; }
+.head .lead { padding-bottom: 8px; }
+.head.center { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+.head.wide { grid-template-columns: 1fr; }
+.head.wide h2 { max-width: 30ch; }
+.head.wide .lead { padding-bottom: 0; }
+.head.center .lead { margin-inline: auto; }
+
+/* ─── botões ─── */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 14px 26px; border-radius: var(--pill); border: 1px solid transparent; font-size: 16px; font-weight: 500; text-align: center; transition: transform .18s var(--ease), background .18s, box-shadow .18s, border-color .18s; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--orange); color: var(--navy); border-color: var(--orange); box-shadow: 0 10px 30px rgba(249,115,22,.25); }
+.btn-primary svg { width: 18px; height: 18px; }
+.btn-ghost { background: transparent; color: inherit; border-color: transparent; padding-inline: 10px; }
+.btn-ghost svg { width: 18px; height: 18px; transition: transform .18s var(--ease); }
+.light .btn-outline { background: transparent; color: var(--navy); border-color: var(--line-light); }
+.dark .btn-outline, .hero .btn-outline { color: var(--on-dark); border-color: var(--line-dark); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--orange-2); border-color: var(--orange-2); transform: translateY(-2px); box-shadow: 0 16px 36px rgba(249,115,22,.32); }
+  .btn-ghost:hover svg { transform: translateY(3px); }
+  .light .btn-outline:hover { border-color: var(--navy); }
+  .scene:hover { transform: translateY(-6px); }
+  .scene:hover img { transform: scale(1.04); }
+  .foot a:hover { color: var(--on-dark); }
+}
+.btn[disabled] { cursor: progress; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-top: clamp(32px, 4vw, 48px); }
+
+/* ─── topo ─── */
+.top { position: absolute; inset: 0 0 auto 0; z-index: 5; padding-block: 20px; }
+.top .wrap { display: flex; align-items: center; justify-content: center; }
+.brand { height: 30px; width: auto; filter: drop-shadow(0 2px 8px rgba(11,22,38,.5)); }
+
+/* ─── hero ─── */
+.hero { position: relative; min-height: min(92vh, 940px); display: flex; align-items: flex-end; color: var(--on-dark); isolation: isolate; overflow: hidden; }
+.hero-media { position: absolute; inset: 0; z-index: -2; }
+.hero-media img, .hero-media video { width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; }
+.hero-media video { position: absolute; inset: 0; opacity: 0; transition: opacity .8s ease; }
+.hero-media video.on { opacity: 1; }
+.hero-media img, .hero-media video { filter: brightness(.7) saturate(.9); }
+.hero-shade { position: absolute; inset: 0; z-index: -1; background:
+  linear-gradient(180deg, rgba(11,22,38,.55) 0%, rgba(11,22,38,.15) 26%, rgba(11,22,38,.4) 55%, rgba(11,22,38,.98) 100%),
+  linear-gradient(90deg, rgba(11,22,38,.97) 0%, rgba(11,22,38,.93) 38%, rgba(11,22,38,.78) 56%, rgba(11,22,38,.35) 74%, rgba(11,22,38,.08) 100%); }
+.hero .wrap { width: 100%; padding-block: clamp(120px, 14vh, 160px) clamp(48px, 7vh, 80px); }
+.hero-copy { max-width: 760px; animation: rise .7s var(--ease) both; text-shadow: 0 2px 6px rgba(11,22,38,.55), 0 12px 40px rgba(11,22,38,.5); }
+.hero h1 { max-width: 10em; }   /* em, nao ch: ch muda com a fonte de fallback e desfaz o size-adjust */
+.hero .lead { margin-top: 24px; color: var(--on-dark); max-width: 48ch; }
+.hero .cta-row { margin-top: 36px; }
+.seals { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(238,242,246,.28); font-size: 15px; color: var(--on-dark); }
+.seals li { display: inline-flex; align-items: center; gap: 8px; }
+.seals svg { width: 16px; height: 16px; color: var(--cyan); flex: 0 0 16px; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ─── prova ─── */
+.proof { background: var(--ink); padding-block: 40px 72px; border-top: 1px solid var(--line-dark); }
+.proof .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px 64px; align-items: center; }
+.proof .lab { font-size: 13px; color: var(--on-dark-2); margin-bottom: 18px; max-width: 34ch; }
+.logos { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 36px; }
+.logo { display: block; height: var(--h, 28px); aspect-ratio: var(--ar); background: var(--on-dark); opacity: .85; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.num b { display: block; font-family: var(--display); font-weight: 600; font-size: clamp(40px, 4.2vw, 60px); line-height: .95; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.num b small { font-size: .5em; opacity: .8; margin-left: 2px; letter-spacing: 0; transition: opacity .15s; }
+.num.counting b small { opacity: 0; }
+.num > span { display: block; margin-top: 8px; font-size: 14px; color: var(--on-dark-2); max-width: 20ch; }
+
+/* ─── antes / depois ─── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.shot { position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 1 / 1; background: var(--navy); }
+.shot img { width: 100%; height: 100%; object-fit: cover; }
+.shot .cap { position: absolute; inset: auto 0 0 0; padding: 120px 28px 28px; color: var(--on-dark); background: linear-gradient(180deg, rgba(11,22,38,0) 0%, rgba(11,22,38,.92) 70%); text-shadow: 0 1px 4px rgba(11,22,38,.6); }
+.shot .cap small { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; color: var(--on-dark-2); margin-bottom: 8px; }
+.shot .cap b { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.2; letter-spacing: -.01em; }
+.shot.after .cap small { color: var(--cyan); }
+.pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 40px; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line-light); }
+.pain h3 { margin-bottom: 8px; }
+.pain p { color: var(--on-light-2); font-size: 15.5px; }
+
+/* ─── cenas ─── */
+.scenes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.scene { position: relative; border-radius: var(--r); overflow: hidden; background: var(--navy); aspect-ratio: 4 / 5; transition: transform .25s var(--ease); }
+.scene img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.scene .n { position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: rgba(11,22,38,.7); backdrop-filter: blur(8px); font-family: var(--display); font-weight: 600; color: var(--on-dark); }
+.scene .txt { position: absolute; inset: auto 0 0 0; padding: 140px 24px 26px; background: linear-gradient(180deg, rgba(11,22,38,0) 0%, rgba(11,22,38,.94) 60%); text-shadow: 0 1px 4px rgba(11,22,38,.6); }
+.scene h3 { color: var(--on-dark); margin-bottom: 8px; }
+.scene p { color: var(--on-dark-2); font-size: 15px; }
+.notif { position: absolute; left: 20px; right: 20px; top: 50%; transform: translateY(-40%); display: grid; grid-template-columns: 10px 1fr auto; gap: 12px; align-items: start; padding: 12px 14px; background: rgba(255,255,255,.96); color: var(--navy); border-radius: 14px; font-size: 13px; box-shadow: 0 12px 30px rgba(11,22,38,.35); }
+.notif .dot { width: 10px; height: 10px; margin-top: 4px; border-radius: 50%; background: var(--cyan); }
+.notif b { display: block; font-weight: 500; }
+.notif span { display: block; color: var(--on-light-2); margin-top: 2px; }
+.notif time { font-size: 11px; color: var(--on-light-2); }
+
+/* ─── hardware + software ─── */
+.hw { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; align-items: stretch; }
+.hw .photo { border-radius: var(--r); overflow: hidden; min-height: 420px; position: relative; background: var(--navy); }
+.hw .photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.hw .specs { position: absolute; left: 20px; bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+.hw .specs span { font-size: 13px; padding: 7px 12px; border-radius: var(--pill); background: rgba(11,22,38,.72); color: var(--on-dark); backdrop-filter: blur(8px); }
+.panel { background: var(--navy); color: var(--on-dark); border-radius: var(--r); padding: 32px; display: flex; flex-direction: column; gap: 22px; }
+.panel .eyebrow { margin-bottom: 0; color: var(--on-dark-2); }
+.panel h3 { font-size: clamp(24px, 2vw, 30px); font-weight: 600; letter-spacing: -.02em; }
+.panel ul { display: grid; gap: 12px; }
+.panel li { display: grid; grid-template-columns: 18px 1fr; gap: 12px; color: var(--on-dark-2); font-size: 15.5px; }
+.panel li svg { width: 18px; height: 18px; color: var(--cyan); margin-top: 3px; }
+.panel .tab { margin-top: auto; border-radius: var(--r-sm); overflow: hidden; aspect-ratio: 16 / 9; }
+.panel .tab img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+
+/* ─── contratação ─── */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.plan { background: var(--white); border: 1px solid var(--line-light); border-radius: var(--r); padding: 28px; }
+.plan h3 { margin-bottom: 16px; font-weight: 600; }
+.plan ul { display: grid; gap: 10px; color: var(--on-light-2); font-size: 15.5px; }
+.plan li { display: grid; grid-template-columns: 16px 1fr; gap: 10px; }
+.plan li svg { width: 16px; height: 16px; margin-top: 4px; color: var(--navy); }
+.prazo { margin-top: 24px; background: var(--navy); color: var(--on-dark); border-radius: var(--r); padding: 28px 32px; display: grid; grid-template-columns: 44px 1fr; gap: 20px; align-items: start; }
+.prazo svg { width: 44px; height: 44px; color: var(--cyan); }
+.prazo h3 { font-weight: 600; margin-bottom: 6px; }
+.prazo p { color: var(--on-dark-2); }
+
+/* ─── faq ─── */
+.faq { max-width: 820px; margin-inline: auto; }
+.faq details { border-top: 1px solid var(--line-light); }
+.faq details:last-child { border-bottom: 1px solid var(--line-light); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; min-height: 44px; font-family: var(--display); font-weight: 500; font-size: 19px; line-height: 1.3; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ''; width: 14px; height: 14px; flex: 0 0 14px; background: var(--on-light-2); -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform .15s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { color: var(--on-light-2); padding-bottom: 22px; max-width: 65ch; }
+
+/* ─── fechamento ─── */
+.close { position: relative; isolation: isolate; color: var(--on-dark); overflow: hidden; }
+.close-media { position: absolute; inset: 0; z-index: -2; }
+.close-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; filter: brightness(.38) saturate(.8); }
+.close-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11,22,38,.98) 0%, rgba(11,22,38,.9) 35%, rgba(11,22,38,.78) 62%, rgba(11,22,38,.97) 100%); }
+.close .wrap { text-shadow: 0 2px 6px rgba(11,22,38,.6), 0 10px 32px rgba(11,22,38,.5); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 40px; padding-bottom: clamp(56px, 7vw, 88px); margin-bottom: clamp(56px, 7vw, 88px); border-bottom: 1px solid var(--line-dark); }
+.step .k { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-dark); font-family: var(--display); font-weight: 600; margin-bottom: 14px; }
+.step h3 { margin-bottom: 6px; }
+.step p { color: var(--on-dark); opacity: .9; font-size: 15.5px; }
+.close-cta { text-align: center; max-width: 720px; margin-inline: auto; }
+.close-cta .lead { margin: 20px auto 0; }
+.close-cta .cta-row { justify-content: center; }
+.close-cta small { display: block; margin-top: 18px; font-size: 13px; color: var(--on-dark); opacity: .8; }
+
+/* ─── rodapé ─── */
+.foot { background: var(--ink); color: var(--on-dark-2); padding-block: 40px; border-top: 1px solid var(--line-dark); font-size: 14px; }
+.foot .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 24px; }
+.foot .brands { display: flex; align-items: center; gap: 24px; }
+.foot .brands img { height: 24px; width: auto; }
+.foot .brands .landor { height: 30px; }
+.foot .vsep { width: 1px; height: 28px; background: var(--line-dark); }
+.foot a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ─── barra fixa (celular) ─── */
+.stick { position: fixed; inset: auto 0 0 0; z-index: 20; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(11,22,38,.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line-dark); transform: translateY(110%); transition: transform .25s var(--ease); display: none; }
+.stick.on { transform: none; }
+.stick .btn { width: 100%; }
+
+/* ─── modal ─── */
+.modal { position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 16px; visibility: hidden; pointer-events: none; transition: visibility 0s linear .15s; }
+.modal.open { visibility: visible; pointer-events: auto; transition-delay: 0s; }
+.veil { position: absolute; inset: 0; background: rgba(11,22,38,.62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; transition: opacity .15s var(--ease); }
+.modal.open .veil { opacity: 1; transition-duration: .22s; }
+.card { position: relative; width: 100%; max-width: 520px; max-height: calc(100dvh - 32px); overflow: auto; background: var(--white); color: var(--on-light); border-radius: var(--r); padding: 32px; box-shadow: 0 30px 80px rgba(0,0,0,.45); opacity: 0; transform: translateY(8px) scale(.98); transition: opacity .15s var(--ease), transform .15s var(--ease); }
+.modal.open .card { opacity: 1; transform: none; transition-duration: .22s; }
+.x { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: transparent; border-radius: 50%; color: var(--on-light-2); }
+.x svg { width: 18px; height: 18px; }
+.card .eyebrow { color: var(--on-light-2); margin-bottom: 14px; }
+.card h3 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; line-height: 1.12; }
+.card .sub { color: var(--on-light-2); margin: 10px 0 24px; }
+.form { display: grid; gap: 16px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 13px; color: var(--on-light-2); }
+.input { width: 100%; min-height: 46px; padding: 12px 14px; border: 1px solid var(--line-light); border-radius: var(--r-sm); background: var(--white); color: var(--on-light); font: inherit; font-size: 15px; transition: border-color .15s, box-shadow .15s; }
+.input::placeholder { color: var(--on-light-2); }
+.input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(15,40,66,.1); }
+.sel { position: relative; }
+.sel select { appearance: none; -webkit-appearance: none; padding-right: 40px; }
+.sel::after { content: ''; position: absolute; right: 14px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); background: var(--navy); pointer-events: none; -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; }
+.input.is-bad { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(180,35,24,.14); }
+.ferr { display: none; font-size: 13px; color: var(--danger); }
+.ferr:not(:empty) { display: block; }
+.err { font-size: 14px; color: var(--danger); min-height: 1.4em; }
+.card .btn { width: 100%; }
+.lgpd { font-size: 13px; color: var(--on-light-2); text-align: center; }
+.lgpd a { text-decoration: underline; text-underline-offset: 3px; }
+.done { text-align: center; padding: 16px 0; }
+.done:focus { outline: none; }
+.done .ok { width: 56px; height: 56px; margin: 0 auto 16px; display: grid; place-items: center; border-radius: 50%; background: var(--navy); color: var(--on-dark); }
+.done .ok svg { width: 24px; height: 24px; }
+.done p { color: var(--on-light-2); margin-top: 8px; }
+
+/* ─── responsivo ─── */
+@media (max-width: 980px) {
+  .head, .proof .wrap, .hw { grid-template-columns: 1fr; }
+  .head .lead { padding-bottom: 0; }
+  .scenes, .plans, .pains, .steps { grid-template-columns: 1fr; }
+  .scene { aspect-ratio: 4 / 3; }
+  .hw .photo { min-height: 0; aspect-ratio: 4 / 3; }
+}
+@media (max-width: 760px) {
+  .hero { min-height: 100svh; align-items: flex-end; }
+  .hero-media img { object-position: 50% 30%; }
+  .hero-shade { background: linear-gradient(180deg, rgba(11,22,38,.65) 0%, rgba(11,22,38,.25) 24%, rgba(11,22,38,.8) 48%, rgba(11,22,38,.99) 100%); }
+  .hero .wrap { padding-block: 110px 40px; }
+  .hero .btn-primary, .cta-row .btn-primary { width: 100%; }
+  .compare { grid-template-columns: 1fr; }
+  .shot { aspect-ratio: 4 / 5; }
+  .nums { grid-template-columns: 1fr 1fr; }
+  .two { grid-template-columns: 1fr; }
+  .card { padding: 24px 20px; }
+  .stick { display: block; }
+  body.has-stick { padding-bottom: 76px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
+</style>
+</head>
+<body class="has-stick">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TLN423QH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<header class="top">
+  <div class="wrap">
+    <img class="brand" src="/condominio/assets/stoom-secundario.svg" alt="Stoom" width="1057" height="278" />
+  </div>
+</header>
+
+<main>
+<!-- 01 HERO -->
+<section class="hero" id="hero">
+  <div class="hero-media" aria-hidden="true">
+    <!-- VÍDEO: /condominio/assets/video/locker.mp4 é um zoom lento gerado a partir do render (16 s, mudo, loop). Quando a Stoom mandar o
+         vídeo real (8 a 12 s, mudo, loop, <2 MB), basta trocar o arquivo. Entra por JS só no desktop, sem reduced-motion e sem save-data. -->
+    <picture>
+      <source media="(max-width: 760px)" srcset="/condominio/assets/v5/hero-m-600.jpg 600w, /condominio/assets/v5/hero-m-900.jpg 900w" sizes="100vw" />
+      <img src="/condominio/assets/v5/hero-1280.jpg" srcset="/condominio/assets/v5/hero-768.jpg 768w, /condominio/assets/v5/hero-1280.jpg 1280w, /condominio/assets/v5/hero-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1097" fetchpriority="high" decoding="async" />
+    </picture>
+    <div class="hero-shade"></div>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Armário inteligente para condomínio</p>
+      <h1>A portaria não foi feita para guardar <em>40 encomendas</em> por dia</h1>
+      <p class="lead">O entregador deposita. O morador retira quando quiser, 24 horas por dia. Sem fila e sem encomenda perdida.</p>
+      <div class="cta-row">
+        <button type="button" class="btn btn-primary js-open">Quero uma proposta para o meu condomínio</button>
+        <a class="btn btn-ghost" href="#como-funciona">Ver como funciona <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+      </div>
+      <ul class="seals" aria-label="Diferenciais">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Homologado pelos Correios</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Condomínios em SP, interior e RS</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aluguel mensal, sem comprar equipamento</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 PROVA · logos + números reais. PENDENTE (Stoom): nº de condomínios atendidos e encomendas por mês entram aqui no lugar de "24/7" e "3". -->
+<section class="proof" aria-label="Quem confia na Stoom">
+  <div class="wrap">
+    <div>
+      <p class="lab">Há mais de 10 anos desenvolvendo tecnologia logística para operações como</p>
+      <div class="logos" role="list" aria-label="Clientes da Stoom">
+        <span class="logo" role="listitem" aria-label="Petz" style="--h: 20px; --ar: 1092/240; --m: url('/condominio/assets/clients/petz.png');"></span>
+        <span class="logo" role="listitem" aria-label="iFood Shop" style="--h: 34px; --ar: 330/240; --m: url('/condominio/assets/clients/ifood-shop.png');"></span>
+        <span class="logo" role="listitem" aria-label="Tenda Atacado" style="--h: 30px; --ar: 378/240; --m: url('/condominio/assets/clients/tenda.png');"></span>
+        <span class="logo" role="listitem" aria-label="Lello" style="--h: 28px; --ar: 512/240; --m: url('/condominio/assets/clients/lello.png');"></span>
+      </div>
+    </div>
+    <div class="nums">
+      <div class="num"><b><span data-count="10">10</span><small>+</small></b><span>anos de tecnologia logística no Brasil</span></div>
+      <div class="num"><b><span data-count="24">24</span><small>/7</small></b><span>retirada sem funcionário envolvido</span></div>
+      <div class="num"><b><span data-count="3">3</span></b><span>tamanhos de compartimento, homologados pelos Correios</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 A DOR EM IMAGEM -->
+<section class="sec light" id="problema">
+  <div class="wrap">
+    <div class="head wide">
+      <div><p class="eyebrow">O problema</p><h2>Todo mês chega mais encomenda, e a portaria <em>é a mesma</em></h2></div>
+      <p class="lead">O condomínio não cresceu, mas o volume de entrega cresceu. O custo disso não aparece na planilha: aparece na reclamação do morador e no tempo do porteiro.</p>
+    </div>
+    <div class="compare">
+      <figure class="shot before">
+        <img src="/condominio/assets/v5/antes-600.jpg" srcset="/condominio/assets/v5/antes-600.jpg 600w, /condominio/assets/v5/antes-1200.jpg 1200w" sizes="(max-width: 760px) 100vw, 50vw" width="1200" height="1216" alt="Prateleiras de uma sala de correspondência lotadas de caixas de encomenda" loading="lazy" decoding="async" />
+        <figcaption class="cap"><small>Portaria hoje</small><b>Prateleira, caderno e o porteiro parado entregando pacote um por um</b></figcaption>
+      </figure>
+      <figure class="shot after">
+        <img src="/condominio/assets/v5/depois-600.jpg" srcset="/condominio/assets/v5/depois-600.jpg 600w, /condominio/assets/v5/depois-1200.jpg 1200w" sizes="(max-width: 760px) 100vw, 50vw" width="1200" height="1216" alt="Smart Locker Stoom navy instalado no hall de um condomínio" loading="lazy" decoding="async" />
+        <figcaption class="cap"><small>Com o Smart Locker</small><b>Tranca sozinho, avisa o morador na hora e registra cada retirada com foto</b></figcaption>
+      </figure>
+    </div>
+    <div class="pains">
+      <div class="pain"><h3>A portaria trava no fim do dia</h3><p>Entre 17h e 21h chega tudo junto. O porteiro para de olhar a entrada para registrar, guardar e depois entregar pacote, um por um.</p></div>
+      <div class="pain"><h3>Encomenda que ninguém sabe onde foi</h3><p>Sem registro no momento da entrega, não existe como provar quem recebeu e quem retirou. A conta sobra para a administração.</p></div>
+      <div class="pain"><h3>Morador que só chega de noite</h3><p>Quem trabalha fora depende do horário da portaria e do humor da escala. A cobrança vira assunto de assembleia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 COMO FUNCIONA EM 3 CENAS -->
+<section class="sec dark" id="como-funciona">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Como funciona</p><h2>Três passos, <em>sem app</em> e sem depender de ninguém</h2></div>
+      <p class="lead">O armário fica instalado em área comum. O entregador não sobe, não espera e não precisa de assinatura.</p>
+    </div>
+    <div class="scenes">
+      <article class="scene">
+        <img src="/condominio/assets/v5/cena1-600.jpg" srcset="/condominio/assets/v5/cena1-600.jpg 600w, /condominio/assets/v5/cena1-1000.jpg 1000w" sizes="(max-width: 980px) 100vw, 33vw" width="1000" height="1013" alt="Entregador depositando uma encomenda no Smart Locker Stoom" loading="lazy" decoding="async" />
+        <span class="n" aria-hidden="true">1</span>
+        <div class="txt"><h3>O entregador deposita</h3><p>Abre o compartimento certo por QR Code e deposita o pacote. O compartimento tranca sozinho. Leva segundos e não envolve funcionário.</p></div>
+      </article>
+      <article class="scene">
+        <img src="/condominio/assets/v5/cena2-600.jpg" srcset="/condominio/assets/v5/cena2-600.jpg 600w, /condominio/assets/v5/cena2-1000.jpg 1000w" sizes="(max-width: 980px) 100vw, 33vw" width="1000" height="996" alt="Moradora no hall do condomínio recebendo o aviso no celular" loading="lazy" decoding="async" />
+        <span class="n" aria-hidden="true">2</span>
+        <div class="notif" aria-label="Exemplo de notificação recebida pelo morador"><span class="dot" aria-hidden="true"></span><div><b>Stoom Smart Locker</b><span>Sua encomenda chegou. Compartimento M12, código de retirada 4821.</span></div><time>18:42</time></div>
+        <div class="txt"><h3>O morador é avisado</h3><p>Notificação automática por WhatsApp ou e-mail, na hora do depósito, com o código de retirada.</p></div>
+      </article>
+      <article class="scene">
+        <img src="/condominio/assets/v5/cena3-600.jpg" srcset="/condominio/assets/v5/cena3-600.jpg 600w, /condominio/assets/v5/cena3-1000.jpg 1000w" sizes="(max-width: 980px) 100vw, 33vw" width="1000" height="1156" alt="Tela e teclado do Smart Locker Stoom para retirada por código ou QR Code" loading="lazy" decoding="async" />
+        <span class="n" aria-hidden="true">3</span>
+        <div class="txt"><h3>Retira quando quiser</h3><p>Com o código ou o QR Code, 24 horas por dia, 7 dias por semana. Sem app para instalar, funciona em qualquer celular.</p></div>
+      </article>
+    </div>
+    <div class="cta-row"><button type="button" class="btn btn-primary js-open">Quero uma proposta para o meu condomínio</button></div>
+  </div>
+</section>
+
+<!-- 05 HARDWARE + SOFTWARE -->
+<section class="sec light" id="produto">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">O equipamento</p><h2>Armário robusto na portaria. <em>Painel</em> na mão da administração.</h2></div>
+      <p class="lead">Compartimentos P, M e G certificados para o sistema dos Correios, câmera que registra cada operação e uma plataforma que mostra ocupação, histórico e encomenda parada.</p>
+    </div>
+    <div class="hw">
+      <div class="photo">
+        <img src="/condominio/assets/v5/hardware-900.jpg" srcset="/condominio/assets/v5/hardware-900.jpg 900w, /condominio/assets/v5/hardware-1600.jpg 1600w" sizes="(max-width: 980px) 100vw, 60vw" width="1600" height="966" alt="Smart Locker Stoom em close, com tela de retirada e teclado" loading="lazy" decoding="async" />
+        <div class="specs"><span>Compartimentos P, M e G</span><span>Homologado pelos Correios</span><span>Abertura por QR Code</span><span>Registro com foto</span></div>
+      </div>
+      <aside class="panel">
+        <p class="eyebrow">Painel de gestão</p>
+        <h3>A administração enxerga o que hoje ninguém vê</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ocupação dos compartimentos em tempo real</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Histórico de cada depósito e retirada, com data, hora, usuário e foto</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alerta de encomenda parada e reenvio automático do aviso</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Devolução pelo mesmo armário, sem contato e sem fila</li>
+        </ul>
+        <div class="tab"><img src="/condominio/assets/img/passo-tablet-600.jpg" srcset="/condominio/assets/img/passo-tablet-600.jpg 600w, /condominio/assets/img/passo-tablet-900.jpg 900w" sizes="(max-width: 980px) 100vw, 40vw" width="900" height="1163" alt="Gestor consultando o painel do Smart Locker Stoom em um tablet" loading="lazy" decoding="async" /></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 06 DEPOIMENTO · oculto até chegar nome, condomínio, unidades e foto -->
+<section class="sec dark" id="tsl" hidden>
+  <div class="wrap"><div class="head center"><p class="eyebrow">Quem já usa</p><h2>"Frase do síndico sobre o antes e o depois na portaria."</h2><p class="lead">Nome do síndico · Condomínio · número de unidades</p></div></div>
+</section>
+
+<!-- 07 INSTALAÇÕES · oculto até chegarem 4 a 6 fotos reais com cidade -->
+<section class="sec dark" id="installs" hidden>
+  <div class="wrap"><div class="head"><div><p class="eyebrow">Instalações</p><h2>Condomínio que instalou <em>não voltou</em> para a portaria</h2></div></div></div>
+</section>
+
+<!-- 08 CONTRATAÇÃO -->
+<section class="sec light" id="contratacao">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Contratação</p><h2>Aluguel mensal, <em>tudo incluso</em>, sem letra miúda</h2></div>
+      <p class="lead">O condomínio não compra equipamento e não assume manutenção. É aluguel mensal por módulo, com tudo incluso.</p>
+    </div>
+    <div class="plans">
+      <div class="plan"><h3>O modelo</h3><ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aluguel mensal por módulo instalado</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sem investimento em equipamento</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Módulo central com cerca de 20 portas, e módulos adicionais conforme o volume</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Contrato com a administração do condomínio</li>
+      </ul></div>
+      <div class="plan"><h3>Já vem incluso</h3><ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Instalação e configuração no local</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Manutenção do equipamento, por técnico da região</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Plataforma de gestão e notificação automática</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Treinamento da equipe da portaria</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Atualização de software, remota</li>
+      </ul></div>
+      <div class="plan"><h3>Investimento</h3><ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Valor mensal definido pelo número de portas e pela configuração</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sem taxa de instalação</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Proposta enviada depois de uma conversa de 15 minutos</li>
+      </ul></div>
+    </div>
+    <div class="prazo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+      <div><h3>Prazo real: 90 a 120 dias entre o contrato e a instalação</h3><p>O equipamento é produzido sob demanda, na configuração do seu condomínio. Preferimos dizer isso agora a prometer um prazo que não se cumpre. Quanto antes a proposta, antes a instalação.</p></div>
+    </div>
+    <div class="cta-row"><button type="button" class="btn btn-primary js-open">Quero uma proposta para o meu condomínio</button></div>
+  </div>
+</section>
+
+<!-- 09 OBJEÇÕES -->
+<section class="sec light" id="faq" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="head center"><div><p class="eyebrow">Perguntas frequentes</p><h2>O que a administração pergunta <em>antes de aprovar</em></h2></div></div>
+    <div class="faq">
+      <details open><summary>Quanto espaço preciso ter, e onde instala?</summary><p>O módulo central ocupa uma parede em área comum coberta, com acesso para o entregador sem passar pelas unidades. Hall de entrada, área de encomendas e corredor de serviço são os lugares mais usados. A visita técnica define o ponto.</p></details>
+      <details><summary>Precisa de tomada e internet?</summary><p>Sim, ponto de energia e conexão de internet no local. A instalação e a configuração são feitas pela equipe da Stoom.</p></details>
+      <details><summary>Quem faz a manutenção, e em quanto tempo atende?</summary><p>A manutenção está inclusa no aluguel e é feita por técnico da região, que atende o seu estado. O condomínio não contrata serviço à parte nem compra peça.</p></details>
+      <details><summary>E se o morador não retirar a encomenda?</summary><p>O painel de gestão mostra as encomendas paradas e a plataforma reenvia notificação. A administração define o prazo para acionar o morador.</p></details>
+      <details><summary>E se uma encomenda desaparecer?</summary><p>Cada depósito e cada retirada ficam registrados com data, hora, usuário e foto. É exatamente o que hoje não existe na portaria: prova de quem recebeu e quem retirou.</p></details>
+      <details><summary>A câmera e a LGPD</summary><p>A imagem serve para registrar a operação do compartimento, não para monitorar pessoas, e é tratada conforme a LGPD. A política de privacidade da Stoom está no rodapé desta página.</p></details>
+      <details><summary>O morador precisa instalar aplicativo?</summary><p>Não. A retirada é por código ou QR Code, em qualquer celular, sem baixar nada. É um dos pontos que mais reduz reclamação na implantação.</p></details>
+      <details><summary>Tem multa se o condomínio quiser encerrar?</summary><p>As condições de vigência e encerramento estão no contrato e são apresentadas na proposta, antes de qualquer assinatura.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 10 FECHAMENTO sobre foto, com o "depois que você preencher" -->
+<section class="sec close" id="proposta">
+  <div class="close-media" aria-hidden="true">
+    <img src="/condominio/assets/v5/fim-1280.jpg" srcset="/condominio/assets/v5/fim-768.jpg 768w, /condominio/assets/v5/fim-1280.jpg 1280w, /condominio/assets/v5/fim-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="669" loading="lazy" decoding="async" />
+    <div class="close-shade"></div>
+  </div>
+  <div class="wrap">
+    <div class="steps">
+      <div class="step"><span class="k" aria-hidden="true">1</span><h3>Um especialista entra em contato</h3><p>Uma pessoa da Stoom, não um robô, pelo WhatsApp que você informar.</p></div>
+      <div class="step"><span class="k" aria-hidden="true">2</span><h3>Conversa de 15 minutos</h3><p>Número de unidades, volume de encomenda por dia e o espaço disponível. É o que define a configuração.</p></div>
+      <div class="step"><span class="k" aria-hidden="true">3</span><h3>Proposta com valores</h3><p>Configuração recomendada, valor mensal e prazo de instalação, por escrito, para levar à assembleia.</p></div>
+    </div>
+    <div class="close-cta">
+      <p class="eyebrow" style="justify-content: center;">Smart Locker Stoom</p>
+      <h2>Tire a encomenda <em>da portaria</em></h2>
+      <p class="lead">Receba a configuração recomendada para o seu condomínio, com valor mensal e prazo de instalação.</p>
+      <div class="cta-row"><button type="button" class="btn btn-primary js-open">Quero uma proposta para o meu condomínio</button></div>
+      <small>Seus dados vão direto para o time comercial da Stoom. Sem spam.</small>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="row">
+      <div class="brands">
+        <img src="/condominio/assets/stoom-secundario.svg" alt="Stoom" width="1057" height="278" loading="lazy" />
+        <span class="vsep" aria-hidden="true"></span>
+        <img class="landor" src="/condominio/assets/landor-selo.svg" alt="Powered by Landor, The Tech Group" width="340" height="108" loading="lazy" />
+      </div>
+      <a href="https://www.stoom.com.br/institucional/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>
+    </div>
+    <div class="row" style="margin-top: 20px;"><span>A Stoom é uma empresa do grupo Landor, The Tech Group.</span><span>© 2026 Stoom. Todos os direitos reservados.</span></div>
+  </div>
+</footer>
+
+<div class="stick" id="stick"><button type="button" class="btn btn-primary js-open">Quero uma proposta para o meu condomínio</button></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" aria-hidden="true">
+  <div class="veil" data-close></div>
+  <div class="card">
+    <button class="x" type="button" data-close aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="mform">
+      <p class="eyebrow">Proposta sem custo</p>
+      <h3 id="mTitle">Receba uma proposta para o seu condomínio</h3>
+      <p class="sub">Preencha e um especialista da Stoom entra em contato para entender a operação e enviar os valores.</p>
+      <form id="lead" class="hs-do-not-collect form">
+        <div class="two">
+          <div class="field"><label for="f-nome">Nome</label><input class="input" id="f-nome" name="firstname" type="text" required autocomplete="given-name" placeholder="Seu nome" aria-describedby="e-nome" /><small class="ferr" id="e-nome" aria-live="polite"></small></div>
+          <div class="field"><label for="f-fone">WhatsApp</label><input class="input" id="f-fone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" aria-describedby="e-fone" /><small class="ferr" id="e-fone" aria-live="polite"></small></div>
+        </div>
+        <div class="field"><label for="f-mail">E-mail</label><input class="input" id="f-mail" name="email" type="email" required autocomplete="email" placeholder="voce@exemplo.com" aria-describedby="e-mail" /><small class="ferr" id="e-mail" aria-live="polite"></small></div>
+        <div class="field"><label for="f-cond">Condomínio</label><input class="input" id="f-cond" name="company" type="text" required autocomplete="organization" placeholder="Nome do condomínio" aria-describedby="e-cond" /><small class="ferr" id="e-cond" aria-live="polite"></small></div>
+        <div class="field"><label for="f-un">Número de unidades</label><span class="sel"><select class="input" id="f-un" name="unidades" required aria-describedby="e-un"><option value="">Selecione</option><option>Até 50</option><option>51 a 100</option><option>101 a 200</option><option>201 a 400</option><option>Mais de 400</option></select></span><small class="ferr" id="e-un" aria-live="polite"></small></div>
+        <p class="err" id="err" role="alert"></p>
+        <button type="submit" class="btn btn-primary submit">Quero uma proposta</button>
+        <p class="lgpd">Seus dados estão protegidos conforme a LGPD. <a href="https://www.stoom.com.br/institucional/politica-de-privacidade" target="_blank" rel="noopener">Política de privacidade</a></p>
+      </form>
+    </div>
+    <div class="done" hidden tabindex="-1" role="status">
+      <span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <h3>Recebido!</h3>
+      <p>Um especialista da Stoom vai entrar em contato pelo WhatsApp que você informou.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== CONVERSÃO: todos os CTAs abrem o mesmo modal; envio pro HubSpot pela Forms API ===== */
+(function(){
+  /* ===== CONFIGURAÇÃO DE CONVERSÃO (preencher na publicação) =====
+     - HUBSPOT.formGuid: form da Stoom no portal do grupo. Vazio = nada é enviado.
+     - ADS_SEND_TO: rótulo da ação de conversão no Google Ads ('AW-11171385452/XXXXXXXX'). Vazio = não dispara.
+     - LINKEDIN_CONVERSION_ID: id numérico da conversão no Campaign Manager (partner 10718305). Vazio = não dispara.
+     - O GTM GTM-TLN423QH já carrega Google Ads, Clarity e LinkedIn Insight; GA4 e Pixel ficam no código, como no site. */
+  var HUBSPOT = { portalId:'51547160', formGuid:'6c33c565-d83e-41e5-80e7-75e316ad7c36' };   /* form 'Solicite uma demonstracao' do site stoom.com.br; CONFIRMAR com a Stoom antes de publicar */
+  var ADS_SEND_TO = '';
+  var LINKEDIN_CONVERSION_ID = '';
+  var PAGE_NAME = 'LP Smart Locker Condominio (Stoom)';
+  var LP_ID = 'stoom-smart-locker-condominio';
+  function uid(){ try { return crypto.randomUUID(); } catch(e){ return 'ev-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10); } }
+  function dl(obj){ try { window.dataLayer = window.dataLayer || []; obj.lp = LP_ID; window.dataLayer.push(obj); } catch(e){} }
+  var formStarted = false;
+  var modal = document.getElementById('modal'), lastFocus = null, lockY = 0;
+  var INERT = ['main', '.top', '.foot', '#stick'];
+  function open(){
+    lastFocus = document.activeElement;
+    lockY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.style.top = (-lockY) + 'px'; document.body.classList.add('lock');
+    modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+    INERT.forEach(function(q){ var el = document.querySelector(q); if(el) el.setAttribute('inert', ''); });
+    var f = modal.querySelector('input'); if(f) setTimeout(function(){ f.focus(); }, 80);
+  }
+  function close(){
+    modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('lock'); document.body.style.top = ''; window.scrollTo(0, lockY);
+    INERT.forEach(function(q){ var el = document.querySelector(q); if(el) el.removeAttribute('inert'); });
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('.js-open').forEach(function(b){ b.addEventListener('click', function(){
+    var sec = b.closest('section, .stick'); var origem = sec ? (sec.id || sec.className.split(' ')[0]) : 'desconhecida';
+    dl({ event:'lp_cta_click', cta_origem: origem });
+    try{ if(window.gtag) gtag('event','lp_cta_click',{ cta_origem: origem, lp: LP_ID }); }catch(e){}
+    open();
+  }); });
+  modal.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){
+    if(!modal.classList.contains('open')) return;
+    if(e.key === 'Escape'){ close(); return; }
+    if(e.key !== 'Tab') return;
+    var f = Array.prototype.filter.call(modal.querySelectorAll('button,[href],input,select,textarea'), function(el){ return !el.disabled && el.offsetParent !== null; });
+    if(!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && (document.activeElement === last || !modal.contains(document.activeElement))){ e.preventDefault(); first.focus(); }
+  });
+  function fireConversion(data){
+    var id = uid();
+    dl({ event:'lp_lead_submit', event_id: id, unidades: data.unidades });
+    try{ if(window.gtag) gtag('event','generate_lead',{ lp: LP_ID, form_id:'smart-locker-condominio', unidades: data.unidades, event_id: id, currency:'BRL', value: 0 }); }catch(e){}
+    try{ if(window.fbq) fbq('track','Lead',{ content_name:'Smart Locker Condominio', content_category:'condominio' }, { eventID: id }); }catch(e){}
+    try{ if(ADS_SEND_TO && window.gtag) gtag('event','conversion',{ send_to: ADS_SEND_TO, transaction_id: id, currency:'BRL', value: 0 }); }catch(e){}
+    try{ if(LINKEDIN_CONVERSION_ID && window.lintrk) lintrk('track', { conversion_id: LINKEDIN_CONVERSION_ID }); }catch(e){}
+    return id;
+  }
+  function waNumber(raw){ var d = String(raw||'').replace(/\D/g,'').replace(/^0+/,''); if(d.length === 10 || d.length === 11) d = '55' + d; return d ? '+' + d : ''; }
+  function hutk(){ var v = ''; document.cookie.split(';').forEach(function(c){ c = c.trim(); if(c.indexOf('hubspotutk=') === 0) v = c.substring(11); }); return v; }
+  function toHubspot(data, eventId){
+    if(!HUBSPOT.formGuid) return Promise.resolve();
+    var url = 'https://api.hsforms.com/submissions/v3/integration/submit/' + HUBSPOT.portalId + '/' + HUBSPOT.formGuid;
+    var body = { submittedAt: Date.now(), fields:[{name:'firstname', value:data.firstname},{name:'email', value:data.email},{name:'phone', value:waNumber(data.phone)},{name:'company', value:data.company},{name:'message', value:'Unidades: ' + data.unidades + ' | LP Smart Locker | evento ' + eventId},{name:'marca_do_grupo', value:'Stoom'}], context:{ pageUri: location.href, pageName: PAGE_NAME } };
+    try{ var qs = new URLSearchParams(location.search); ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){ var v = qs.get(k); if(v) body.fields.push({name:k, value:v.slice(0,200)}); }); }catch(e){}
+    var h = hutk(); if(h) body.context.hutk = h;
+    return fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(function(){});
+  }
+  /* validação por estado do campo: erro só depois do 1º blur com edição ou do submit; gmail é aceito */
+  var form = document.getElementById('lead'), errEl = document.getElementById('err');
+  form.noValidate = true;
+  var RULES = {
+    firstname: { test: function(v){ return v.trim().length > 0; }, msg: 'Digite seu nome.' },
+    phone:     { test: function(v){ var d = v.replace(/\D/g,''); return d.length === 10 || d.length === 11; }, msg: 'WhatsApp com DDD, 10 ou 11 números.' },
+    email:     { test: function(v){ return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.trim()); }, msg: 'E-mail no formato nome@dominio.com.br.' },
+    company:   { test: function(v){ return v.trim().length > 0; }, msg: 'Diga o nome do condomínio.' },
+    unidades:  { test: function(v){ return v !== ''; }, msg: 'Escolha uma faixa de unidades.' }
+  };
+  function errBox(el){ return document.getElementById(el.getAttribute('aria-describedby')); }
+  function check(el){ var r = RULES[el.name]; if(!r) return true; var ok = r.test(el.value), box = errBox(el); el.classList.toggle('is-bad', !ok); el.setAttribute('aria-invalid', ok ? 'false' : 'true'); if(box) box.textContent = ok ? '' : r.msg; return ok; }
+  form.addEventListener('focusin', function(){ if(formStarted) return; formStarted = true; dl({ event:'lp_form_start' }); try{ if(window.gtag) gtag('event','lp_form_start',{ lp: LP_ID }); }catch(e){} });
+  Array.prototype.forEach.call(form.elements, function(el){
+    if(!RULES[el.name]) return; var dirty = false;
+    el.addEventListener('input', function(){ dirty = true; if(el.classList.contains('is-bad')) check(el); if(!form.querySelector('.is-bad')) errEl.textContent = ''; });
+    el.addEventListener('change', function(){ dirty = true; if(el.classList.contains('is-bad')) check(el); });
+    el.addEventListener('blur', function(){ if(dirty) check(el); });
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var bad = []; Array.prototype.forEach.call(form.elements, function(el){ if(RULES[el.name] && !check(el)) bad.push(el); });
+    if(bad.length){ errEl.textContent = 'Confere os campos destacados para a gente conseguir te chamar.'; bad[0].focus(); dl({ event:'lp_form_error', campos: bad.map(function(el){ return el.name; }).join(',') }); return; }
+    errEl.textContent = '';
+    var btn = form.querySelector('.submit'); if(btn){ btn.disabled = true; btn.textContent = 'Enviando...'; }
+    var data = { firstname: form.firstname.value.trim(), phone: form.phone.value.trim(), email: form.email.value.trim(), company: form.company.value.trim(), unidades: form.unidades.value };
+    var eventId = fireConversion(data);
+    var show = function(){ modal.querySelector('.mform').hidden = true; var d = modal.querySelector('.done'); d.hidden = false; d.focus(); };
+    toHubspot(data, eventId).then(show, show);
+  });
+})();
+
+/* ===== VÍDEO do hero: só desktop, só com movimento permitido e sem economia de dados ===== */
+(function(){
+  var wrap = document.querySelector('.hero-media'); if(!wrap) return;
+  var conn = navigator.connection || {};
+  if(!matchMedia('(min-width: 761px)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches || conn.saveData) return;
+  /* so depois do load, pra nao disputar banda com a foto do hero e as fontes (o LCP) */
+  function start(){ setTimeout(mount, 400); }
+  if(document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
+  function mount(){
+  var v = document.createElement('video');
+  v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true'); v.preload = 'auto';
+  v.src = '/condominio/assets/video/locker.mp4';
+  var played = false; v.addEventListener('playing', function(){ v.classList.add('on'); if(!played){ played = true; try{ window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event:'lp_video_play', lp:'stoom-smart-locker-condominio' }); }catch(e){} } });
+  v.addEventListener('error', function(){ v.remove(); });
+  wrap.insertBefore(v, wrap.querySelector('.hero-shade'));
+  var p = v.play(); if(p && p.catch) p.catch(function(){ v.remove(); });
+  }
+})();
+
+/* ===== BARRA FIXA no celular: aparece depois do hero, some perto do fechamento e com o modal aberto ===== */
+(function(){
+  var bar = document.getElementById('stick'), hero = document.getElementById('hero'), end = document.getElementById('proposta'), modal = document.getElementById('modal');
+  if(!bar || !hero || !('IntersectionObserver' in window)) return;
+  var heroOut = false, endIn = false;
+  function upd(){ bar.classList.toggle('on', heroOut && !endIn && !modal.classList.contains('open')); }
+  new IntersectionObserver(function(en){ heroOut = !en[0].isIntersecting; upd(); }, { threshold: 0.05 }).observe(hero);
+  new IntersectionObserver(function(en){ endIn = en[0].isIntersecting; upd(); }, { threshold: 0.2 }).observe(end);
+  new MutationObserver(upd).observe(modal, { attributes: true, attributeFilter: ['class'] });
+})();
+
+/* ===== CONTAGEM dos números (uma vez, respeita prefers-reduced-motion) ===== */
+(function(){
+  var els = document.querySelectorAll('[data-count]'); if(!els.length) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  var ease = function(t){ return 1 - Math.pow(1 - t, 3); };
+  function run(el){
+    var end = parseInt(el.getAttribute('data-count'), 10), t0 = null, dur = 900, wrap = el.closest('.num'); if(wrap) wrap.classList.add('counting');
+    function step(ts){ if(t0 === null) t0 = ts; var p = Math.min((ts - t0) / dur, 1); el.textContent = Math.round(ease(p) * end); if(p < 1) requestAnimationFrame(step); else if(wrap) wrap.classList.remove('counting'); }
+    el.textContent = '0'; requestAnimationFrame(step);
+  }
+  var io = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if(en.isIntersecting){ run(en.target); io.unobserve(en.target); } }); }, { threshold: 0.4 });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>
