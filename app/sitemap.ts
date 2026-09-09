@@ -31,6 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/institucional/parceiros`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/institucional/politica-de-privacidade`, lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${SITE_URL}/smart-locker`,                  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/condominio`,                    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 
   const conteudoPages: MetadataRoute.Sitemap = conteudos.map(({ slug, updatedAt }) => ({
