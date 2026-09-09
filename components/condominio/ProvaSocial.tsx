@@ -80,7 +80,7 @@ type NumeroProva = {
 const numeros: readonly NumeroProva[] = [
   { alvo: 10, sufixo: '+', rotulo: 'anos de tecnologia logística no Brasil' },
   { alvo: 24, sufixo: '/7', rotulo: 'retirada sem funcionário envolvido' },
-  { alvo: 3, sufixo: '', rotulo: 'tamanhos de compartimento, homologados pelos Correios' },
+  { alvo: 3, sufixo: '', rotulo: 'tamanhos de compartimento: P, M e G' },
 ]
 
 /** Duracao da contagem, igual ao original. */

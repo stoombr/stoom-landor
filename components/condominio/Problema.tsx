@@ -75,7 +75,6 @@ export default function Problema() {
               <Destaque sobreEscuro={false}>é a mesma</Destaque>
             </>
           }
-          lead="O condomínio não cresceu, mas o volume de entrega cresceu. O custo disso não aparece na planilha: aparece na reclamação do morador e no tempo do porteiro."
         />
 
         {/* ── Antes e depois ──────────────────────────────────────────────── */}

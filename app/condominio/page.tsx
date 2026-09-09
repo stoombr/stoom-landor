@@ -26,16 +26,18 @@ const OG_IMAGE = '/lp-condominio/assets/og.jpg'
 /** Absoluta para as chaves og:image:* de `other`, que o metadataBase nao resolve. */
 const OG_IMAGE_ABS = 'https://stoom.com.br' + OG_IMAGE
 
-const TITULO = 'Armário inteligente para condomínio | Smart Locker Stoom'
+const TITULO = 'Armário inteligente para condomínio | Stoom'
 
+// 152 caracteres, dentro do que o Google mostra sem cortar.
 const DESCRICAO =
-  'Armário inteligente para condomínio: o entregador deposita, o morador retira 24 horas por dia, sem fila e sem encomenda perdida. Aluguel mensal, homologado pelos Correios. Peça uma proposta.'
+  'Armário inteligente para condomínio: o entregador deposita e o morador retira 24h por dia. Aluguel mensal, homologado pelos Correios. Peça uma proposta.'
 
+// 85 caracteres: o WhatsApp corta o preview por volta de 90, entao o texto e
+// escrito para caber inteiro, nunca para preencher.
 const DESCRICAO_OG =
-  'O entregador deposita, o morador retira 24 horas por dia. Sem fila e sem encomenda perdida. Aluguel mensal, homologado pelos Correios. Peça uma proposta.'
+  'O entregador deposita, o morador retira 24h por dia. Sem fila, sem encomenda perdida.'
 
-const DESCRICAO_TWITTER =
-  'O entregador deposita, o morador retira 24 horas por dia. Sem fila e sem encomenda perdida.'
+const DESCRICAO_TWITTER = DESCRICAO_OG
 
 export const metadata: Metadata = {
   title: TITULO,

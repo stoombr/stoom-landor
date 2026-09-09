@@ -127,7 +127,7 @@ export function Titulo({
   return (
     <h2
       className={cn(
-        'font-outfit text-4xl lg:text-5xl font-bold leading-tight',
+        'font-outfit text-[2.5rem] lg:text-[3.5rem] font-bold leading-[1.06]',
         sobreEscuro ? 'text-white' : 'text-brand-primary',
         className
       )}

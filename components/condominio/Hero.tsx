@@ -95,8 +95,10 @@ export default function Hero({ aoAbrir }: HeroProps) {
       id="hero"
       className={cn(
         'relative isolate flex items-end overflow-hidden bg-brand-ink',
-        // 100svh no celular (o original usa a mesma medida para o hero encher a tela).
-        'min-h-[100svh] md:min-h-[min(92vh,940px)]'
+        // 100svh em toda tela. O teto de 940px que existia aqui fazia a faixa
+        // seguinte espiar 140px na primeira dobra em telas de 1080 de altura;
+        // a regra e que a segunda dobra nunca aparece na primeira.
+        'min-h-[100svh]'
       )}
     >
       {/* ── Foto de fundo ─────────────────────────────────────────────────── */}
@@ -196,7 +198,9 @@ export default function Hero({ aoAbrir }: HeroProps) {
 
           <ul
             aria-label="Diferenciais"
-            className="mt-[30px] flex flex-wrap gap-x-[26px] gap-y-2.5 border-t border-white/25 pt-[22px]"
+            // Empilhados, nao em fileira: os tres somam 821px e a coluna de copy
+            // tem 760, entao em fileira eles quebravam 2 + 1, com um sobrando.
+            className="mt-[30px] flex flex-col gap-y-2.5 border-t border-white/25 pt-[22px]"
           >
             {selos.map((selo, i) => (
               <li
