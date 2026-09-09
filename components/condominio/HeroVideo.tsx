@@ -5,10 +5,11 @@
 // E enfeite, nunca conteudo: a foto do hero continua sendo o que carrega, o que
 // aparece no LCP e o que sobra se qualquer coisa falhar. O video so entra por
 // cima, em fade, quando as quatro guardas do original passam:
-//   1. tela >= 761px            (no celular a foto vertical basta)
-//   2. sem prefers-reduced-motion
-//   3. sem save-data
-//   4. depois do evento `load` da pagina + 400ms
+//   1. sem prefers-reduced-motion
+//   2. sem save-data
+//   3. depois do evento `load` da pagina + 400ms
+// A guarda de largura saiu: ela fazia o mesmo celular mostrar video deitado e
+// nao mostrar em pe. Hoje a largura so escolhe QUAL recorte usar.
 // O atraso existe para nao disputar banda com a imagem do hero e com as fontes.
 //
 // Posicao no JSX: entre a <Image> do hero e as camadas de escurecimento, do
@@ -21,10 +22,18 @@ import { eventoVideoPlay } from '@/lib/condominio/tracking'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
 
-const FONTE = '/lp-condominio/assets/video/locker.mp4'
+/** Recorte horizontal, para telas largas. */
+const FONTE_LARGA = '/lp-condominio/assets/video/locker.mp4'
 
-/** Largura minima para montar o video (o original usa `min-width: 761px`). */
-const CONSULTA_DESKTOP = '(min-width: 761px)'
+/** Recorte vertical, para o celular em pe. Mesma direcao de arte da foto. */
+const FONTE_ALTA = '/lp-condominio/assets/video/locker-vertical.mp4'
+
+/**
+ * Divide qual dos dois recortes usar. NAO decide mais se o video existe: antes
+ * decidia, e por isso o mesmo celular mostrava video deitado (Pixel da 863) e
+ * nao mostrava em pe (393), enquanto o iPhone nao mostrava nem deitado (734).
+ */
+const CONSULTA_LARGA = '(min-width: 761px)'
 
 const CONSULTA_MOVIMENTO = '(prefers-reduced-motion: reduce)'
 
@@ -33,7 +42,14 @@ const ATRASO_MS = 400
 
 /** Mesmo tratamento de imagem do hero, para o corte entre foto e video nao pular. */
 const CLASSES_BASE =
-  'absolute inset-0 h-full w-full object-cover object-[62%_50%] brightness-[0.7] saturate-[0.9] pointer-events-none'
+  'absolute inset-0 h-full w-full object-cover brightness-[0.7] saturate-[0.9] pointer-events-none'
+
+/**
+ * Enquadramento por recorte. O horizontal puxa para 62%, o mesmo da foto larga,
+ * para o titulo cair sobre a parede e nao sobre o morador. O vertical ja nasce
+ * cortado no lugar certo, entao fica no centro.
+ */
+const POSICAO = { largo: 'object-[62%_50%]', alto: 'object-center' } as const
 
 type NavegadorComConexao = Navigator & { connection?: { saveData?: boolean } }
 
@@ -45,6 +61,7 @@ export default function HeroVideo({ className }: HeroVideoProps) {
   const reduce = useReducedMotion()
   const [montado, setMontado] = useState(false)
   const [tocando, setTocando] = useState(false)
+  const [largo, setLargo] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
   const jaNotificou = useRef(false)
 
@@ -55,8 +72,14 @@ export default function HeroVideo({ className }: HeroVideoProps) {
       return
     }
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
-    if (!window.matchMedia(CONSULTA_DESKTOP).matches) return
     if (window.matchMedia(CONSULTA_MOVIMENTO).matches) return
+
+    // Escolhe o recorte e continua ouvindo: girar o aparelho troca o arquivo em
+    // vez de deixar o video sumir, que era o comportamento antigo.
+    const consulta = window.matchMedia(CONSULTA_LARGA)
+    setLargo(consulta.matches)
+    const aoTrocar = (e: MediaQueryListEvent) => setLargo(e.matches)
+    consulta.addEventListener('change', aoTrocar)
 
     const conexao = (navigator as NavegadorComConexao).connection
     if (conexao && conexao.saveData) return
@@ -73,6 +96,7 @@ export default function HeroVideo({ className }: HeroVideoProps) {
     }
 
     return () => {
+      consulta.removeEventListener('change', aoTrocar)
       window.removeEventListener('load', agendar)
       if (temporizador !== undefined) window.clearTimeout(temporizador)
     }
@@ -109,8 +133,8 @@ export default function HeroVideo({ className }: HeroVideoProps) {
   return (
     <m.video
       ref={videoRef}
-      src={FONTE}
-      className={cn(CLASSES_BASE, className)}
+      src={largo ? FONTE_LARGA : FONTE_ALTA}
+      className={cn(CLASSES_BASE, largo ? POSICAO.largo : POSICAO.alto, className)}
       autoPlay
       muted
       loop
