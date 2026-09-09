@@ -155,8 +155,9 @@ export default function Contratacao({ aoAbrir, className }: ContratacaoProps) {
         </SectionWrapper>
 
         {/* ── CTA ───────────────────────────────────────────────────────────── */}
-        <SectionWrapper className="mt-12" delay={0.1}>
-          {/* No celular o CTA ocupa a largura toda, igual ao original (<=760px). */}
+        <SectionWrapper className="mt-12 sm:flex sm:justify-center" delay={0.1}>
+          {/* No celular o CTA ocupa a largura toda, igual ao original (<=760px);
+              a partir do sm ele encolhe e centraliza embaixo dos cartoes. */}
           <BotaoCta onClick={aoClicar} className="w-full sm:w-auto">
             {ROTULO_CTA}
           </BotaoCta>
