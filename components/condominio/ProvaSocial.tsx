@@ -2,10 +2,15 @@
 
 // Faixa de prova social da LP /condominio (`.proof` do original, secao sem id).
 //
-// E uma faixa, nao um capitulo: encosta no hero, separada so por um fio, com
-// 40px de respiro em cima e 72px embaixo. Por isso ela e a unica secao da LP que
-// nao usa o `py-24 lg:py-32` do repositorio; com o ritmo normal a faixa vira um
-// bloco vazio de navy e o desenho aprovado se perde. O override vem no className.
+// E uma faixa, nao um capitulo: encosta no hero, separada so por um fio. Por
+// isso ela e a unica secao da LP que nao usa o `py-24 lg:py-32` do repositorio;
+// com o ritmo normal a faixa vira um bloco vazio de navy e o desenho aprovado se
+// perde. O override vem no className: 40px em cima e 72px embaixo no celular,
+// 64 e 80 no desktop, onde ela divide a linha com os numeros de 60px.
+//
+// O `lg:py-0` que existia aqui zerava os dois no desktop: a faixa ficava com
+// 108px de altura, a frase encostada na borda de cima e a legenda do terceiro
+// numero cortada pela de baixo. Nao repor.
 //
 // Duas colunas de mesma largura: a esquerda tem a frase de credibilidade e os
 // quatro logos de cliente em monocromia clara; a direita tem os tres numeros,
@@ -224,7 +229,7 @@ export default function ProvaSocial() {
       aria-label="Quem confia na Stoom"
       // `py-0 lg:py-0` derruba o ritmo padrao da Secao; ver o comentario do topo.
       // O fio de cima e a unica costura entre o hero e esta faixa.
-      className="border-t border-white/10 py-0 pb-[72px] pt-10 lg:py-0"
+      className="border-t border-white/10 py-0 pb-[72px] pt-10 lg:pb-20 lg:pt-16"
     >
       <Container>
         <div className="grid gap-x-16 gap-y-10 lg:grid-cols-2 lg:items-center">
