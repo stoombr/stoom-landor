@@ -76,7 +76,7 @@ function CabecalhoLp() {
           alt={MARCA_STOOM.alt}
           width={MARCA_STOOM.largura}
           height={MARCA_STOOM.altura}
-          className="h-[30px] w-auto [filter:drop-shadow(0_2px_8px_rgb(15_40_66/0.5))]"
+          className="h-[39px] w-auto [filter:drop-shadow(0_2px_8px_rgb(15_40_66/0.5))]"
         />
       </Container>
     </header>
