@@ -26,6 +26,9 @@ const config: Config = {
       colors: {
         brand: {
           primary: '#0f2842',
+          // chao profundo da LP /condominio (hero, faixas escuras, rodape, veus).
+          // Distinto de primary, que e o Azul Stoom dos cartoes escuros.
+          ink: '#0b1626',
           secondary: '#f97316',
           highlight: '#4cc9f0',
           light: '#f2f4f6',
