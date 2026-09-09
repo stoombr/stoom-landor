@@ -19,7 +19,7 @@
 // origem ANTES de chamar `abrirModal`, entao esta pagina nao pode disparar de
 // novo no handler, senao o `lp_cta_click` conta dobrado.
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Container, focoVisivel } from '@/components/condominio/ui'
@@ -142,6 +142,17 @@ function RodapeLp() {
 
 export default function CondominioClient() {
   const [modalAberto, setModalAberto] = useState(false)
+
+  // O chat flutuante do HubSpot sai desta rota. Ele e montado direto no body
+  // pelo script do layout, fora da arvore da pagina, entao a unica forma de
+  // alcanca-lo daqui e marcar o body; a regra que esconde esta no globals.css.
+  // Duas razoes: a LP tem um caminho de conversao so, o formulario, e no
+  // celular a bolinha ficava por cima do CTA fixo. Sai so aqui, o resto do
+  // site continua com o chat.
+  useEffect(() => {
+    document.body.classList.add('lp-condominio')
+    return () => document.body.classList.remove('lp-condominio')
+  }, [])
 
   // Estaveis de proposito: os capitulos recebem esta funcao por prop e nao
   // devem re-renderizar so porque a pagina re-renderizou.

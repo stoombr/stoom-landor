@@ -127,7 +127,7 @@ export function Titulo({
   return (
     <h2
       className={cn(
-        'font-outfit text-[2.5rem] lg:text-[3.5rem] font-bold leading-[1.06]',
+        'font-outfit text-[2.5rem] lg:text-[3.5rem] font-bold leading-[1.06] [text-wrap:balance]',
         sobreEscuro ? 'text-white' : 'text-brand-primary',
         className
       )}
@@ -321,6 +321,21 @@ export function CabecalhoSecao({
             {lead}
           </Lead>
         ) : null}
+      </SectionWrapper>
+    )
+  }
+
+  // Sem texto de apoio o cabecalho deixa de ser grade de duas colunas. A grade
+  // existe para por o lead ao lado do titulo; sem lead, a segunda coluna fica
+  // vazia e o titulo continua preso em 7/12 do container (677px de 1232), o que
+  // o fazia quebrar em tres ou quatro linhas com uma palavra sobrando na ultima.
+  if (!lead) {
+    return (
+      <SectionWrapper className={cn('mb-16', className)}>
+        <Eyebrow sobreEscuro={sobreEscuro}>{eyebrow}</Eyebrow>
+        <Titulo sobreEscuro={sobreEscuro} className="max-w-[24ch]">
+          {titulo}
+        </Titulo>
       </SectionWrapper>
     )
   }

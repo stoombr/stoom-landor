@@ -140,7 +140,7 @@ export default function Hero({ aoAbrir }: HeroProps) {
 
       {/* ── Copy ──────────────────────────────────────────────────────────── */}
       <Container className="relative z-10 w-full pb-10 pt-[110px] md:pb-[clamp(48px,7vh,80px)] md:pt-[clamp(120px,14vh,160px)]">
-        <div className="max-w-[760px] [text-shadow:0_2px_6px_rgb(0_0_0/0.55),0_12px_40px_rgb(0_0_0/0.5)]">
+        <div className="max-w-[920px] [text-shadow:0_2px_6px_rgb(0_0_0/0.55),0_12px_40px_rgb(0_0_0/0.5)]">
           <div className="lp-rise [animation-delay:100ms]">
             {/* Mais claro que o eyebrow das demais secoes escuras, como no original. */}
             <Eyebrow sobreEscuro className="mb-[22px] text-white/90">
@@ -151,7 +151,7 @@ export default function Hero({ aoAbrir }: HeroProps) {
           <h1
             // A escala e o `--fs-h1` do original: 42px no celular, 92px no
             // desktop largo. E a maior tipografia da pagina.
-            className="lp-rise [animation-delay:150ms] max-w-[10em] font-outfit text-[length:clamp(2.625rem,6.2vw,5.75rem)] font-bold leading-[0.98] tracking-tight text-white [text-wrap:balance]"
+            className="lp-rise [animation-delay:150ms] max-w-[12em] font-outfit text-[length:clamp(2.625rem,6.2vw,5.75rem)] font-bold leading-[0.98] tracking-tight text-white [text-wrap:balance]"
           >
             {TITULO_ANTES}{' '}
             <span className="relative inline-block">

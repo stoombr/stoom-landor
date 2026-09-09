@@ -94,5 +94,32 @@ export const metadata: Metadata = {
 }
 
 export default function CondominioPage() {
-  return <CondominioClient />
+  return (
+    <>
+      {/*
+        O chat do HubSpot nao carrega nesta rota.
+
+        Nao e so estetica: o bundle do widget (conversations-visitor-ui) e o
+        MAIOR recurso da pagina, 434 KB de 2.051 KB medidos. Escondê-lo por CSS
+        deixaria o download acontecendo do mesmo jeito, entao o desligamento
+        precisa vir antes: `loadImmediately: false` e lido pelo loader do
+        HubSpot (`hs-script-loader`, `afterInteractive` no layout) quando ele
+        executa. Este script inline roda na analise do HTML, bem antes disso.
+
+        O `js.hs-scripts.com/51547160.js` continua carregando de proposito: e
+        ele que grava o cookie `hubspotutk`, que o formulario manda junto no
+        campo `hutk` para o HubSpot casar o lead com a sessao. So o widget de
+        conversa fica de fora.
+
+        Motivo do pedido: a LP tem um caminho de conversao so, o formulario, e
+        no celular a bolinha ficava por cima do CTA fixo.
+      */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: 'window.hsConversationsSettings={loadImmediately:false};',
+        }}
+      />
+      <CondominioClient />
+    </>
+  )
 }

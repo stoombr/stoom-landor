@@ -126,3 +126,14 @@ textarea:-webkit-autofill:focus {
     scroll-behavior: auto !important;
   }
 }
+
+/* LP /condominio: sem chat flutuante
+   O chat do HubSpot e montado no body pelo script do layout, fora da arvore da
+   pagina, entao nao da para esconder por seletor descendente do componente. A
+   classe entra no body enquanto a LP esta montada (ver CondominioClient) e sai
+   quando o visitante navega para outra rota, onde o chat continua valendo.
+   Motivo: a LP tem um caminho de conversao so, o formulario, e no celular a
+   bolinha ainda cobria o CTA fixo. */
+body.lp-condominio #hubspot-messages-iframe-container {
+  display: none !important;
+}
