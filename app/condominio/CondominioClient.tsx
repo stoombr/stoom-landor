@@ -111,7 +111,7 @@ function RodapeLp() {
               alt={SELO_LANDOR.alt}
               width={SELO_LANDOR.largura}
               height={SELO_LANDOR.altura}
-              className="h-[30px] w-auto"
+              className="h-[39px] w-auto"
             />
           </div>
 
