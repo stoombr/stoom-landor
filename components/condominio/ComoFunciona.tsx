@@ -192,7 +192,6 @@ export default function ComoFunciona({ aoAbrir, className }: ComoFuncionaProps) 
               e sem depender de ninguém
             </>
           }
-          lead="O armário fica instalado em área comum. O entregador não sobe, não espera e não precisa de assinatura."
         />
 
         <div className="grid gap-6 lg:grid-cols-3">

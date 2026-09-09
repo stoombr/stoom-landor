@@ -33,9 +33,6 @@ const ROTULO_CTA = 'Quero uma proposta para o meu condomínio'
 
 const EYEBROW = 'Contratação'
 
-const LEAD =
-  'O condomínio não compra equipamento e não assume manutenção. É aluguel mensal por módulo, com tudo incluso.'
-
 /**
  * Os tres cartoes de contratacao. O terceiro nao traz numero de proposito:
  * preco "a partir de R$ X" so entra com assinatura do Luciano.
@@ -109,7 +106,6 @@ export default function Contratacao({ aoAbrir, className }: ContratacaoProps) {
               miúda
             </>
           }
-          lead={LEAD}
         />
 
         {/* ── Os tres cartoes ───────────────────────────────────────────────── */}

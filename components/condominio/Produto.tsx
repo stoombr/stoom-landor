@@ -22,9 +22,6 @@ import { CabecalhoSecao, Container, Destaque, Eyebrow, ListaChecada, Secao } fro
 
 const EYEBROW = 'O equipamento'
 
-const LEAD =
-  'Compartimentos P, M e G certificados para o sistema dos Correios, câmera que registra cada operação e uma plataforma que mostra ocupação, histórico e encomenda parada.'
-
 /** Foto grande da coluna larga. */
 const FOTO_HARDWARE = {
   src: '/lp-condominio/assets/v5/hardware-1600.jpg',
@@ -78,7 +75,6 @@ export default function Produto() {
               na mão da administração.
             </>
           }
-          lead={LEAD}
         />
 
         <div

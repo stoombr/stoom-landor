@@ -111,7 +111,14 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/favicon-stoom.svg',
+    // Fundo branco de proposito. Em fundo transparente o simbolo laranja encosta
+    // na cor de aba que o usuario escolheu (verde, azul, rosa) e some. O SVG
+    // atende Chrome, Edge e Firefox; os PNG cobrem Safari e o atalho do iOS.
+    icon: [
+      { url: '/favicon-stoom-tab.svg', type: 'image/svg+xml' },
+      { url: '/favicon-stoom-32.png', type: 'image/png', sizes: '32x32' },
+    ],
+    apple: '/favicon-stoom-180.png',
   },
 };
 
