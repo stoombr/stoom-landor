@@ -11,6 +11,10 @@
 // quatro logos de cliente em monocromia clara; a direita tem os tres numeros,
 // que contam uma unica vez ao entrar na tela.
 //
+// No celular nada disso cabe lado a lado: os logos viram 2 x 2 (em fileira eles
+// quebravam 3 + 1) e os numeros viram tres linhas de numero + rotulo (em duas
+// colunas o terceiro ficava sozinho, com um buraco do lado).
+//
 // Os numeros 24/7 e 3 sao provisorios: quando a Stoom mandar condominios
 // atendidos e encomendas por mes, e aqui que eles entram.
 
@@ -185,8 +189,13 @@ function NumeroAnimado({ dado, indice }: { dado: NumeroProva; indice: number }) 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: reduce ? 0 : 0.4, delay: reduce ? 0 : indice * 0.07 }}
+      // No celular os tres numeros viram uma lista de linhas: numero a esquerda
+      // numa coluna de largura fixa, rotulo ao lado. Empilhado (o desenho do
+      // desktop) o bloco ficava alto demais; em duas colunas o terceiro numero
+      // ficava sozinho com um buraco do lado. Do md pra cima nada muda.
+      className="flex items-baseline gap-4 md:block"
     >
-      <b className="block font-outfit text-[40px] font-bold leading-[0.95] tracking-[-0.03em] text-white tabular-nums lg:text-6xl">
+      <b className="block min-w-[4.25rem] shrink-0 font-outfit text-[34px] font-bold leading-[0.95] tracking-[-0.03em] text-white tabular-nums md:min-w-0 md:text-[40px] lg:text-6xl">
         {valor}
         {dado.sufixo ? (
           <small
@@ -199,7 +208,7 @@ function NumeroAnimado({ dado, indice }: { dado: NumeroProva; indice: number }) 
           </small>
         ) : null}
       </b>
-      <span className="mt-2 block max-w-[20ch] font-roboto text-sm leading-snug text-white/60">
+      <span className="block font-roboto text-sm leading-snug text-white/60 md:mt-2 md:max-w-[20ch]">
         {dado.rotulo}
       </span>
     </m.div>
@@ -227,7 +236,7 @@ export default function ProvaSocial() {
             <div
               role="list"
               aria-label="Clientes da Stoom"
-              className="flex flex-wrap items-center gap-x-9 gap-y-3.5"
+              className="grid grid-cols-2 place-items-center gap-x-6 gap-y-5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-9 sm:gap-y-3.5"
             >
               {logos.map((logo, i) => (
                 <LogoCliente key={logo.nome} logo={logo} indice={i} />
@@ -235,8 +244,9 @@ export default function ProvaSocial() {
             </div>
           </SectionWrapper>
 
-          {/* Duas colunas no celular, tres a partir do tablet, como no original. */}
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+          {/* Uma coluna no celular (senao o terceiro numero fica orfao numa
+              grade de duas), tres a partir do tablet, como no original. */}
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
             {numeros.map((numero, i) => (
               <NumeroAnimado key={numero.rotulo} dado={numero} indice={i} />
             ))}

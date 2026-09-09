@@ -201,8 +201,9 @@ export default function ComoFunciona({ aoAbrir, className }: ComoFuncionaProps) 
           ))}
         </div>
 
-        {/* `.cta-row`: no celular o botao ocupa a largura toda, como no original. */}
-        <div className="mt-8 flex flex-wrap items-center gap-4 lg:mt-12">
+        {/* `.cta-row`: no celular o botao ocupa a largura toda, como no original;
+            do md pra cima ele centraliza embaixo dos tres cartoes. */}
+        <div className="mt-8 flex flex-wrap items-center gap-4 md:justify-center lg:mt-12">
           <BotaoCta
             onClick={aoClicar}
             className="w-full md:w-auto focus-visible:ring-offset-brand-primary"
