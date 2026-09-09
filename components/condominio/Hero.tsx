@@ -94,7 +94,7 @@ export default function Hero({ aoAbrir }: HeroProps) {
     <section
       id="hero"
       className={cn(
-        'relative isolate flex items-end overflow-hidden bg-brand-ink',
+        'relative isolate flex items-center overflow-hidden bg-brand-ink',
         // 100svh em toda tela. O teto de 940px que existia aqui fazia a faixa
         // seguinte espiar 140px na primeira dobra em telas de 1080 de altura;
         // a regra e que a segunda dobra nunca aparece na primeira.
@@ -139,7 +139,7 @@ export default function Hero({ aoAbrir }: HeroProps) {
       </div>
 
       {/* ── Copy ──────────────────────────────────────────────────────────── */}
-      <Container className="relative z-10 w-full pb-10 pt-[110px] md:pb-[clamp(48px,7vh,80px)] md:pt-[clamp(120px,14vh,160px)]">
+      <Container className="relative z-10 w-full py-[110px] md:py-[clamp(96px,11vh,140px)]">
         <div className="[text-shadow:0_2px_6px_rgb(0_0_0/0.55),0_12px_40px_rgb(0_0_0/0.5)]">
           <div className="lp-rise [animation-delay:100ms]">
             {/* Mais claro que o eyebrow das demais secoes escuras, como no original. */}
