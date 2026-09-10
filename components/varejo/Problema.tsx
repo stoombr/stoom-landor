@@ -4,9 +4,9 @@
 // mesma estrutura (cabecalho em duas colunas, comparativo antes/depois, tres dores),
 // copy adaptada de portaria/condominio para caixa/loja.
 //
-// Fotos do comparativo reaproveitadas do /condominio: sao closes do proprio
-// equipamento (prateleira cheia / locker instalado), sem nenhum elemento visual
-// que amarre a cena a um condominio especifico.
+// Foto "antes" e propria do varejo (public/pedidos.webp). Foto "depois" ainda
+// reaproveitada do /condominio: e um close do proprio locker instalado, sem
+// nenhum elemento visual que amarre a cena a um condominio especifico.
 
 import { m, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
@@ -18,7 +18,7 @@ import { CabecalhoSecao, Container, Destaque, Secao } from '@/components/condomi
 const comparativo = [
   {
     id: 'antes',
-    src: '/lp-condominio/assets/v5/antes-1200.jpg',
+    src: '/pedidos.webp',
     alt: 'Prateleiras de um estoque de loja lotadas de pedidos separados para retirada',
     rotulo: 'Retirada hoje',
     legenda: 'Prateleira, planilha e um funcionário parado separando pedido um por um',

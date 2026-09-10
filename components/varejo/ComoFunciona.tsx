@@ -28,6 +28,8 @@ type Cena = {
   titulo: string
   texto: string
   notificacao?: boolean
+  /** Posicao do recorte no `object-cover`. Default: centralizado. */
+  posicao?: string
 }
 
 const cenas: readonly Cena[] = [
@@ -47,6 +49,9 @@ const cenas: readonly Cena[] = [
     texto:
       'Notificação automática por WhatsApp ou e-mail, na hora do depósito, com o código de retirada.',
     notificacao: true,
+    // A pessoa fica encostada na borda esquerda da foto; centralizado (default)
+    // corta a cliente fora no recorte 4:5 do desktop.
+    posicao: 'object-left',
   },
   {
     numero: '3',
@@ -109,7 +114,13 @@ function CartaoCena({ cena, indice }: { cena: Cena; indice: number }) {
         transition={{ duration: reduce ? 0 : 0.6, ease: 'easeOut' }}
         className="absolute inset-0"
       >
-        <Image src={cena.src} alt={cena.alt} fill sizes={SIZES_CENA} className="object-cover" />
+        <Image
+          src={cena.src}
+          alt={cena.alt}
+          fill
+          sizes={SIZES_CENA}
+          className={cn('object-cover', cena.posicao)}
+        />
       </m.div>
 
       <span
