@@ -26,10 +26,9 @@ import { BotaoCta, Container, Eyebrow, Lead, focoVisivel } from '@/components/co
 
 const EYEBROW = 'Armário inteligente para varejo'
 
-/** O h1 quebra em tres pedacos por causa do trecho destacado no meio. */
-const TITULO_ANTES = 'O caixa não foi feito para separar'
-const TITULO_DESTAQUE = '200 pedidos'
-const TITULO_DEPOIS = 'por dia'
+/** O h1 abre com o trecho destacado, depois o restante da frase. */
+const TITULO_DESTAQUE = '200 pedidos por dia'
+const TITULO_DEPOIS = 'não cabem numa prateleira atrás do caixa'
 
 const LEAD =
   'O cliente retira o pedido quando quiser, sem passar pelo caixa. Sem fila e sem gente parada separando sacola.'
@@ -108,7 +107,6 @@ export default function Hero({ aoAbrir }: HeroProps) {
           </div>
 
           <h1 className="lp-rise [animation-delay:150ms] font-outfit text-[length:clamp(2.625rem,6.2vw,5.25rem)] font-bold leading-[0.98] tracking-tight text-white [text-wrap:balance]">
-            {TITULO_ANTES}{' '}
             <span className="relative inline-block">
               <span className="text-brand-highlight">{TITULO_DESTAQUE}</span>
               <span
