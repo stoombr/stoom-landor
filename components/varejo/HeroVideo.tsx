@@ -2,13 +2,17 @@
 
 // Video de fundo do hero (zoom lento, mudo, em loop).
 //
-// Spin-off de components/condominio/HeroVideo.tsx: reaproveita o mesmo par de
-// arquivos (a filmagem e do produto em si, sem contexto de condominio ou de
-// varejo), so troca o modulo de tracking. Mesmas quatro guardas do original:
+// Spin-off de components/condominio/HeroVideo.tsx, mas com filmagem propria do
+// varejo (cliente compra pelo celular, vai ate a loja e retira no locker).
+// So existe recorte horizontal: o material entregue e um unico plano
+// 1920x1080, sem versao vertical. Por isso o video fica desktop-only e o
+// celular continua so na foto estatica (FOTO_FUNDO em Hero.tsx) — esticar
+// esse mesmo plano num recorte vertical cortaria a cena de forma ruim.
+// Guardas antes de montar:
 //   1. sem prefers-reduced-motion
 //   2. sem save-data
-//   3. depois do evento `load` da pagina + 400ms
-//   4. a largura so escolhe QUAL recorte usar, nunca se o video existe
+//   3. so em telas largas (sem recorte vertical para o celular)
+//   4. depois do evento `load` da pagina + 400ms
 
 import { m, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
@@ -17,17 +21,10 @@ import { eventoVideoPlay } from '@/lib/varejo/tracking'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
 
-/** Recorte horizontal, para telas largas. */
-const FONTE_LARGA = '/lp-condominio/assets/video/locker.mp4'
+/** Unico recorte disponivel: horizontal, para telas largas. */
+const FONTE_LARGA = '/varejo.mp4'
 
-/** Recorte vertical, para o celular em pe. Mesma direcao de arte da foto. */
-const FONTE_ALTA = '/lp-condominio/assets/video/locker-vertical.mp4'
-
-/**
- * Divide qual dos dois recortes usar. NAO decide mais se o video existe: antes
- * decidia, e por isso o mesmo celular mostrava video deitado (Pixel da 863) e
- * nao mostrava em pe (393), enquanto o iPhone nao mostrava nem deitado (734).
- */
+/** Abaixo disso o celular fica so na foto: nao existe recorte vertical do video. */
 const CONSULTA_LARGA = '(min-width: 761px)'
 
 const CONSULTA_MOVIMENTO = '(prefers-reduced-motion: reduce)'
@@ -37,10 +34,7 @@ const ATRASO_MS = 400
 
 /** Mesmo tratamento de imagem do hero, para o corte entre foto e video nao pular. */
 const CLASSES_BASE =
-  'absolute inset-0 h-full w-full object-cover brightness-[0.7] saturate-[0.9] pointer-events-none'
-
-/** Enquadramento por recorte. Centralizado dos dois lados: sem morador nem cliente para desviar. */
-const POSICAO = { largo: 'object-center', alto: 'object-center' } as const
+  'absolute inset-0 h-full w-full object-cover object-center brightness-[0.7] saturate-[0.9] pointer-events-none'
 
 type NavegadorComConexao = Navigator & { connection?: { saveData?: boolean } }
 
@@ -52,7 +46,6 @@ export default function HeroVideo({ className }: HeroVideoProps) {
   const reduce = useReducedMotion()
   const [montado, setMontado] = useState(false)
   const [tocando, setTocando] = useState(false)
-  const [largo, setLargo] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
   const jaNotificou = useRef(false)
 
@@ -65,15 +58,17 @@ export default function HeroVideo({ className }: HeroVideoProps) {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
     if (window.matchMedia(CONSULTA_MOVIMENTO).matches) return
 
-    // Escolhe o recorte e continua ouvindo: girar o aparelho troca o arquivo em
-    // vez de deixar o video sumir, que era o comportamento antigo.
+    // So existe recorte largo: em telas estreitas o video nem monta, e girar o
+    // aparelho para largo/estreito entra ou sai dele ao vivo.
     const consulta = window.matchMedia(CONSULTA_LARGA)
-    setLargo(consulta.matches)
-    const aoTrocar = (e: MediaQueryListEvent) => setLargo(e.matches)
-    consulta.addEventListener('change', aoTrocar)
+    const aoTrocarLargura = (e: MediaQueryListEvent) => {
+      if (!e.matches) setMontado(false)
+    }
+    consulta.addEventListener('change', aoTrocarLargura)
+    if (!consulta.matches) return () => consulta.removeEventListener('change', aoTrocarLargura)
 
     const conexao = (navigator as NavegadorComConexao).connection
-    if (conexao && conexao.saveData) return
+    if (conexao && conexao.saveData) return () => consulta.removeEventListener('change', aoTrocarLargura)
 
     let temporizador: number | undefined
     const agendar = () => {
@@ -87,7 +82,7 @@ export default function HeroVideo({ className }: HeroVideoProps) {
     }
 
     return () => {
-      consulta.removeEventListener('change', aoTrocar)
+      consulta.removeEventListener('change', aoTrocarLargura)
       window.removeEventListener('load', agendar)
       if (temporizador !== undefined) window.clearTimeout(temporizador)
     }
@@ -124,8 +119,8 @@ export default function HeroVideo({ className }: HeroVideoProps) {
   return (
     <m.video
       ref={videoRef}
-      src={largo ? FONTE_LARGA : FONTE_ALTA}
-      className={cn(CLASSES_BASE, largo ? POSICAO.largo : POSICAO.alto, className)}
+      src={FONTE_LARGA}
+      className={cn(CLASSES_BASE, className)}
       autoPlay
       muted
       loop
