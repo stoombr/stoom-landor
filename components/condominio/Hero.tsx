@@ -38,7 +38,7 @@ const ROTULO_ANCORA = 'Ver como funciona'
 
 const selos = [
   'Homologado pelos Correios',
-  'Condomínios em SP, interior e RS',
+  'Condomínios em todo o estado de SP',
   'Aluguel mensal, sem comprar equipamento',
 ] as const
 
