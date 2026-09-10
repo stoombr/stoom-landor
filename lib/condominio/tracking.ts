@@ -167,6 +167,12 @@ export function eventoLead(dados: { unidades: string }): string {
 
   dlPush('lp_lead_submit', { event_id: eventId, unidades: dados.unidades })
 
+  // Mesmo nome de evento que o form do site principal (components/CTA.tsx)
+  // ja empurra no sucesso do envio. O acionador "Form Locker Novo Site" no
+  // GTM (conversao do Google Ads) escuta esse nome, entao sem isso o lead
+  // desta LP nunca contava na conversao.
+  dlPush('lead_form_success', { event_id: eventId, unidades: dados.unidades })
+
   gtagEvento('generate_lead', {
     lp: LP_ID,
     form_id: 'smart-locker-condominio',
