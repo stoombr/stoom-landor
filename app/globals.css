@@ -137,3 +137,8 @@ textarea:-webkit-autofill:focus {
 body.lp-condominio #hubspot-messages-iframe-container {
   display: none !important;
 }
+
+/* LP /varejo: mesma regra acima, spin-off da /condominio. */
+body.lp-varejo #hubspot-messages-iframe-container {
+  display: none !important;
+}
