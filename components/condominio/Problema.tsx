@@ -71,8 +71,8 @@ export default function Problema() {
           eyebrow="O problema"
           titulo={
             <>
-              Todo mês chega mais encomenda, e a portaria{' '}
-              <Destaque sobreEscuro={false}>é a mesma</Destaque>
+              Todo mês o número de encomendas cresce, mas o tamanho da portaria{' '}
+              <Destaque sobreEscuro={false}>é o mesmo</Destaque>
             </>
           }
         />
