@@ -26,6 +26,7 @@ import { Container, focoVisivel } from '@/components/condominio/ui'
 import Hero from '@/components/varejo/Hero'
 import ProvaSocial from '@/components/varejo/ProvaSocial'
 import Problema from '@/components/varejo/Problema'
+import Impacto from '@/components/varejo/Impacto'
 import ComoFunciona from '@/components/varejo/ComoFunciona'
 import Produto from '@/components/varejo/Produto'
 import Contratacao from '@/components/varejo/Contratacao'
@@ -176,6 +177,7 @@ export default function VarejoClient() {
           <Hero aoAbrir={abrirModal} />
           <ProvaSocial />
           <Problema />
+          <Impacto />
           <ComoFunciona aoAbrir={abrirModal} />
           <Produto />
           <Contratacao aoAbrir={abrirModal} />

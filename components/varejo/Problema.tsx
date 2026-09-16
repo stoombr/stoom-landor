@@ -1,8 +1,11 @@
 'use client'
 
 // Secao 3 da LP /varejo: o problema. Spin-off de components/condominio/Problema.tsx,
-// mesma estrutura (cabecalho em duas colunas, comparativo antes/depois, tres dores),
-// copy adaptada de portaria/condominio para caixa/loja.
+// mesma estrutura (cabecalho + comparativo antes/depois), copy adaptada de
+// portaria/condominio para caixa/loja.
+//
+// As "tres dores" que viviam aqui foram para a section propria Impacto.tsx:
+// esta section acumulava titulo + comparativo + tres dores numa unica dobra.
 //
 // Foto "antes" e propria do varejo (public/pedidos.webp). Foto "depois" ainda
 // reaproveitada do /condominio: e um close do proprio locker instalado, sem
@@ -31,24 +34,6 @@ const comparativo = [
     rotulo: 'Com o Smart Locker',
     legenda: 'Cliente escaneia o código, retira sozinho e a operação registra a retirada com foto',
     destacado: true,
-  },
-] as const
-
-const dores = [
-  {
-    titulo: 'O caixa vira balcão de retirada',
-    texto:
-      'No horário de pico o funcionário para de atender venda para procurar, conferir e entregar pedido, um por um.',
-  },
-  {
-    titulo: 'Pedido que ninguém sabe onde foi parar',
-    texto:
-      'Sem registro no momento da entrega, não existe como provar quem retirou. A conta sobra para a operação da loja.',
-  },
-  {
-    titulo: 'Cliente que só passa depois do expediente',
-    texto:
-      'Quem trabalha o dia inteiro depende do horário da loja. A reclamação vira ticket no SAC e nota baixa na avaliação.',
   },
 ] as const
 
@@ -110,24 +95,6 @@ export default function Problema() {
                 </p>
               </figcaption>
             </m.figure>
-          ))}
-        </div>
-
-        {/* ── As tres dores ───────────────────────────────────────────────── */}
-        <div className="mt-14 grid gap-x-10 gap-y-8 border-t border-gray-200 pt-10 md:grid-cols-3">
-          {dores.map((dor, i) => (
-            <m.div
-              key={dor.titulo}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: reduce ? 0 : 0.4, delay: reduce ? 0 : i * 0.07 }}
-            >
-              <h3 className="mb-2 font-outfit text-xl lg:text-2xl font-medium text-brand-primary leading-snug">
-                {dor.titulo}
-              </h3>
-              <p className="font-roboto text-[15.5px] text-gray-600 leading-relaxed">{dor.texto}</p>
-            </m.div>
           ))}
         </div>
       </Container>
