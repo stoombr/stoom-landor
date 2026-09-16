@@ -20,18 +20,15 @@ import { ArrowDown, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { eventoCta } from '@/lib/varejo/tracking'
 import HeroVideo from './HeroVideo'
-import { BotaoCta, Container, Eyebrow, Lead, focoVisivel } from '@/components/condominio/ui'
+import { BotaoCta, Container, Eyebrow, focoVisivel } from '@/components/condominio/ui'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
 
 const EYEBROW = 'Armário inteligente para varejo'
 
-/** O h1 abre com o trecho destacado, depois o restante da frase. */
-const TITULO_DESTAQUE = '200 pedidos por dia'
-const TITULO_DEPOIS = 'não cabem numa prateleira atrás do caixa'
-
-const LEAD =
-  'O cliente retira o pedido quando quiser, sem passar pelo caixa. Sem fila e sem gente parada separando sacola.'
+/** O h1 quebra em duas linhas. */
+const TITULO_LINHA_1 = 'O cliente retira o pedido quando quiser.'
+const TITULO_LINHA_2 = 'Sem fila e sem gente separando sacola.'
 
 const ROTULO_CTA = 'Quero uma proposta para minha rede varejista'
 const ROTULO_ANCORA = 'Ver como funciona'
@@ -107,23 +104,32 @@ export default function Hero({ aoAbrir }: HeroProps) {
           </div>
 
           <h1 className="lp-rise [animation-delay:150ms] font-outfit text-[length:clamp(2.625rem,6.2vw,5.25rem)] font-bold leading-[0.98] tracking-tight text-white [text-wrap:balance]">
-            <span className="relative inline-block">
-              <span className="text-brand-highlight">{TITULO_DESTAQUE}</span>
-              <span
-                aria-hidden="true"
-                className="lp-underline [animation-delay:1s] absolute -bottom-[0.04em] left-0 right-0 h-[0.055em] origin-left rounded-full bg-brand-highlight"
-              />
-            </span>{' '}
-            {TITULO_DEPOIS}
+            <span className="block">{TITULO_LINHA_1}</span>
+            <span className="block">{TITULO_LINHA_2}</span>
           </h1>
 
-          <div className="lp-rise [animation-delay:250ms] mt-6">
-            <Lead sobreEscuro className="max-w-[48ch] text-white/90 lg:text-xl [text-wrap:pretty]">
-              {LEAD}
-            </Lead>
-          </div>
+          <ul
+            aria-label="Diferenciais"
+            className="lp-rise [animation-delay:250ms] mt-9 flex max-w-[920px] flex-col gap-y-2.5 border-t border-white/25 pt-[22px]"
+          >
+            {selos.map((selo, i) => (
+              <li
+                key={selo}
+                style={{ animationDelay: 300 + i * 70 + 'ms' }}
+                className="lp-rise inline-flex items-center gap-2 font-roboto text-[15px] text-white"
+              >
+                <Check
+                  size={16}
+                  strokeWidth={2.4}
+                  aria-hidden="true"
+                  className="flex-shrink-0 text-brand-highlight"
+                />
+                {selo}
+              </li>
+            ))}
+          </ul>
 
-          <div className="lp-rise [animation-delay:350ms] mt-9 flex flex-wrap items-center gap-x-[18px] gap-y-3">
+          <div className="lp-rise [animation-delay:550ms] mt-9 flex flex-wrap items-center gap-x-[18px] gap-y-3">
             <BotaoCta
               onClick={aoClicar}
               className="w-full focus-visible:ring-offset-brand-ink md:w-auto"
@@ -147,27 +153,6 @@ export default function Hero({ aoAbrir }: HeroProps) {
               />
             </a>
           </div>
-
-          <ul
-            aria-label="Diferenciais"
-            className="mt-[30px] flex max-w-[920px] flex-col gap-y-2.5 border-t border-white/25 pt-[22px]"
-          >
-            {selos.map((selo, i) => (
-              <li
-                key={selo}
-                style={{ animationDelay: 450 + i * 70 + 'ms' }}
-                className="lp-rise inline-flex items-center gap-2 font-roboto text-[15px] text-white"
-              >
-                <Check
-                  size={16}
-                  strokeWidth={2.4}
-                  aria-hidden="true"
-                  className="flex-shrink-0 text-brand-highlight"
-                />
-                {selo}
-              </li>
-            ))}
-          </ul>
         </div>
       </Container>
     </section>

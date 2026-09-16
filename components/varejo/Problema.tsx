@@ -11,7 +11,7 @@
 import { m, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { CabecalhoSecao, Container, Destaque, Secao } from '@/components/condominio/ui'
+import { Container, Destaque, Eyebrow, Secao, SectionWrapper, Titulo } from '@/components/condominio/ui'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
 
@@ -61,15 +61,18 @@ export default function Problema() {
   return (
     <Secao id="problema">
       <Container>
-        <CabecalhoSecao
-          eyebrow="O problema"
-          titulo={
-            <>
-              A cada campanha o número de pedidos online cresce, mas o tamanho da loja{' '}
-              <Destaque sobreEscuro={false}>é o mesmo</Destaque>
-            </>
-          }
-        />
+        <SectionWrapper className="mb-16">
+          <Eyebrow sobreEscuro={false}>O problema</Eyebrow>
+          {/* max-w mais largo que o padrao (24ch) do CabecalhoSecao: a copy foi
+              escrita para quebrar em exatamente duas linhas via <br/>, e o
+              container padrao (pensado para uma unica sentenca corrida) a
+              quebraria de novo, voltando a dar tres ou quatro linhas. */}
+          <Titulo sobreEscuro={false} className="max-w-[34ch]">
+            O volume de pedidos cresce a cada dia,
+            <br />
+            mas o tamanho da loja <Destaque sobreEscuro={false}>é o mesmo</Destaque>.
+          </Titulo>
+        </SectionWrapper>
 
         {/* ── Antes e depois ──────────────────────────────────────────────── */}
         <div className="grid gap-6 md:grid-cols-2">
