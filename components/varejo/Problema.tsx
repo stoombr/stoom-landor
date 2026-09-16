@@ -78,7 +78,7 @@ export default function Problema({ aoAbrir }: ProblemaProps) {
           <Titulo sobreEscuro={false} className="max-w-[34ch]">
             O volume de pedidos cresce a cada dia,
             <br />
-            mas o tamanho da loja <Destaque sobreEscuro={false}>é o mesmo</Destaque>.
+            mas o tamanho da loja <Destaque sobreEscuro={false}>é o mesmo</Destaque>
           </Titulo>
         </SectionWrapper>
 

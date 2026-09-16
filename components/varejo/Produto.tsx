@@ -82,7 +82,7 @@ export default function Produto({ aoAbrir }: ProdutoProps) {
             <>
               Armário robusto na loja.{' '}
               <Destaque sobreEscuro={false}>Painel</Destaque>{' '}
-              na mão da operação.
+              na mão da operação
             </>
           }
         />
