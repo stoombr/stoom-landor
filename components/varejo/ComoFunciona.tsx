@@ -154,9 +154,7 @@ export default function ComoFunciona({ aoAbrir, className }: ComoFuncionaProps) 
           eyebrow="Como funciona"
           titulo={
             <>
-              Três passos,{' '}
-              <Destaque>sem app</Destaque>{' '}
-              e sem depender de ninguém
+              Três passos <Destaque>simples</Destaque>
             </>
           }
         />
