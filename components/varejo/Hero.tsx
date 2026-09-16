@@ -20,7 +20,7 @@ import { ArrowDown, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { eventoCta } from '@/lib/varejo/tracking'
 import HeroVideo from './HeroVideo'
-import { BotaoCta, Container, Eyebrow, focoVisivel } from '@/components/condominio/ui'
+import { BotaoCta, Container, Destaque, Eyebrow, focoVisivel } from '@/components/condominio/ui'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
 
@@ -28,7 +28,6 @@ const EYEBROW = 'Armário inteligente para varejo'
 
 /** O h1 quebra em duas linhas. */
 const TITULO_LINHA_1 = 'Retirada de pedidos'
-const TITULO_LINHA_2 = 'com rapidez e praticidade.'
 
 const ROTULO_CTA = 'Quero uma proposta para minha rede varejista'
 const ROTULO_ANCORA = 'Ver como funciona'
@@ -105,7 +104,9 @@ export default function Hero({ aoAbrir }: HeroProps) {
 
           <h1 className="lp-rise [animation-delay:150ms] font-outfit text-[length:clamp(2.625rem,6.2vw,5.25rem)] font-bold leading-[0.98] tracking-tight text-white [text-wrap:balance]">
             <span className="block">{TITULO_LINHA_1}</span>
-            <span className="block">{TITULO_LINHA_2}</span>
+            <span className="block">
+              com <Destaque>rapidez e praticidade</Destaque>
+            </span>
           </h1>
 
           <ul
