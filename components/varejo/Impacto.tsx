@@ -6,9 +6,23 @@
 // tres dores numa unica dobra, com informacao demais de uma vez so.
 
 import { m, useReducedMotion } from 'framer-motion'
-import { Container, Destaque, Eyebrow, Secao, SectionWrapper, Titulo } from '@/components/condominio/ui'
+import { eventoCta } from '@/lib/varejo/tracking'
+import {
+  BotaoCta,
+  Container,
+  Destaque,
+  Eyebrow,
+  Secao,
+  SectionWrapper,
+  Titulo,
+} from '@/components/condominio/ui'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
+
+/** Id da secao. Vira `cta_origem` do evento. Nao renomear. */
+const ID_SECAO = 'impacto'
+
+const ROTULO_CTA = 'Quero uma proposta para minha rede varejista'
 
 const dores = [
   {
@@ -28,11 +42,20 @@ const dores = [
   },
 ] as const
 
-export default function Impacto() {
+type ImpactoProps = {
+  aoAbrir: () => void
+}
+
+export default function Impacto({ aoAbrir }: ImpactoProps) {
   const reduce = useReducedMotion()
 
+  function aoClicar() {
+    eventoCta(ID_SECAO)
+    aoAbrir()
+  }
+
   return (
-    <Secao id="impacto">
+    <Secao id={ID_SECAO}>
       <Container>
         <SectionWrapper className="mb-16">
           <Eyebrow sobreEscuro={false}>O impacto</Eyebrow>
@@ -62,6 +85,13 @@ export default function Impacto() {
             </m.div>
           ))}
         </div>
+
+        {/* ── CTA ───────────────────────────────────────────────────────────── */}
+        <SectionWrapper className="mt-12 sm:flex sm:justify-center" delay={0.1}>
+          <BotaoCta onClick={aoClicar} className="w-full sm:w-auto">
+            {ROTULO_CTA}
+          </BotaoCta>
+        </SectionWrapper>
       </Container>
     </Secao>
   )

@@ -8,9 +8,24 @@
 import { m, useInView, useReducedMotion } from 'framer-motion'
 import { useRef } from 'react'
 import Image from 'next/image'
-import { CabecalhoSecao, Container, Destaque, Eyebrow, ListaChecada, Secao } from '@/components/condominio/ui'
+import { eventoCta } from '@/lib/varejo/tracking'
+import {
+  BotaoCta,
+  CabecalhoSecao,
+  Container,
+  Destaque,
+  Eyebrow,
+  ListaChecada,
+  Secao,
+  SectionWrapper,
+} from '@/components/condominio/ui'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
+
+/** Id da secao. Vira `cta_origem` do evento. Nao renomear. */
+const ID_SECAO = 'produto'
+
+const ROTULO_CTA = 'Quero uma proposta para minha rede varejista'
 
 const EYEBROW = 'O equipamento'
 
@@ -44,13 +59,22 @@ const FOTO_TABLET = {
 
 // ─── Componente ───────────────────────────────────────────────────────────────
 
-export default function Produto() {
+type ProdutoProps = {
+  aoAbrir: () => void
+}
+
+export default function Produto({ aoAbrir }: ProdutoProps) {
   const gradeRef = useRef(null)
   const naTela = useInView(gradeRef, { once: true, margin: '-80px' })
   const reduce = useReducedMotion()
 
+  function aoClicar() {
+    eventoCta(ID_SECAO)
+    aoAbrir()
+  }
+
   return (
-    <Secao id="produto">
+    <Secao id={ID_SECAO}>
       <Container>
         <CabecalhoSecao
           eyebrow={EYEBROW}
@@ -129,6 +153,13 @@ export default function Produto() {
             </div>
           </m.aside>
         </div>
+
+        {/* ── CTA ───────────────────────────────────────────────────────────── */}
+        <SectionWrapper className="mt-12 sm:flex sm:justify-center" delay={0.1}>
+          <BotaoCta onClick={aoClicar} className="w-full sm:w-auto">
+            {ROTULO_CTA}
+          </BotaoCta>
+        </SectionWrapper>
       </Container>
     </Secao>
   )

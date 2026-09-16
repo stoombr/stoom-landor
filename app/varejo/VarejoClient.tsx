@@ -176,10 +176,10 @@ export default function VarejoClient() {
         <main>
           <Hero aoAbrir={abrirModal} />
           <ProvaSocial />
-          <Problema />
-          <Impacto />
+          <Problema aoAbrir={abrirModal} />
+          <Impacto aoAbrir={abrirModal} />
           <ComoFunciona aoAbrir={abrirModal} />
-          <Produto />
+          <Produto aoAbrir={abrirModal} />
           <Contratacao aoAbrir={abrirModal} />
           <Faq />
           <Fechamento aoAbrir={abrirModal} />
