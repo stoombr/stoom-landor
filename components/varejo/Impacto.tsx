@@ -63,9 +63,9 @@ export default function Impacto({ aoAbrir }: ImpactoProps) {
               em duas linhas via <br/>, e o max-w padrao (24ch) do
               CabecalhoSecao a quebraria de novo. */}
           <Titulo sobreEscuro={false} className="max-w-[34ch]">
-            Se algum desses problemas é da sua loja,
+            Problemas da sua loja
             <br />
-            <Destaque sobreEscuro={false}>a Stoom resolve</Destaque>.
+            que <Destaque sobreEscuro={false}>a Stoom resolve</Destaque>
           </Titulo>
         </SectionWrapper>
 
