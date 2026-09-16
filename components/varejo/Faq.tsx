@@ -54,7 +54,7 @@ const perguntas = [
   },
 ] as const
 
-const ABERTO_INICIAL = 0
+const ABERTO_INICIAL = null
 
 // ─── Secao ────────────────────────────────────────────────────────────────────
 
@@ -71,8 +71,7 @@ export default function Faq() {
           eyebrow="Perguntas frequentes"
           titulo={
             <>
-              O que a operação pergunta{' '}
-              <Destaque sobreEscuro={false}>antes de aprovar</Destaque>
+              Saiba <Destaque sobreEscuro={false}>antes de aprovar</Destaque>
             </>
           }
           centralizado
