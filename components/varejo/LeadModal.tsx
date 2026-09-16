@@ -540,14 +540,10 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
                 <Eyebrow className="mb-3.5">Proposta sem custo</Eyebrow>
                 <h3
                   id="mTitle"
-                  className="font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
+                  className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
                 >
-                  Receba uma proposta para a sua rede
+                  Fale com um especialista
                 </h3>
-                <p className="mb-6 mt-2.5 font-roboto text-gray-600 leading-relaxed">
-                  Preencha e um especialista da Stoom entra em contato para entender a operação e
-                  enviar os valores.
-                </p>
 
                 {/* hs-do-not-collect impede a coleta automatica do HubSpot: quem manda o
                     lead e a Forms API em lib/varejo/tracking.ts, com os campos certos. */}

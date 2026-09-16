@@ -1,9 +1,9 @@
 'use client'
 
 // Fechamento sobre foto da LP /varejo. Spin-off de components/condominio/Fechamento.tsx,
-// mesma estrutura (tres passos + fecho centralizado). Foto reaproveitada sem
-// alteracao: com brightness .38 o contexto de fundo (lobby) fica quase invisivel,
-// entao o mesmo tratamento serve para qualquer segmento.
+// aqui reduzido ao fecho centralizado (sem os tres passos do original). Foto
+// reaproveitada sem alteracao: com brightness .38 o contexto de fundo (lobby)
+// fica quase invisivel, entao o mesmo tratamento serve para qualquer segmento.
 //
 // O id `proposta` e contrato de duas coisas ao mesmo tempo: e o `cta_origem` do
 // analytics e e o alvo que a barra fixa do celular observa para se recolher.
@@ -22,26 +22,6 @@ const ID_SECAO = 'proposta'
 const ROTULO_CTA = 'Quero uma proposta para minha rede varejista'
 
 const FOTO = '/lp-condominio/assets/v5/fim-1920.jpg'
-
-const passos = [
-  {
-    numero: '1',
-    titulo: 'Um especialista entra em contato',
-    descricao: 'Uma pessoa da Stoom, não um robô, pelo WhatsApp que você informar.',
-  },
-  {
-    numero: '2',
-    titulo: 'Conversa de 15 minutos',
-    descricao:
-      'Número de lojas, volume de pedido por dia e o espaço disponível. É o que define a configuração.',
-  },
-  {
-    numero: '3',
-    titulo: 'Proposta com valores',
-    descricao:
-      'Configuração recomendada, valor mensal e prazo de instalação, por escrito, para levar à diretoria.',
-  },
-] as const
 
 const ATRASOS_FECHO = { eyebrow: 0.1, titulo: 0.15, lead: 0.25, cta: 0.35, nota: 0.45 } as const
 
@@ -82,34 +62,8 @@ export default function Fechamento({ aoAbrir, className }: FechamentoProps) {
       </div>
 
       <Container className="relative z-10 [text-shadow:0_2px_6px_rgb(0_0_0/0.6),0_10px_32px_rgb(0_0_0/0.5)]">
-        {/* ── Os tres passos ────────────────────────────────────────────────── */}
-        <div className="mb-14 grid gap-x-10 gap-y-8 border-b border-white/10 pb-14 md:grid-cols-3 lg:mb-20 lg:pb-20">
-          {passos.map((passo, i) => (
-            <m.div
-              key={passo.titulo}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduce ? 0 : 0.4, delay: reduce ? 0 : i * 0.12 }}
-            >
-              <span
-                aria-hidden="true"
-                className="mb-3.5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 font-outfit text-sm font-semibold text-white"
-              >
-                {passo.numero}
-              </span>
-              <h3 className="mb-1.5 font-outfit text-xl font-medium leading-snug text-white">
-                {passo.titulo}
-              </h3>
-              <p className="font-roboto text-[15.5px] leading-relaxed text-white/90">
-                {passo.descricao}
-              </p>
-            </m.div>
-          ))}
-        </div>
-
         {/* ── Fecho ─────────────────────────────────────────────────────────── */}
-        <div ref={fechoRef} className="mx-auto max-w-[720px] text-center">
+        <div ref={fechoRef} className="mx-auto max-w-[720px] text-center lg:max-w-[900px]">
           <m.div {...entrada(ATRASOS_FECHO.eyebrow)}>
             <Eyebrow sobreEscuro>Smart Locker Stoom</Eyebrow>
           </m.div>
@@ -121,13 +75,18 @@ export default function Fechamento({ aoAbrir, className }: FechamentoProps) {
           </m.div>
 
           <m.div {...entrada(ATRASOS_FECHO.lead)}>
-            <Lead sobreEscuro className="mt-5 mx-auto">
+            <Lead sobreEscuro className="mt-5 mx-auto lg:max-w-none lg:whitespace-nowrap">
               Receba a configuração recomendada para a sua rede, com valor mensal e prazo de
               instalação.
             </Lead>
           </m.div>
 
-          <m.div {...entrada(ATRASOS_FECHO.cta)} className="mt-10">
+          {/* Divisoria que antes separava os tres passos do fecho: alinhada
+              agora direto acima do cta, unico bloco que resta nesta secao. */}
+          <m.div
+            {...entrada(ATRASOS_FECHO.cta)}
+            className="mt-10 border-t border-white/10 pt-10"
+          >
             <BotaoCta onClick={aoClicar} className="w-full md:w-auto">
               {ROTULO_CTA}
             </BotaoCta>
