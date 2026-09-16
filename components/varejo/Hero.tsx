@@ -27,8 +27,8 @@ import { BotaoCta, Container, Eyebrow, focoVisivel } from '@/components/condomin
 const EYEBROW = 'Armário inteligente para varejo'
 
 /** O h1 quebra em duas linhas. */
-const TITULO_LINHA_1 = 'O cliente retira o pedido quando quiser.'
-const TITULO_LINHA_2 = 'Sem fila e sem gente separando sacola.'
+const TITULO_LINHA_1 = 'Retirada de pedidos'
+const TITULO_LINHA_2 = 'com rapidez e praticidade.'
 
 const ROTULO_CTA = 'Quero uma proposta para minha rede varejista'
 const ROTULO_ANCORA = 'Ver como funciona'
