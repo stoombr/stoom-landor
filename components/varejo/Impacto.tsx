@@ -62,10 +62,8 @@ export default function Impacto({ aoAbrir }: ImpactoProps) {
           {/* Mesmo motivo do max-w customizado em Problema.tsx: a copy quebra
               em duas linhas via <br/>, e o max-w padrao (24ch) do
               CabecalhoSecao a quebraria de novo. */}
-          <Titulo sobreEscuro={false} className="max-w-[34ch]">
-            Problemas da sua loja
-            <br />
-            que <Destaque sobreEscuro={false}>a Stoom resolve</Destaque>
+          <Titulo sobreEscuro={false} className="max-w-[44ch]">
+            Problemas da sua loja que <Destaque sobreEscuro={false}>a Stoom resolve</Destaque>
           </Titulo>
         </SectionWrapper>
 
