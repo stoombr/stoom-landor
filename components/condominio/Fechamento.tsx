@@ -30,26 +30,6 @@ const ROTULO_CTA = 'Quero uma proposta para o meu condomínio'
 
 const FOTO = '/lp-condominio/assets/v5/fim-1920.jpg'
 
-const passos = [
-  {
-    numero: '1',
-    titulo: 'Um especialista entra em contato',
-    descricao: 'Uma pessoa da Stoom, não um robô, pelo WhatsApp que você informar.',
-  },
-  {
-    numero: '2',
-    titulo: 'Conversa de 15 minutos',
-    descricao:
-      'Número de unidades, volume de encomenda por dia e o espaço disponível. É o que define a configuração.',
-  },
-  {
-    numero: '3',
-    titulo: 'Proposta com valores',
-    descricao:
-      'Configuração recomendada, valor mensal e prazo de instalação, por escrito, para levar à assembleia.',
-  },
-] as const
-
 /** Escada de entrada do fecho, na ordem do JSX. */
 const ATRASOS_FECHO = { eyebrow: 0.1, titulo: 0.15, lead: 0.25, cta: 0.35, nota: 0.45 } as const
 
@@ -101,32 +81,6 @@ export default function Fechamento({ aoAbrir, className }: FechamentoProps) {
       </div>
 
       <Container className="relative z-10 [text-shadow:0_2px_6px_rgb(0_0_0/0.6),0_10px_32px_rgb(0_0_0/0.5)]">
-        {/* ── Os tres passos ────────────────────────────────────────────────── */}
-        <div className="mb-14 grid gap-x-10 gap-y-8 border-b border-white/10 pb-14 md:grid-cols-3 lg:mb-20 lg:pb-20">
-          {passos.map((passo, i) => (
-            <m.div
-              key={passo.titulo}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduce ? 0 : 0.4, delay: reduce ? 0 : i * 0.12 }}
-            >
-              <span
-                aria-hidden="true"
-                className="mb-3.5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 font-outfit text-sm font-semibold text-white"
-              >
-                {passo.numero}
-              </span>
-              <h3 className="mb-1.5 font-outfit text-xl font-medium leading-snug text-white">
-                {passo.titulo}
-              </h3>
-              <p className="font-roboto text-[15.5px] leading-relaxed text-white/90">
-                {passo.descricao}
-              </p>
-            </m.div>
-          ))}
-        </div>
-
         {/* ── Fecho ─────────────────────────────────────────────────────────── */}
         <div ref={fechoRef} className="mx-auto max-w-[720px] text-center">
           <m.div {...entrada(ATRASOS_FECHO.eyebrow)}>
@@ -134,7 +88,7 @@ export default function Fechamento({ aoAbrir, className }: FechamentoProps) {
           </m.div>
 
           <m.div {...entrada(ATRASOS_FECHO.titulo)}>
-            <Titulo sobreEscuro>
+            <Titulo sobreEscuro className="lg:whitespace-nowrap">
               Tire a encomenda <Destaque>da portaria</Destaque>
             </Titulo>
           </m.div>

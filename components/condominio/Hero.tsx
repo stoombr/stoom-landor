@@ -200,7 +200,7 @@ export default function Hero({ aoAbrir }: HeroProps) {
             aria-label="Diferenciais"
             // Empilhados, nao em fileira: os tres somam 821px e a coluna de copy
             // tem 760, entao em fileira eles quebravam 2 + 1, com um sobrando.
-            className="mt-[30px] flex max-w-[920px] flex-col gap-y-2.5 border-t border-white/25 pt-[22px]"
+            className="mt-[30px] flex max-w-[920px] flex-col gap-y-2.5 pt-[22px]"
           >
             {selos.map((selo, i) => (
               <li
