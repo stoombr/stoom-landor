@@ -81,11 +81,9 @@ export default function Fechamento({ aoAbrir, className }: FechamentoProps) {
             </Lead>
           </m.div>
 
-          {/* Divisoria que antes separava os tres passos do fecho: alinhada
-              agora direto acima do cta, unico bloco que resta nesta secao. */}
           <m.div
             {...entrada(ATRASOS_FECHO.cta)}
-            className="mt-10 border-t border-white/10 pt-10"
+            className="mt-10"
           >
             <BotaoCta onClick={aoClicar} className="w-full md:w-auto">
               {ROTULO_CTA}

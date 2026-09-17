@@ -111,7 +111,7 @@ export default function Hero({ aoAbrir }: HeroProps) {
 
           <ul
             aria-label="Diferenciais"
-            className="lp-rise [animation-delay:250ms] mt-9 flex max-w-[920px] flex-col gap-y-2.5 border-t border-white/25 pt-[22px]"
+            className="lp-rise [animation-delay:250ms] mt-9 flex max-w-[920px] flex-col gap-y-2.5 pt-[22px]"
           >
             {selos.map((selo, i) => (
               <li
