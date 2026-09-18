@@ -41,6 +41,7 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
   const [montado, setMontado] = useState(false)
   const [carregarScript, setCarregarScript] = useState(false)
   const [enviado, setEnviado] = useState(false)
+  const [formPronto, setFormPronto] = useState(false)
 
   const refModal = useRef<HTMLDivElement>(null)
   const refFechar = useRef<HTMLButtonElement>(null)
@@ -69,6 +70,14 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
     return () => window.clearTimeout(id)
   }, [aberto])
 
+  // O container reabre vazio a cada abertura (o HubSpot reinjeta os campos
+  // do zero), então o skeleton de carregamento também precisa resetar.
+  useEffect(() => {
+    if (aberto) return
+    const id = window.setTimeout(() => setFormPronto(false), 300)
+    return () => window.clearTimeout(id)
+  }, [aberto])
+
   // ── Detecção de envio ───────────────────────────────────────────────────
   useEffect(() => {
     if (!aberto || enviado) return
@@ -82,6 +91,7 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
 
       if (temForm) {
         formRenderizado = true
+        setFormPronto(true)
         return
       }
 
@@ -306,13 +316,36 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
                       Fale com um especialista
                     </h3>
 
-                    <div
-                      ref={refFormContainer}
-                      className="hs-form-html stoom-hs-form-modal"
-                      data-region="na1"
-                      data-form-id={HUBSPOT_FORM_ID}
-                      data-portal-id={HUBSPOT_PORTAL_ID}
-                    />
+                    <div className="relative min-h-[460px]">
+                      <div
+                        ref={refFormContainer}
+                        className="hs-form-html stoom-hs-form-modal"
+                        data-region="na1"
+                        data-form-id={HUBSPOT_FORM_ID}
+                        data-portal-id={HUBSPOT_PORTAL_ID}
+                      />
+
+                      {/* Skeleton: cobre o container enquanto o HubSpot ainda não
+                          injetou os campos, pra evitar o "pulo" de o modal abrir só
+                          com o título e o rodapé de LGPD e depois expandir de repente. */}
+                      {!formPronto && (
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 flex flex-col gap-4 bg-white"
+                        >
+                          <div className="flex gap-4">
+                            <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                            <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                          </div>
+                          <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                          <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                          <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                          <div className="h-[100px] animate-pulse rounded-xl bg-gray-100" />
+                          <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
+                          <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
+                        </div>
+                      )}
+                    </div>
 
                     <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
                       Seus dados estão protegidos conforme a LGPD.

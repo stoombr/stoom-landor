@@ -27,6 +27,7 @@
   gap: 1rem !important;
   width: 100% !important;
   max-width: none !important;
+  padding: 0 !important;
 }
 
 .stoom-hs-form-modal [data-hsfc-id='Row'] {
