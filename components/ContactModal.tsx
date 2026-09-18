@@ -73,13 +73,19 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
     else el.setAttribute('inert', '')
   }, [aberto, montado])
 
-  // ── Detecção de envio ───────────────────────────────────────────────────
+  // ── Detecção de carregamento e envio ────────────────────────────────────
+  // Fica observando o container desde a montagem (não só enquanto o modal
+  // está aberto): agora o script do HubSpot carrega assim que a página
+  // monta, então os campos podem ser injetados antes da primeira abertura —
+  // sem essa checagem síncrona logo ao anexar, o observer só reagiria a
+  // mutações futuras e nunca perceberia um formulário que já chegou.
   useEffect(() => {
-    if (!aberto || enviado) return
+    if (enviado) return
     const container = refFormContainer.current
     if (!container) return
 
-    let formRenderizado = false
+    let formRenderizado = !!container.querySelector('form[data-hsfc-id="Form"]')
+    if (formRenderizado) setFormPronto(true)
 
     const observer = new MutationObserver(() => {
       const temForm = !!container.querySelector('form[data-hsfc-id="Form"]')
@@ -115,7 +121,7 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
 
     observer.observe(container, { childList: true, subtree: true })
     return () => observer.disconnect()
-  }, [aberto, enviado])
+  }, [montado, enviado])
 
   // ── Trava de scroll, inert no fundo e devolução do foco ─────────────────
   useEffect(() => {
