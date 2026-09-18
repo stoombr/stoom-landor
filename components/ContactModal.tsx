@@ -16,7 +16,7 @@
 // estado de "obrigado" pós-envio) e dispara os mesmos eventos de analytics
 // que o CTA.tsx antigo disparava (dataLayer, GA4, Meta Pixel).
 
-import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { CircleCheck as CheckCircle, X } from 'lucide-react'
@@ -39,7 +39,6 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
   const reduzir = useReducedMotion()
 
   const [montado, setMontado] = useState(false)
-  const [carregarScript, setCarregarScript] = useState(false)
   const [enviado, setEnviado] = useState(false)
   const [formPronto, setFormPronto] = useState(false)
 
@@ -56,12 +55,6 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
     setMontado(true)
   }, [])
 
-  // Só carrega o script do HubSpot na primeira abertura (evita JS de terceiro
-  // no carregamento inicial da página).
-  useEffect(() => {
-    if (aberto) setCarregarScript(true)
-  }, [aberto])
-
   // Sem isto o modal reabriria preso na tela "Mensagem enviada!". O atraso
   // deixa a animação de saída terminar antes do formulário reaparecer.
   useEffect(() => {
@@ -70,13 +63,15 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
     return () => window.clearTimeout(id)
   }, [aberto])
 
-  // O container reabre vazio a cada abertura (o HubSpot reinjeta os campos
-  // do zero), então o skeleton de carregamento também precisa resetar.
+  // O modal fica sempre montado no DOM (nunca desmonta) — assim o script do
+  // HubSpot só precisa injetar o formulário uma vez, e fechar/reabrir não
+  // perde os campos. Fechado, ele fica inert (fora do foco/leitor de tela).
   useEffect(() => {
-    if (aberto) return
-    const id = window.setTimeout(() => setFormPronto(false), 300)
-    return () => window.clearTimeout(id)
-  }, [aberto])
+    const el = refModal.current
+    if (!el) return
+    if (aberto) el.removeAttribute('inert')
+    else el.setAttribute('inert', '')
+  }, [aberto, montado])
 
   // ── Detecção de envio ───────────────────────────────────────────────────
   useEffect(() => {
@@ -229,133 +224,123 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
 
   return (
     <>
-      {carregarScript && (
-        <Script
-          id="hs-form-embed-script"
-          src={`https://js.hsforms.net/forms/embed/developer/${HUBSPOT_PORTAL_ID}.js`}
-          strategy="afterInteractive"
-        />
-      )}
+      <Script
+        id="hs-form-embed-script"
+        src={`https://js.hsforms.net/forms/embed/developer/${HUBSPOT_PORTAL_ID}.js`}
+        strategy="afterInteractive"
+      />
 
       {createPortal(
-        <AnimatePresence>
-          {aberto ? (
-            <m.div
-              key="contact-modal"
-              ref={refModal}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby={enviado ? 'contatoFeito' : 'contatoTitulo'}
-              className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+        <div
+          ref={refModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={enviado ? 'contatoFeito' : 'contatoTitulo'}
+          className={cn(
+            'fixed inset-0 z-[60] flex items-center justify-center p-4',
+            !aberto && 'pointer-events-none'
+          )}
+        >
+          {/* véu */}
+          <m.div
+            aria-hidden="true"
+            onClick={aoFechar}
+            initial={false}
+            animate={{ opacity: aberto ? 1 : 0 }}
+            transition={{ duration: aberto ? duracaoEntrada : duracaoSaida, ease: 'easeOut' }}
+            className="absolute inset-0 bg-brand-primary/70 backdrop-blur-[10px]"
+          />
+
+          {/* cartão */}
+          <m.div
+            initial={false}
+            animate={{
+              opacity: aberto ? 1 : 0,
+              y: reduzir ? 0 : aberto ? 0 : 8,
+              scale: reduzir ? 1 : aberto ? 1 : 0.98,
+            }}
+            transition={{ duration: aberto ? duracaoEntrada : duracaoSaida, ease: 'easeOut' }}
+            className="relative w-full max-w-[560px] max-h-[calc(100dvh_-_32px)] overflow-auto rounded-2xl bg-white px-5 py-6 text-brand-primary shadow-[0_30px_80px_rgb(0_0_0/0.45)] sm:p-8"
+          >
+            <button
+              ref={refFechar}
+              type="button"
+              onClick={aoFechar}
+              aria-label="Fechar"
+              className={cn(
+                'absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full text-gray-500 transition-colors hover:text-brand-primary',
+                focoVisivel
+              )}
             >
-              {/* véu */}
-              <m.div
-                aria-hidden="true"
-                onClick={aoFechar}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { duration: duracaoEntrada, ease: 'easeOut' } }}
-                exit={{ opacity: 0, transition: { duration: duracaoSaida, ease: 'easeOut' } }}
-                className="absolute inset-0 bg-brand-primary/70 backdrop-blur-[10px]"
-              />
+              <X size={18} strokeWidth={1.8} aria-hidden="true" />
+            </button>
 
-              {/* cartão */}
-              <m.div
-                initial={reduzir ? false : { opacity: 0, y: 8, scale: 0.98 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: { duration: duracaoEntrada, ease: 'easeOut' },
-                }}
-                exit={{
-                  opacity: 0,
-                  y: reduzir ? 0 : 8,
-                  scale: reduzir ? 1 : 0.98,
-                  transition: { duration: duracaoSaida, ease: 'easeOut' },
-                }}
-                className="relative w-full max-w-[560px] max-h-[calc(100dvh_-_32px)] overflow-auto rounded-2xl bg-white px-5 py-6 text-brand-primary shadow-[0_30px_80px_rgb(0_0_0/0.45)] sm:p-8"
-              >
-                <button
-                  ref={refFechar}
-                  type="button"
-                  onClick={aoFechar}
-                  aria-label="Fechar"
-                  className={cn(
-                    'absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full text-gray-500 transition-colors hover:text-brand-primary',
-                    focoVisivel
-                  )}
+            {enviado ? (
+              <div role="status" className="py-4 text-center">
+                <span className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-brand-primary text-white">
+                  <CheckCircle size={24} strokeWidth={2.4} aria-hidden="true" />
+                </span>
+                <h3
+                  id="contatoFeito"
+                  className="font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
                 >
-                  <X size={18} strokeWidth={1.8} aria-hidden="true" />
-                </button>
+                  Mensagem enviada!
+                </h3>
+                <p className="mt-2 font-roboto text-gray-600 leading-relaxed">
+                  Nossa equipe entrará em contato em breve.
+                </p>
+              </div>
+            ) : (
+              <div>
+                <p className="mb-3.5 inline-flex items-center gap-3 font-roboto text-xs font-medium uppercase tracking-[0.14em] text-gray-500">
+                  <span aria-hidden="true" className="h-0.5 w-6 flex-shrink-0 bg-brand-highlight" />
+                  Fale com a Stoom
+                </p>
+                <h3
+                  id="contatoTitulo"
+                  className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
+                >
+                  Fale com um especialista
+                </h3>
 
-                {enviado ? (
-                  <div role="status" className="py-4 text-center">
-                    <span className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-brand-primary text-white">
-                      <CheckCircle size={24} strokeWidth={2.4} aria-hidden="true" />
-                    </span>
-                    <h3
-                      id="contatoFeito"
-                      className="font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
+                <div className="relative min-h-[460px]">
+                  <div
+                    ref={refFormContainer}
+                    className="hs-form-html stoom-hs-form-modal"
+                    data-region="na1"
+                    data-form-id={HUBSPOT_FORM_ID}
+                    data-portal-id={HUBSPOT_PORTAL_ID}
+                  />
+
+                  {/* Skeleton: cobre o container enquanto o HubSpot ainda não
+                      injetou os campos, pra evitar o "pulo" de o modal abrir só
+                      com o título e o rodapé de LGPD e depois expandir de repente. */}
+                  {!formPronto && (
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 flex flex-col gap-4 bg-white"
                     >
-                      Mensagem enviada!
-                    </h3>
-                    <p className="mt-2 font-roboto text-gray-600 leading-relaxed">
-                      Nossa equipe entrará em contato em breve.
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p className="mb-3.5 inline-flex items-center gap-3 font-roboto text-xs font-medium uppercase tracking-[0.14em] text-gray-500">
-                      <span aria-hidden="true" className="h-0.5 w-6 flex-shrink-0 bg-brand-highlight" />
-                      Fale com a Stoom
-                    </p>
-                    <h3
-                      id="contatoTitulo"
-                      className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
-                    >
-                      Fale com um especialista
-                    </h3>
-
-                    <div className="relative min-h-[460px]">
-                      <div
-                        ref={refFormContainer}
-                        className="hs-form-html stoom-hs-form-modal"
-                        data-region="na1"
-                        data-form-id={HUBSPOT_FORM_ID}
-                        data-portal-id={HUBSPOT_PORTAL_ID}
-                      />
-
-                      {/* Skeleton: cobre o container enquanto o HubSpot ainda não
-                          injetou os campos, pra evitar o "pulo" de o modal abrir só
-                          com o título e o rodapé de LGPD e depois expandir de repente. */}
-                      {!formPronto && (
-                        <div
-                          aria-hidden="true"
-                          className="absolute inset-0 flex flex-col gap-4 bg-white"
-                        >
-                          <div className="flex gap-4">
-                            <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                            <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                          </div>
-                          <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                          <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                          <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                          <div className="h-[100px] animate-pulse rounded-xl bg-gray-100" />
-                          <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
-                          <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
-                        </div>
-                      )}
+                      <div className="flex gap-4">
+                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                      </div>
+                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[100px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
                     </div>
+                  )}
+                </div>
 
-                    <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
-                      Seus dados estão protegidos conforme a LGPD.
-                    </p>
-                  </div>
-                )}
-              </m.div>
-            </m.div>
-          ) : null}
-        </AnimatePresence>,
+                <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
+                  Seus dados estão protegidos conforme a LGPD.
+                </p>
+              </div>
+            )}
+          </m.div>
+        </div>,
         document.body
       )}
     </>

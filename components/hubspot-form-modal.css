@@ -23,7 +23,9 @@
 
 .stoom-hs-form-modal .hsfc-Step__Content {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
   gap: 1rem !important;
   width: 100% !important;
   max-width: none !important;
@@ -35,6 +37,14 @@
   width: 100% !important;
   max-width: none !important;
   gap: 1rem !important;
+}
+
+/* "Nome da empresa" e "Número de telefone do WhatsApp" ficam lado a lado,
+   na mesma linha (as duas únicas linhas que ficam com metade da largura;
+   o resto do formulário segue empilhado em largura total). */
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/company']),
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([data-hsfc-id='PhoneField']) {
+  width: calc(50% - 0.5rem) !important;
 }
 
 .stoom-hs-form-modal [data-hsfc-id='Row'] > * {
@@ -112,11 +122,13 @@
   box-shadow: 0 0 0 3px rgba(15, 40, 66, 0.1) !important;
 }
 
-/* O widget de telefone tem sua própria caixa; o input interno fica "flush" dentro dela */
+/* O widget de telefone tem sua própria caixa; o input interno fica "flush"
+   dentro dela. A bandeira/seletor de país (irrelevante pro público BR) fica
+   escondida, pra ficar um campo de texto simples, igual ao de /varejo — sem
+   remover do DOM, pra não quebrar a sincronização interna do HubSpot. */
 .stoom-hs-form-modal .hsfc-PhoneInput {
   display: flex !important;
   align-items: center !important;
-  gap: 0.5rem !important;
 }
 .stoom-hs-form-modal .hsfc-PhoneInput .hsfc-TextInput {
   padding: 0 !important;
@@ -124,6 +136,9 @@
   background: transparent !important;
   box-shadow: none !important;
   min-height: 0 !important;
+}
+.stoom-hs-form-modal .hsfc-PhoneInput__FlagAndCaret {
+  display: none !important;
 }
 
 /* Grupo de checkboxes "Produto de interesse": cada opção vira um cartão
