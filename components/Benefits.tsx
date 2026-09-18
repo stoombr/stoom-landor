@@ -8,6 +8,7 @@ import {
   ChartBar as BarChart3,
   LayoutDashboard,
 } from 'lucide-react';
+import { useContactModal } from './ContactModalContext';
 
 const solutionItems = [
   { icon: Sliders, text: 'Adaptação ao fluxo da operação' },
@@ -19,6 +20,7 @@ const solutionItems = [
 export default function Benefits() {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
+  const modal = useContactModal();
 
   const isInView = useInView(contentRef, { once: true, margin: '-80px' });
 
@@ -90,12 +92,13 @@ export default function Benefits() {
               transition={{ delay: 0.55, duration: 0.5 }}
               className="mt-10 hidden lg:block"
             >
-              <a
-                href="#contato"
+              <button
+                type="button"
+                onClick={() => modal?.abrirContato()}
                 className="inline-flex min-h-[56px] items-center justify-center rounded-sm bg-brand-secondary px-8 sm:px-10 py-4 text-base font-roboto font-semibold text-black shadow-lg shadow-brand-secondary/20 transition-all duration-300 hover:scale-[1.03] hover:bg-brand-secondary/90"
               >
                 <span className="whitespace-nowrap">Solicite uma demonstração</span>
-              </a>
+              </button>
             </m.div>
           </m.div>
 
@@ -124,12 +127,13 @@ export default function Benefits() {
               transition={{ delay: 0.55, duration: 0.5 }}
               className="mt-8 flex justify-center lg:hidden"
             >
-              <a
-                href="#contato"
+              <button
+                type="button"
+                onClick={() => modal?.abrirContato()}
                 className="inline-flex min-h-[56px] items-center justify-center rounded-sm bg-brand-secondary px-8 sm:px-10 py-4 text-base font-roboto font-semibold text-black shadow-lg shadow-brand-secondary/20 transition-all duration-300 hover:scale-[1.03] hover:bg-brand-secondary/90"
               >
                 <span className="whitespace-nowrap">Solicite uma demonstração</span>
-              </a>
+              </button>
             </m.div>
           </div>
         </div>

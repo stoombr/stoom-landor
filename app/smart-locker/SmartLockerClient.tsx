@@ -23,6 +23,7 @@ import {
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CTA from '@/components/CTA'
+import { ContactModalProvider, useContactModal } from '@/components/ContactModalContext'
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
 
@@ -124,6 +125,16 @@ function Badge({ label }: { label: string }) {
 
 export default function SmartLockerClient() {
   return (
+    <ContactModalProvider>
+      <SmartLockerContent />
+    </ContactModalProvider>
+  )
+}
+
+function SmartLockerContent() {
+  const modal = useContactModal()
+
+  return (
     <>
       <Navbar />
 
@@ -154,12 +165,13 @@ export default function SmartLockerClient() {
             <p className="font-roboto text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
               Do depósito à retirada, tudo rastreado, protegido e disponível 24 horas por dia. Sem filas, sem reentregas, sem dependência de funcionários.
             </p>
-            <a
-              href="#contato"
+            <button
+              type="button"
+              onClick={() => modal?.abrirContato()}
               className="inline-flex items-center px-8 py-4 bg-brand-secondary text-black font-roboto font-semibold rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-[1.03] shadow-lg shadow-brand-secondary/25"
             >
               Quero um smart locker
-            </a>
+            </button>
           </m.div>
         </div>
       </section>
@@ -216,12 +228,13 @@ export default function SmartLockerClient() {
           </div>
 
           <div className="text-center">
-            <a
-              href="#contato"
+            <button
+              type="button"
+              onClick={() => modal?.abrirContato()}
               className="inline-flex items-center px-8 py-4 bg-brand-primary text-white font-roboto font-semibold rounded-sm hover:bg-brand-primary/90 transition-all hover:scale-[1.03]"
             >
               Quero resolver isso
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -323,12 +336,13 @@ export default function SmartLockerClient() {
           </div>
 
           <div className="text-center">
-            <a
-              href="#contato"
+            <button
+              type="button"
+              onClick={() => modal?.abrirContato()}
               className="inline-flex items-center px-8 py-4 bg-brand-secondary text-black font-roboto font-semibold rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-[1.03] shadow-lg shadow-brand-secondary/20"
             >
               Quero esses benefícios
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -438,12 +452,13 @@ export default function SmartLockerClient() {
           </div>
 
           <div className="text-center">
-            <a
-              href="#contato"
+            <button
+              type="button"
+              onClick={() => modal?.abrirContato()}
               className="inline-flex items-center px-8 py-4 bg-brand-secondary text-black font-roboto font-semibold rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-[1.03] shadow-lg shadow-brand-secondary/20"
             >
               Falar com um especialista
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -455,3 +470,4 @@ export default function SmartLockerClient() {
     </>
   )
 }
+

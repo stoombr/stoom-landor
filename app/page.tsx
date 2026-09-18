@@ -9,21 +9,24 @@ import Achievements from '@/components/Achievements';
 import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
+import { ContactModalProvider } from '@/components/ContactModalContext';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <About />
-      <Challenge />
-      <Services />
-      <HowItWorks />
-      <Benefits />
-      <Achievements />
-      <FAQ />
-      <CTA />
-      <Footer />
-    </main>
+    <ContactModalProvider>
+      <main className="min-h-screen">
+        <Navbar />
+        <Hero />
+        <About />
+        <Challenge />
+        <Services />
+        <HowItWorks />
+        <Benefits />
+        <Achievements />
+        <FAQ />
+        <CTA />
+        <Footer />
+      </main>
+    </ContactModalProvider>
   );
 }

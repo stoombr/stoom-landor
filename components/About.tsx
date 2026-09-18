@@ -9,6 +9,7 @@ import {
   ArrowRight,
   Lock,
 } from 'lucide-react';
+import { useContactModal } from './ContactModalContext';
 
 const product1Features = [
   'Compartimentos inteligentes de diferentes tamanhos',
@@ -123,6 +124,7 @@ function ProductCard({
 
 export default function About() {
   const ref = useRef(null);
+  const modal = useContactModal();
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
@@ -187,12 +189,13 @@ export default function About() {
           transition={{ delay: 0.55, duration: 0.6 }}
           className="pt-8 lg:pt-10 flex justify-center"
         >
-          <a
-            href="#contato"
+          <button
+            type="button"
+            onClick={() => modal?.abrirContato()}
             className="group inline-flex min-h-[60px] items-center justify-center gap-3 rounded-md bg-brand-secondary px-8 py-4 sm:px-10 sm:py-5 text-base font-semibold text-black shadow-lg shadow-brand-secondary/20 transition-all duration-300 hover:scale-[1.03] hover:bg-brand-secondary/90"
           >
             <span className="whitespace-nowrap">Automatize a logística</span>
-          </a>
+          </button>
         </m.div>
       </div>
     </section>

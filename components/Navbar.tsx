@@ -6,6 +6,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useContactModal } from './ContactModalContext';
 
 const institucionalLinks = [
   { label: 'Quem somos', href: '/institucional/quem-somos' },
@@ -20,6 +21,7 @@ export default function Navbar() {
   const [isMobileInstitucionalOpen, setIsMobileInstitucionalOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
   const pathname = usePathname();
+  const modal = useContactModal();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -120,12 +122,22 @@ export default function Navbar() {
               <li><Link href="/conteudos" className={linkClass}>Conteúdos</Link></li>
             </ul>
 
-            <a
-              href="/#contato"
-              className="px-6 py-3 bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
-            >
-              Solicite uma demonstração
-            </a>
+            {modal ? (
+              <button
+                type="button"
+                onClick={() => modal.abrirContato()}
+                className="px-6 py-3 bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
+              >
+                Solicite uma demonstração
+              </button>
+            ) : (
+              <a
+                href="/#contato"
+                className="px-6 py-3 bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
+              >
+                Solicite uma demonstração
+              </a>
+            )}
 
             <div className={`w-px h-6 ${isScrolled ? 'bg-gray-200' : 'bg-white/20'}`} />
 
@@ -227,13 +239,23 @@ export default function Navbar() {
                 Conteúdos
               </Link>
 
-              <a
-                href="/#contato"
-                className="block px-6 py-3 bg-brand-secondary text-black text-center font-roboto font-medium rounded-sm"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Solicitar Demonstração
-              </a>
+              {modal ? (
+                <button
+                  type="button"
+                  onClick={() => { modal.abrirContato(); setIsMobileMenuOpen(false); }}
+                  className="block w-full px-6 py-3 bg-brand-secondary text-black text-center font-roboto font-medium rounded-sm"
+                >
+                  Solicitar Demonstração
+                </button>
+              ) : (
+                <a
+                  href="/#contato"
+                  className="block px-6 py-3 bg-brand-secondary text-black text-center font-roboto font-medium rounded-sm"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Solicitar Demonstração
+                </a>
+              )}
 
               <div className="flex justify-center pt-2 pb-1">
                 <a href="https://www.landor.com.br/" target="_blank" rel="noopener noreferrer">

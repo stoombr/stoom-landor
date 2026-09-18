@@ -3,6 +3,7 @@
 import { m, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Package, Smartphone, ChartBar as BarChart2 } from 'lucide-react';
+import { useContactModal } from './ContactModalContext';
 
 const itemTransition = {
   duration: 0.7,
@@ -11,6 +12,7 @@ const itemTransition = {
 
 export default function Hero() {
   const sectionRef = useRef(null);
+  const modal = useContactModal();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
@@ -80,12 +82,13 @@ export default function Hero() {
               transition={{ ...itemTransition, delay: 0.15 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <a
-                href="#contato"
+              <button
+                type="button"
+                onClick={() => modal?.abrirContato()}
                 className="group px-8 py-4 bg-brand-secondary text-black font-roboto font-semibold rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-[1.03] flex items-center justify-center gap-2 shadow-lg shadow-brand-secondary/30"
               >
                 Solicite uma demonstração
-              </a>
+              </button>
             </m.div>
           </div>
 

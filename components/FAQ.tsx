@@ -3,6 +3,7 @@
 import { m, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { useContactModal } from './ContactModalContext';
 
 const faqs = [
   {
@@ -33,6 +34,7 @@ const faqs = [
 
 export default function FAQ() {
   const ref = useRef(null);
+  const modal = useContactModal();
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [open, setOpen] = useState<number | null>(null);
 
@@ -132,12 +134,13 @@ export default function FAQ() {
           transition={{ delay: 0.35, duration: 0.6 }}
           className="mt-12 lg:mt-16 flex justify-center"
         >
-          <a
-            href="#contato"
+          <button
+            type="button"
+            onClick={() => modal?.abrirContato()}
             className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-secondary text-black font-roboto font-semibold rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-[1.03] shadow-lg shadow-brand-secondary/20"
           >
             Implemente os lockers
-          </a>
+          </button>
         </m.div>
       </div>
     </section>

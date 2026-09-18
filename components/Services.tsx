@@ -9,6 +9,7 @@ import {
   Truck,
   CircleCheck as CheckCircle2,
 } from 'lucide-react';
+import { useContactModal } from './ContactModalContext';
 
 const segments = [
   {
@@ -76,6 +77,7 @@ const segments = [
 
 export default function Services() {
   const ref = useRef(null);
+  const modal = useContactModal();
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const [active, setActive] = useState(0);
@@ -220,12 +222,13 @@ export default function Services() {
           transition={{ delay: 0.45, duration: 0.6 }}
           className="mt-16 lg:mt-20 flex justify-center"
         >
-          <a
-            href="#contato"
+          <button
+            type="button"
+            onClick={() => modal?.abrirContato()}
             className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-secondary text-black font-roboto font-semibold rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-[1.03] shadow-lg shadow-brand-secondary/20"
           >
             Veja as aplicações
-          </a>
+          </button>
         </m.div>
       </div>
     </section>

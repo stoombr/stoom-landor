@@ -1,0 +1,179 @@
+/* Overrides para o form embutido do HubSpot dentro do ContactModal (home e
+   /smart-locker). Mesma estrutura/grid de hubspot-form.css (usado antes em
+   CTA.tsx), mas com cores claras para o cartão branco do modal — no mesmo
+   padrão visual dos modais de /condominio e /varejo
+   (components/condominio/LeadModal.tsx). !important pelo mesmo motivo do
+   arquivo irmão: o <style> de tema do HubSpot é injetado depois do nosso CSS. */
+
+.stoom-hs-form-modal,
+.stoom-hs-form-modal [data-hsfc-id='FormWrapper'],
+.stoom-hs-form-modal [data-hsfc-id='Renderer'],
+.stoom-hs-form-modal form[data-hsfc-id='Form'] {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-modal [data-hsfc-id='Step'] {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-modal .hsfc-Step__Content {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1rem !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-modal [data-hsfc-id='Row'] {
+  margin: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-modal [data-hsfc-id='Row'] > * {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Reordena os campos: Nome+Empresa na 1ª linha, Email+Telefone na 2ª, Mensagem full-width */
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/firstname']) {
+  order: 1 !important;
+  grid-column: auto !important;
+}
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/company']) {
+  order: 2 !important;
+  grid-column: auto !important;
+}
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/email']) {
+  order: 3 !important;
+  grid-column: auto !important;
+}
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([data-hsfc-id='PhoneField']) {
+  order: 4 !important;
+  grid-column: auto !important;
+}
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/message']) {
+  order: 5 !important;
+  grid-column: 1 / -1 !important;
+}
+.stoom-hs-form-modal [data-hsfc-id='NavigationRow'] {
+  order: 6 !important;
+  grid-column: 1 / -1 !important;
+  margin-top: 0.25rem !important;
+  display: block !important;
+  justify-content: normal !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+@media (max-width: 640px) {
+  .stoom-hs-form-modal .hsfc-Step__Content {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([data-hsfc-id='HiddenField']) {
+  display: none !important;
+}
+
+.stoom-hs-form-modal [data-hsfc-id='FieldLabel'] {
+  display: block !important;
+  margin-bottom: 0.375rem !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  color: #6b7280 !important;
+}
+
+.stoom-hs-form-modal .hsfc-FieldLabel__RequiredIndicator {
+  color: #6b7280 !important;
+}
+
+.stoom-hs-form-modal .hsfc-TextInput,
+.stoom-hs-form-modal .hsfc-TextareaInput,
+.stoom-hs-form-modal .hsfc-PhoneInput {
+  width: 100% !important;
+  min-height: 46px !important;
+  padding: 0.75rem 0.875rem !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.75rem !important;
+  color: #0f2842 !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-size: 0.9375rem !important;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.stoom-hs-form-modal .hsfc-TextareaInput {
+  resize: none !important;
+  min-height: 4.5rem !important;
+}
+
+.stoom-hs-form-modal .hsfc-TextInput::placeholder,
+.stoom-hs-form-modal .hsfc-TextareaInput::placeholder {
+  color: #6b7280 !important;
+}
+
+.stoom-hs-form-modal input:-webkit-autofill,
+.stoom-hs-form-modal input:-webkit-autofill:hover,
+.stoom-hs-form-modal input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0f2842 !important;
+}
+
+.stoom-hs-form-modal .hsfc-TextInput:hover,
+.stoom-hs-form-modal .hsfc-TextareaInput:hover,
+.stoom-hs-form-modal .hsfc-PhoneInput:hover {
+  border-color: #d1d5db !important;
+}
+
+.stoom-hs-form-modal .hsfc-TextInput:focus,
+.stoom-hs-form-modal .hsfc-TextareaInput:focus,
+.stoom-hs-form-modal .hsfc-PhoneInput:focus-within {
+  outline: none !important;
+  border-color: #0f2842 !important;
+  box-shadow: 0 0 0 3px rgba(15, 40, 66, 0.1) !important;
+}
+
+/* O widget de telefone tem sua própria caixa; o input interno fica "flush" dentro dela */
+.stoom-hs-form-modal .hsfc-PhoneInput {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+.stoom-hs-form-modal .hsfc-PhoneInput .hsfc-TextInput {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+}
+
+/* Botão pill laranja, mesmo desenho do BotaoCta usado nos modais de /condominio e /varejo */
+.stoom-hs-form-modal .hsfc-Button {
+  width: 100% !important;
+  min-height: 52px !important;
+  padding: 1rem 2rem !important;
+  background-color: #f97316 !important;
+  color: #0f2842 !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.25) !important;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.stoom-hs-form-modal .hsfc-Button:hover {
+  background-color: rgba(249, 115, 22, 0.9) !important;
+  transform: scale(1.02);
+}
+
+.stoom-hs-form-modal .hsfc-Button[aria-busy='true'] {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
