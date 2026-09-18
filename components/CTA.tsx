@@ -58,7 +58,7 @@ export default function CTA() {
           transition={{ delay: 0.15, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-4xl lg:text-5xl font-outfit font-bold text-white leading-tight"
         >
-          Tenha lockers inteligentes{' '}
+          Tenha lockers inteligentes <br className="hidden lg:block" />
           <span className="text-brand-secondary">em sua operação</span>
         </m.h2>
 
@@ -68,7 +68,9 @@ export default function CTA() {
           transition={{ delay: 0.28, duration: 0.6 }}
           className="text-white/70 font-roboto text-lg leading-relaxed mt-6"
         >
-          Converse com um de nossos especialistas e descubra como implementar smart lockers.
+          Converse com um de nossos especialistas e descubra{' '}
+          <br className="hidden lg:block" />
+          como implementar smart lockers.
         </m.p>
 
         <m.div

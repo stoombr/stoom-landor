@@ -1,9 +1,12 @@
 /* Overrides para o form embutido do HubSpot dentro do ContactModal (home e
-   /smart-locker). Mesma estrutura/grid de hubspot-form.css (usado antes em
-   CTA.tsx), mas com cores claras para o cartão branco do modal — no mesmo
-   padrão visual dos modais de /condominio e /varejo
-   (components/condominio/LeadModal.tsx). !important pelo mesmo motivo do
-   arquivo irmão: o <style> de tema do HubSpot é injetado depois do nosso CSS. */
+   /smart-locker). Layout em coluna única, no mesmo padrão visual e estrutural
+   dos modais de /condominio e /varejo (components/condominio/LeadModal.tsx):
+   só a primeira linha (Nome + Sobrenome, pareados nativamente pelo próprio
+   HubSpot dentro do mesmo Row) fica em 2 colunas; todo o resto empilha em
+   largura total, na ordem natural do formulário (isso já coloca "Produto de
+   interesse" antes de "Mensagem", sem precisar de hack de reordenação).
+   !important pelo mesmo motivo do arquivo irmão: o <style> de tema do
+   HubSpot é injetado depois do nosso CSS. */
 
 .stoom-hs-form-modal,
 .stoom-hs-form-modal [data-hsfc-id='FormWrapper'],
@@ -19,8 +22,8 @@
 }
 
 .stoom-hs-form-modal .hsfc-Step__Content {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
+  display: flex !important;
+  flex-direction: column !important;
   gap: 1rem !important;
   width: 100% !important;
   max-width: none !important;
@@ -28,8 +31,9 @@
 
 .stoom-hs-form-modal [data-hsfc-id='Row'] {
   margin: 0 !important;
-  width: auto !important;
+  width: 100% !important;
   max-width: none !important;
+  gap: 1rem !important;
 }
 
 .stoom-hs-form-modal [data-hsfc-id='Row'] > * {
@@ -37,45 +41,16 @@
   max-width: none !important;
 }
 
-/* Reordena os campos: Nome+Empresa na 1ª linha, Email+Telefone na 2ª, Mensagem full-width */
-.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/firstname']) {
-  order: 1 !important;
-  grid-column: auto !important;
+.stoom-hs-form-modal [data-hsfc-id='Row']:has([data-hsfc-id='HiddenField']) {
+  display: none !important;
 }
-.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/company']) {
-  order: 2 !important;
-  grid-column: auto !important;
-}
-.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/email']) {
-  order: 3 !important;
-  grid-column: auto !important;
-}
-.stoom-hs-form-modal [data-hsfc-id='Row']:has([data-hsfc-id='PhoneField']) {
-  order: 4 !important;
-  grid-column: auto !important;
-}
-.stoom-hs-form-modal [data-hsfc-id='Row']:has([name='0-1/message']) {
-  order: 5 !important;
-  grid-column: 1 / -1 !important;
-}
+
 .stoom-hs-form-modal [data-hsfc-id='NavigationRow'] {
-  order: 6 !important;
-  grid-column: 1 / -1 !important;
   margin-top: 0.25rem !important;
   display: block !important;
   justify-content: normal !important;
   width: 100% !important;
   max-width: none !important;
-}
-
-@media (max-width: 640px) {
-  .stoom-hs-form-modal .hsfc-Step__Content {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-.stoom-hs-form-modal [data-hsfc-id='Row']:has([data-hsfc-id='HiddenField']) {
-  display: none !important;
 }
 
 .stoom-hs-form-modal [data-hsfc-id='FieldLabel'] {
@@ -148,6 +123,55 @@
   background: transparent !important;
   box-shadow: none !important;
   min-height: 0 !important;
+}
+
+/* Grupo de checkboxes "Produto de interesse": cada opção vira um cartão
+   clicável, no mesmo padrão visual dos demais campos do formulário. */
+.stoom-hs-form-modal .hsfc-CheckboxFieldGroup {
+  width: 100% !important;
+}
+
+.stoom-hs-form-modal .hsfc-CheckboxFieldGroup__Options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+}
+
+.stoom-hs-form-modal .hsfc-CheckboxFieldGroup__Options > * {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.stoom-hs-form-modal .hsfc-CheckboxFieldGroup__Options [data-hsfc-id='FieldLabel'] {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.625rem !important;
+  width: 100% !important;
+  margin-bottom: 0 !important;
+  padding: 0.75rem 0.875rem !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.75rem !important;
+  color: #0f2842 !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-size: 0.9375rem !important;
+  font-weight: 400 !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.stoom-hs-form-modal .hsfc-CheckboxFieldGroup__Options [data-hsfc-id='FieldLabel']:hover {
+  border-color: #d1d5db !important;
+}
+
+.stoom-hs-form-modal .hsfc-CheckboxInput {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  accent-color: #f97316 !important;
+  cursor: pointer !important;
 }
 
 /* Botão pill laranja, mesmo desenho do BotaoCta usado nos modais de /condominio e /varejo */
