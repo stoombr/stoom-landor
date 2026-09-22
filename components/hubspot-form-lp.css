@@ -1,0 +1,175 @@
+/* Overrides para o form embutido do HubSpot dentro dos modais de /condominio e
+   /varejo. Copia de components/hubspot-form-modal.css (mesmo form, mesmo
+   layout), com uma regra a mais: o campo obrigatorio "Produto de interesse"
+   fica oculto, porque estas LPs sao especificas de Smart Locker e o valor e
+   marcado via JS assim que o form renderiza (ver LeadModal.tsx). !important
+   pelo mesmo motivo do arquivo irmao: o <style> de tema do HubSpot e injetado
+   depois do nosso CSS. */
+
+.stoom-hs-form-lp,
+.stoom-hs-form-lp [data-hsfc-id='FormWrapper'],
+.stoom-hs-form-lp [data-hsfc-id='Renderer'],
+.stoom-hs-form-lp form[data-hsfc-id='Form'] {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-lp [data-hsfc-id='Step'] {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-lp .hsfc-Step__Content {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 1rem !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.stoom-hs-form-lp [data-hsfc-id='Row'] {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  gap: 1rem !important;
+}
+
+/* "Nome/Sobrenome" e "Nome da empresa"/"Numero de telefone do WhatsApp" ficam
+   lado a lado; o resto do formulario segue empilhado em largura total. */
+.stoom-hs-form-lp [data-hsfc-id='Row']:has([name='firstname']),
+.stoom-hs-form-lp [data-hsfc-id='Row']:has([name='0-1/company']),
+.stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='PhoneField']) {
+  width: calc(50% - 0.5rem) !important;
+}
+
+.stoom-hs-form-lp [data-hsfc-id='Row'] > * {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='HiddenField']) {
+  display: none !important;
+}
+
+/* "Produto de interesse": oculto nestas LPs, o valor "Smart Locker" e
+   marcado via JS assim que o form renderiza (ver LeadModal.tsx). */
+.stoom-hs-form-lp [data-hsfc-id='Row']:has([name='0-1/produto']) {
+  display: none !important;
+}
+
+.stoom-hs-form-lp [data-hsfc-id='NavigationRow'] {
+  margin-top: 0.25rem !important;
+  display: block !important;
+  justify-content: normal !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.stoom-hs-form-lp [data-hsfc-id='FieldLabel'] {
+  display: block !important;
+  margin-bottom: 0.375rem !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  color: #6b7280 !important;
+}
+
+.stoom-hs-form-lp .hsfc-FieldLabel__RequiredIndicator {
+  color: #6b7280 !important;
+}
+
+.stoom-hs-form-lp .hsfc-TextInput,
+.stoom-hs-form-lp .hsfc-TextareaInput,
+.stoom-hs-form-lp .hsfc-PhoneInput {
+  width: 100% !important;
+  min-height: 46px !important;
+  padding: 0.75rem 0.875rem !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.75rem !important;
+  color: #0f2842 !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-size: 0.9375rem !important;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.stoom-hs-form-lp .hsfc-TextareaInput {
+  resize: none !important;
+  min-height: 4.5rem !important;
+}
+
+.stoom-hs-form-lp .hsfc-TextInput::placeholder,
+.stoom-hs-form-lp .hsfc-TextareaInput::placeholder {
+  color: #6b7280 !important;
+}
+
+.stoom-hs-form-lp input:-webkit-autofill,
+.stoom-hs-form-lp input:-webkit-autofill:hover,
+.stoom-hs-form-lp input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0f2842 !important;
+}
+
+.stoom-hs-form-lp .hsfc-TextInput:hover,
+.stoom-hs-form-lp .hsfc-TextareaInput:hover,
+.stoom-hs-form-lp .hsfc-PhoneInput:hover {
+  border-color: #d1d5db !important;
+}
+
+.stoom-hs-form-lp .hsfc-TextInput:focus,
+.stoom-hs-form-lp .hsfc-TextareaInput:focus,
+.stoom-hs-form-lp .hsfc-PhoneInput:focus-within {
+  outline: none !important;
+  border-color: #0f2842 !important;
+  box-shadow: 0 0 0 3px rgba(15, 40, 66, 0.1) !important;
+}
+
+/* O widget de telefone tem sua propria caixa; o input interno fica "flush"
+   dentro dela. A bandeira/seletor de pais (irrelevante pro publico BR) fica
+   escondida, pra ficar um campo de texto simples, igual ao dos modais
+   originais — sem remover do DOM, pra nao quebrar a sincronizacao interna do
+   HubSpot. */
+.stoom-hs-form-lp .hsfc-PhoneInput {
+  display: flex !important;
+  align-items: center !important;
+}
+.stoom-hs-form-lp .hsfc-PhoneInput .hsfc-TextInput {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+}
+.stoom-hs-form-lp .hsfc-PhoneInput__FlagAndCaret {
+  display: none !important;
+}
+
+/* Botao pill laranja, mesmo desenho do BotaoCta usado nestes modais */
+.stoom-hs-form-lp .hsfc-Button {
+  width: 100% !important;
+  min-height: 52px !important;
+  padding: 1rem 2rem !important;
+  background-color: #f97316 !important;
+  color: #0f2842 !important;
+  font-family: var(--font-roboto), sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.25) !important;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.stoom-hs-form-lp .hsfc-Button:hover {
+  background-color: rgba(249, 115, 22, 0.9) !important;
+  transform: scale(1.02);
+}
+
+.stoom-hs-form-lp .hsfc-Button[aria-busy='true'] {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}

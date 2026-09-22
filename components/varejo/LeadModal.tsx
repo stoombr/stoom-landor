@@ -1,219 +1,22 @@
 'use client'
 
 // Modal de conversao da LP /varejo: o unico caminho de lead da pagina.
-// Spin-off de components/condominio/LeadModal.tsx: mesma maquina de estado de
-// validacao, mesmo padrao de foco/inert/scroll-lock. Diferencas de copy: o
-// campo "Condomínio" virou "Rede ou loja" e o campo "Número de unidades" virou
-// "Número de lojas", com faixas proprias de varejo.
-//
-// Tracking: este arquivo nao carrega script nenhum. GTM, GA4, Pixel, HubSpot e LinkedIn
-// ja vivem no app/layout.tsx; aqui so chamamos lib/varejo/tracking.ts.
+// Spin-off de components/condominio/LeadModal.tsx: mesmo mecanismo de embed
+// real do HubSpot (ver comentario la para o historico completo). Diferenca
+// de copy: o campo "Nome da empresa" e relabeled para "Rede ou loja" em vez
+// de "Nome do condomínio", e o titulo/eyebrow sao os desta LP.
 
-import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { m, useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { AlertCircle, Check, ChevronDown, X } from 'lucide-react'
-import { BotaoCta, Eyebrow, focoVisivel } from '@/components/condominio/ui'
-import {
-  enviarHubspot,
-  eventoFormErro,
-  eventoFormInicio,
-  eventoLead,
-  type DadosLead,
-} from '@/lib/varejo/tracking'
+import { Check, X } from 'lucide-react'
+import Script from 'next/script'
+import { Eyebrow, focoVisivel } from '@/components/condominio/ui'
+import { HUBSPOT, eventoFormInicio, eventoLead } from '@/lib/varejo/tracking'
 import { cn } from '@/lib/utils'
-
-// ─── Dados ────────────────────────────────────────────────────────────────────
-
-type NomeCampo = keyof DadosLead
-type NomeCampoTexto = Exclude<NomeCampo, 'lojas'>
-
-type DefinicaoCampo = {
-  nome: NomeCampoTexto
-  id: string
-  idErro: string
-  rotulo: string
-  tipo: 'text' | 'tel' | 'email'
-  autoComplete: string
-  placeholder: string
-  inputMode?: 'tel'
-}
-
-const CAMPOS_TEXTO: readonly DefinicaoCampo[] = [
-  {
-    nome: 'firstname',
-    id: 'f-nome',
-    idErro: 'e-nome',
-    rotulo: 'Nome',
-    tipo: 'text',
-    autoComplete: 'given-name',
-    placeholder: 'Seu nome',
-  },
-  {
-    nome: 'phone',
-    id: 'f-fone',
-    idErro: 'e-fone',
-    rotulo: 'WhatsApp',
-    tipo: 'tel',
-    autoComplete: 'tel',
-    placeholder: '(11) 99999-9999',
-    inputMode: 'tel',
-  },
-  {
-    nome: 'email',
-    id: 'f-mail',
-    idErro: 'e-mail',
-    rotulo: 'E-mail',
-    tipo: 'email',
-    autoComplete: 'email',
-    placeholder: 'voce@exemplo.com',
-  },
-  {
-    nome: 'company',
-    id: 'f-cond',
-    idErro: 'e-cond',
-    rotulo: 'Rede ou loja',
-    tipo: 'text',
-    autoComplete: 'organization',
-    placeholder: 'Nome da rede ou loja',
-  },
-]
-
-const CAMPO_LOJAS = {
-  nome: 'lojas' as const,
-  id: 'f-un',
-  idErro: 'e-un',
-  rotulo: 'Número de lojas',
-}
-
-const OPCOES_LOJAS: readonly { valor: string; rotulo: string }[] = [
-  { valor: '', rotulo: 'Selecione' },
-  { valor: '1 loja', rotulo: '1 loja' },
-  { valor: '2 a 5', rotulo: '2 a 5' },
-  { valor: '6 a 20', rotulo: '6 a 20' },
-  { valor: '21 a 50', rotulo: '21 a 50' },
-  { valor: 'Mais de 50', rotulo: 'Mais de 50' },
-]
-
-const ORDEM: readonly NomeCampo[] = ['firstname', 'phone', 'email', 'company', 'lojas']
-
-type Regra = { valido: (valor: string) => boolean; mensagem: string }
-
-const REGRAS: Record<NomeCampo, Regra> = {
-  firstname: {
-    valido: (v) => v.trim().length > 0,
-    mensagem: 'Digite seu nome.',
-  },
-  phone: {
-    valido: (v) => {
-      const d = v.replace(/\D/g, '')
-      return d.length === 10 || d.length === 11
-    },
-    mensagem: 'WhatsApp com DDD, 10 ou 11 números.',
-  },
-  email: {
-    valido: (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.trim()),
-    mensagem: 'E-mail no formato nome@dominio.com.br.',
-  },
-  company: {
-    valido: (v) => v.trim().length > 0,
-    mensagem: 'Diga o nome da rede ou loja.',
-  },
-  lojas: {
-    valido: (v) => v !== '',
-    mensagem: 'Escolha uma faixa de lojas.',
-  },
-}
-
-const ERRO_GERAL = 'Confere os campos destacados para a gente conseguir te chamar.'
+import '../hubspot-form-lp.css'
 
 const POLITICA_PRIVACIDADE = 'https://www.stoom.com.br/institucional/politica-de-privacidade'
-
-const VALORES_VAZIOS: DadosLead = {
-  firstname: '',
-  phone: '',
-  email: '',
-  company: '',
-  lojas: '',
-}
-
-type MapaErros = Partial<Record<NomeCampo, string>>
-
-// ─── Estilo dos controles ─────────────────────────────────────────────────────
-
-const CLASSES_CAMPO =
-  'w-full min-h-[46px] rounded-xl border bg-white px-3.5 py-3 font-roboto text-[15px] text-brand-primary placeholder:text-gray-500 transition-[border-color,box-shadow] duration-150 focus:outline-none focus:ring-[3px]'
-
-function classesCampo(temErro: boolean) {
-  return cn(
-    CLASSES_CAMPO,
-    temErro
-      ? 'border-destructive ring-[3px] ring-destructive/20 focus:border-destructive focus:ring-destructive/20'
-      : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary/10'
-  )
-}
-
-// ─── Primitivos locais ────────────────────────────────────────────────────────
-
-function MensagemErro({ id, mensagem }: { id: string; mensagem?: string }) {
-  return (
-    <small
-      id={id}
-      aria-live="polite"
-      className={cn(
-        'font-roboto text-[13px] font-medium text-destructive',
-        mensagem ? 'flex items-start gap-1.5' : 'hidden'
-      )}
-    >
-      {mensagem ? (
-        <>
-          <AlertCircle size={14} strokeWidth={2.2} aria-hidden="true" className="mt-[2px] flex-shrink-0" />
-          <span>{mensagem}</span>
-        </>
-      ) : null}
-    </small>
-  )
-}
-
-type PropsCampoTexto = {
-  campo: DefinicaoCampo
-  valor: string
-  erro?: string
-  aoDigitar: (nome: NomeCampo, valor: string) => void
-  aoSair: (nome: NomeCampo) => void
-  registrar: (nome: NomeCampo, el: HTMLInputElement | HTMLSelectElement | null) => void
-}
-
-function CampoTexto({ campo, valor, erro, aoDigitar, aoSair, registrar }: PropsCampoTexto) {
-  return (
-    <div className="grid gap-1.5">
-      <label htmlFor={campo.id} className="font-roboto text-[13px] text-gray-500">
-        {campo.rotulo}
-      </label>
-      <input
-        ref={(el) => {
-          registrar(campo.nome, el)
-        }}
-        id={campo.id}
-        name={campo.nome}
-        type={campo.tipo}
-        value={valor}
-        required
-        autoComplete={campo.autoComplete}
-        inputMode={campo.inputMode}
-        placeholder={campo.placeholder}
-        aria-describedby={campo.idErro}
-        aria-invalid={Boolean(erro)}
-        onChange={(e) => aoDigitar(campo.nome, e.target.value)}
-        onBlur={() => aoSair(campo.nome)}
-        className={classesCampo(Boolean(erro))}
-      />
-      <MensagemErro id={campo.idErro} mensagem={erro} />
-    </div>
-  )
-}
-
-// ─── Modal ────────────────────────────────────────────────────────────────────
 
 export type LeadModalProps = {
   aberto: boolean
@@ -224,28 +27,13 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
   const reduzir = useReducedMotion()
 
   const [montado, setMontado] = useState(false)
-  const [valores, setValores] = useState<DadosLead>(VALORES_VAZIOS)
-  const [erros, setErros] = useState<MapaErros>({})
-  const [erroGeral, setErroGeral] = useState('')
-  const [enviando, setEnviando] = useState(false)
   const [enviado, setEnviado] = useState(false)
-
-  useEffect(() => {
-    if (aberto) return
-    const id = window.setTimeout(() => {
-      setEnviado(false)
-      setEnviando(false)
-      setValores(VALORES_VAZIOS)
-      setErros({})
-      setErroGeral('')
-    }, 300)
-    return () => window.clearTimeout(id)
-  }, [aberto])
+  const [formPronto, setFormPronto] = useState(false)
 
   const refModal = useRef<HTMLDivElement>(null)
+  const refFechar = useRef<HTMLButtonElement>(null)
   const refConcluido = useRef<HTMLDivElement>(null)
-  const refCampos = useRef<Partial<Record<NomeCampo, HTMLInputElement | HTMLSelectElement | null>>>({})
-  const refSujos = useRef<Partial<Record<NomeCampo, boolean>>>({})
+  const refFormContainer = useRef<HTMLDivElement>(null)
   const refFormIniciado = useRef(false)
   const refFecharAtual = useRef(aoFechar)
 
@@ -257,92 +45,75 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
     setMontado(true)
   }, [])
 
-  const registrar = useCallback(
-    (nome: NomeCampo, el: HTMLInputElement | HTMLSelectElement | null) => {
-      refCampos.current[nome] = el
-    },
-    []
-  )
+  // Sem isto o modal reabriria preso na tela "Recebido!". O atraso deixa a
+  // animacao de saida terminar antes do formulario reaparecer.
+  useEffect(() => {
+    if (aberto) return
+    const id = window.setTimeout(() => setEnviado(false), 300)
+    return () => window.clearTimeout(id)
+  }, [aberto])
 
-  // ── Validacao ───────────────────────────────────────────────────────────────
+  // Sempre montado no DOM; fechado, fica inert (fora do foco/leitor de tela).
+  useEffect(() => {
+    const el = refModal.current
+    if (!el) return
+    if (aberto) el.removeAttribute('inert')
+    else el.setAttribute('inert', '')
+  }, [aberto, montado])
 
-  const aoDigitar = useCallback(
-    (nome: NomeCampo, valor: string) => {
-      setValores((atuais) => ({ ...atuais, [nome]: valor }))
-      refSujos.current[nome] = true
+  // ── Ajustes no form injetado: relabel do campo empresa + auto-check do produto ──
+  useEffect(() => {
+    const container = refFormContainer.current
+    if (!container || !formPronto) return
 
-      let restantes = erros
-      if (erros[nome]) {
-        const proximos: MapaErros = { ...erros }
-        if (REGRAS[nome].valido(valor)) delete proximos[nome]
-        else proximos[nome] = REGRAS[nome].mensagem
-        setErros(proximos)
-        restantes = proximos
-      }
-      if (Object.keys(restantes).length === 0) setErroGeral('')
-    },
-    [erros]
-  )
+    const campoEmpresa = container.querySelector<HTMLInputElement>('input[name="0-1/company"]')
+    const rotulo = campoEmpresa
+      ?.closest('[data-hsfc-id="TextField"]')
+      ?.querySelector<HTMLElement>('label span > span')
+    if (rotulo && rotulo.textContent !== 'Rede ou loja') {
+      rotulo.textContent = 'Rede ou loja'
+    }
 
-  const aoSair = useCallback(
-    (nome: NomeCampo) => {
-      if (!refSujos.current[nome]) return
-      const valor = valores[nome]
-      setErros((atuais) => {
-        const proximos: MapaErros = { ...atuais }
-        if (REGRAS[nome].valido(valor)) delete proximos[nome]
-        else proximos[nome] = REGRAS[nome].mensagem
-        return proximos
-      })
-    },
-    [valores]
-  )
+    const checkboxProduto = container.querySelector<HTMLInputElement>(
+      'input[name="0-1/produto"][value="Smart Locker"]'
+    )
+    if (checkboxProduto && !checkboxProduto.checked) checkboxProduto.click()
+  }, [formPronto])
 
-  const aoFocarFormulario = useCallback(() => {
-    if (refFormIniciado.current) return
-    refFormIniciado.current = true
-    eventoFormInicio()
-  }, [])
+  // ── Deteccao de carregamento e envio ─────────────────────────────────────────
+  useEffect(() => {
+    if (enviado) return
+    const container = refFormContainer.current
+    if (!container) return
 
-  const aoEnviar = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
+    let formRenderizado = !!container.querySelector('form[data-hsfc-id="Form"]')
+    if (formRenderizado) setFormPronto(true)
 
-      const proximos: MapaErros = {}
-      const invalidos: NomeCampo[] = []
-      ORDEM.forEach((nome) => {
-        if (!REGRAS[nome].valido(valores[nome])) {
-          proximos[nome] = REGRAS[nome].mensagem
-          invalidos.push(nome)
-        }
-      })
-      setErros(proximos)
+    const observer = new MutationObserver(() => {
+      const temForm = !!container.querySelector('form[data-hsfc-id="Form"]')
 
-      if (invalidos.length > 0) {
-        setErroGeral(ERRO_GERAL)
-        eventoFormErro(invalidos)
-        const alvo = refCampos.current[invalidos[0]]
-        if (alvo) alvo.focus()
+      if (temForm) {
+        formRenderizado = true
+        setFormPronto(true)
         return
       }
 
-      setErroGeral('')
-      setEnviando(true)
-
-      const dados: DadosLead = {
-        firstname: valores.firstname.trim(),
-        phone: valores.phone.trim(),
-        email: valores.email.trim(),
-        company: valores.company.trim(),
-        lojas: valores.lojas,
+      if (formRenderizado) {
+        formRenderizado = false
+        eventoLead()
+        setEnviado(true)
       }
+    })
 
-      const eventId = eventoLead({ lojas: dados.lojas })
-      const mostrarSucesso = () => setEnviado(true)
-      enviarHubspot(dados, eventId).then(mostrarSucesso, mostrarSucesso)
-    },
-    [valores]
-  )
+    observer.observe(container, { childList: true, subtree: true })
+    return () => observer.disconnect()
+  }, [montado, enviado])
+
+  const aoFocarFormulario = () => {
+    if (refFormIniciado.current) return
+    refFormIniciado.current = true
+    eventoFormInicio()
+  }
 
   // ── Trava de scroll, inert no fundo e devolucao do foco ─────────────────────
 
@@ -369,6 +140,9 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
     corpo.style.width = '100%'
     corpo.style.overflow = 'hidden'
 
+    // Tudo que nao e o modal sai da arvore de acessibilidade e do foco.
+    // Iteramos os filhos do body porque o modal vive num portal: nao dependemos
+    // de saber quais secoes a pagina montou.
     const inertados: Element[] = []
     Array.from(corpo.children).forEach((el) => {
       if (el === refModal.current) return
@@ -386,7 +160,10 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
       corpo.style.right = estiloAnterior.right
       corpo.style.width = estiloAnterior.width
       corpo.style.overflow = estiloAnterior.overflow
+      // 'instant' porque o globals.css declara scroll-behavior: smooth, e o
+      // scroll suave aqui faz a pagina deslizar sozinha ao fechar o modal.
       window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' as ScrollBehavior })
+      // Tirar o inert antes de devolver o foco: nao da para focar dentro de inert.
       inertados.forEach((el) => el.removeAttribute('inert'))
       if (focoAnterior && typeof focoAnterior.focus === 'function')
         focoAnterior.focus({ preventScroll: true })
@@ -402,10 +179,11 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
         refConcluido.current?.focus()
         return
       }
-      const primeiro = refCampos.current[ORDEM[0]]
-      if (primeiro) primeiro.focus()
+      refFechar.current?.focus()
     }, 80)
     return () => window.clearTimeout(id)
+    // Deliberado: so no momento da abertura. A troca para a tela de sucesso tem
+    // o efeito proprio logo abaixo.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aberto])
 
@@ -414,7 +192,7 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
     refConcluido.current?.focus()
   }, [aberto, enviado])
 
-  // ── Escape e ciclo de foco no Tab ───────────────────────────────────────────
+  // ── Escape e ciclo de foco no Tab ────────────────────────────────────────────
 
   useEffect(() => {
     if (!aberto) return
@@ -465,45 +243,48 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
   const duracaoEntrada = reduzir ? 0 : 0.22
   const duracaoSaida = reduzir ? 0 : 0.15
 
-  return createPortal(
-    <AnimatePresence>
-      {aberto ? (
-        <m.div
-          key="lead-modal"
+  return (
+    <>
+      <Script
+        id="hs-form-embed-script"
+        src={`https://js.hsforms.net/forms/embed/developer/${HUBSPOT.portalId}.js`}
+        strategy="afterInteractive"
+      />
+
+      {createPortal(
+        <div
           ref={refModal}
           role="dialog"
           aria-modal="true"
           aria-labelledby={enviado ? 'mFeito' : 'mTitle'}
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+          className={cn(
+            'fixed inset-0 z-[60] flex items-center justify-center p-4',
+            !aberto && 'pointer-events-none'
+          )}
         >
           {/* veu */}
           <m.div
             aria-hidden="true"
             onClick={aoFechar}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: duracaoEntrada, ease: 'easeOut' } }}
-            exit={{ opacity: 0, transition: { duration: duracaoSaida, ease: 'easeOut' } }}
+            initial={false}
+            animate={{ opacity: aberto ? 1 : 0 }}
+            transition={{ duration: aberto ? duracaoEntrada : duracaoSaida, ease: 'easeOut' }}
             className="absolute inset-0 bg-brand-ink/70 backdrop-blur-[10px]"
           />
 
           {/* cartao */}
           <m.div
-            initial={reduzir ? false : { opacity: 0, y: 8, scale: 0.98 }}
+            initial={false}
             animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              transition: { duration: duracaoEntrada, ease: 'easeOut' },
+              opacity: aberto ? 1 : 0,
+              y: reduzir ? 0 : aberto ? 0 : 8,
+              scale: reduzir ? 1 : aberto ? 1 : 0.98,
             }}
-            exit={{
-              opacity: 0,
-              y: reduzir ? 0 : 8,
-              scale: reduzir ? 1 : 0.98,
-              transition: { duration: duracaoSaida, ease: 'easeOut' },
-            }}
+            transition={{ duration: aberto ? duracaoEntrada : duracaoSaida, ease: 'easeOut' }}
             className="relative w-full max-w-[520px] max-h-[calc(100dvh_-_32px)] overflow-auto rounded-2xl bg-white px-5 py-6 text-brand-primary shadow-[0_30px_80px_rgb(0_0_0/0.45)] sm:p-8"
           >
             <button
+              ref={refFechar}
               type="button"
               onClick={aoFechar}
               aria-label="Fechar"
@@ -545,109 +326,58 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
                   Fale com um especialista
                 </h3>
 
-                {/* hs-do-not-collect impede a coleta automatica do HubSpot: quem manda o
-                    lead e a Forms API em lib/varejo/tracking.ts, com os campos certos. */}
-                <form
-                  id="lead"
-                  noValidate
-                  onSubmit={aoEnviar}
-                  onFocus={aoFocarFormulario}
-                  className="hs-do-not-collect grid gap-4"
-                >
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {CAMPOS_TEXTO.slice(0, 2).map((campo) => (
-                      <CampoTexto
-                        key={campo.nome}
-                        campo={campo}
-                        valor={valores[campo.nome]}
-                        erro={erros[campo.nome]}
-                        aoDigitar={aoDigitar}
-                        aoSair={aoSair}
-                        registrar={registrar}
-                      />
-                    ))}
-                  </div>
+                <div className="relative min-h-[420px]" onFocus={aoFocarFormulario}>
+                  <div
+                    ref={refFormContainer}
+                    className="hs-form-html stoom-hs-form-lp"
+                    data-region="na1"
+                    data-form-id={HUBSPOT.formGuid}
+                    data-portal-id={HUBSPOT.portalId}
+                  />
 
-                  {CAMPOS_TEXTO.slice(2).map((campo) => (
-                    <CampoTexto
-                      key={campo.nome}
-                      campo={campo}
-                      valor={valores[campo.nome]}
-                      erro={erros[campo.nome]}
-                      aoDigitar={aoDigitar}
-                      aoSair={aoSair}
-                      registrar={registrar}
-                    />
-                  ))}
-
-                  <div className="grid gap-1.5">
-                    <label htmlFor={CAMPO_LOJAS.id} className="font-roboto text-[13px] text-gray-500">
-                      {CAMPO_LOJAS.rotulo}
-                    </label>
-                    <span className="relative block">
-                      <select
-                        ref={(el) => {
-                          registrar(CAMPO_LOJAS.nome, el)
-                        }}
-                        id={CAMPO_LOJAS.id}
-                        name={CAMPO_LOJAS.nome}
-                        value={valores.lojas}
-                        required
-                        aria-describedby={CAMPO_LOJAS.idErro}
-                        aria-invalid={Boolean(erros.lojas)}
-                        onChange={(e) => aoDigitar(CAMPO_LOJAS.nome, e.target.value)}
-                        onBlur={() => aoSair(CAMPO_LOJAS.nome)}
-                        className={cn(classesCampo(Boolean(erros.lojas)), 'appearance-none pr-10')}
-                      >
-                        {OPCOES_LOJAS.map((opcao) => (
-                          <option key={opcao.rotulo} value={opcao.valor}>
-                            {opcao.rotulo}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown
-                        size={16}
-                        strokeWidth={2}
-                        aria-hidden="true"
-                        className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-primary"
-                      />
-                    </span>
-                    <MensagemErro id={CAMPO_LOJAS.idErro} mensagem={erros.lojas} />
-                  </div>
-
-                  <p
-                    id="err"
-                    role="alert"
-                    className="min-h-[1.4em] font-roboto text-sm font-medium text-destructive"
-                  >
-                    {erroGeral}
-                  </p>
-
-                  <BotaoCta type="submit" disabled={enviando} className="w-full">
-                    {enviando ? 'Enviando...' : 'Quero uma proposta'}
-                  </BotaoCta>
-
-                  <p className="text-center font-roboto text-[13px] text-gray-500">
-                    Seus dados estão protegidos conforme a LGPD.{' '}
-                    <a
-                      href={POLITICA_PRIVACIDADE}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        'rounded-sm underline underline-offset-[3px] transition-colors hover:text-brand-primary',
-                        focoVisivel
-                      )}
+                  {/* Skeleton: cobre o container enquanto o HubSpot ainda nao
+                      injetou os campos, pra evitar o "pulo" de o modal abrir so
+                      com o titulo e depois expandir de repente. */}
+                  {!formPronto && (
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 flex flex-col gap-4 bg-white"
                     >
-                      Política de privacidade
-                    </a>
-                  </p>
-                </form>
+                      <div className="flex gap-4">
+                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                      </div>
+                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="flex gap-4">
+                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                      </div>
+                      <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
+                    </div>
+                  )}
+                </div>
+
+                <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
+                  Seus dados estão protegidos conforme a LGPD.{' '}
+                  <a
+                    href={POLITICA_PRIVACIDADE}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      'rounded-sm underline underline-offset-[3px] transition-colors hover:text-brand-primary',
+                      focoVisivel
+                    )}
+                  >
+                    Política de privacidade
+                  </a>
+                </p>
               </div>
             )}
           </m.div>
-        </m.div>
-      ) : null}
-    </AnimatePresence>,
-    document.body
+        </div>,
+        document.body
+      )}
+    </>
   )
 }
