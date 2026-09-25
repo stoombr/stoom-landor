@@ -23,7 +23,7 @@
 // /varejo e a home e tem campos que nao fazem sentido aqui:
 //  - "Nome da empresa" e relabeled para "Nome do condomínio" (CSS nao muda texto)
 //  - "Produto de interesse" (obrigatorio) fica oculto por CSS e "Smart Locker"
-//    e marcado via clique programatico assim que o form renderiza
+//    e marcado via setFieldValue quando o HubSpot dispara on-ready
 
 import { m, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
@@ -36,6 +36,27 @@ import { cn } from '@/lib/utils'
 import '../hubspot-form-lp.css'
 
 const POLITICA_PRIVACIDADE = 'https://www.stoom.com.br/institucional/politica-de-privacidade'
+
+type HubSpotFormV4 = {
+  getInstanceId: () => string
+  setFieldValue: (nome: string, valor: string | string[]) => void
+}
+
+type HubSpotFormsV4 = {
+  getForms: () => HubSpotFormV4[]
+  getFormFromEvent: (evento: CustomEvent) => HubSpotFormV4 | undefined
+}
+
+const ROTULO_EMPRESA = 'Nome do condomínio'
+
+// "Nome da empresa" do form compartilhado vira o rotulo desta LP.
+function aplicarRotulo(container: HTMLElement) {
+  const rotulo = container
+    .querySelector<HTMLInputElement>('input[name="0-1/company"]')
+    ?.closest('[data-hsfc-id="TextField"]')
+    ?.querySelector<HTMLElement>('label span > span')
+  if (rotulo && rotulo.textContent !== ROTULO_EMPRESA) rotulo.textContent = ROTULO_EMPRESA
+}
 
 export type LeadModalProps = {
   aberto: boolean
@@ -80,23 +101,55 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
     else el.setAttribute('inert', '')
   }, [aberto, montado])
 
-  // ── Ajustes no form injetado: relabel do campo empresa + auto-check do produto ──
+  // ── Ajustes no form injetado: relabel do campo empresa + produto ──────────
+  // O HTML do form chega antes do React do HubSpot hidratar (script de modulo
+  // carregado depois). Qualquer mudanca de estado feita antes disso (ex.: um
+  // input.click() no checkbox) nao entra no estado interno do form, e o envio
+  // falha com "Preencha todos os campos obrigatorios" por causa do campo
+  // oculto. Por isso o produto so e marcado no evento on-ready, pela API
+  // oficial (HubSpotFormsV4.getFormFromEvent().setFieldValue). O listener fica
+  // ativo desde a montagem e, ao anexar, checa se o form ja hidratou (o id do
+  // container e o instanceId que o HubSpot usa).
+  useEffect(() => {
+    const container = refFormContainer.current
+    if (!container) return
+
+    const api = () => (window as unknown as { HubSpotFormsV4?: HubSpotFormsV4 }).HubSpotFormsV4
+
+    const marcarProduto = (form: HubSpotFormV4 | undefined) => {
+      if (form) {
+        form.setFieldValue('0-1/produto', ['Smart Locker'])
+      } else {
+        // Fallback: depois da hidratacao o clique passa pelo handler do React.
+        const checkbox = container.querySelector<HTMLInputElement>(
+          'input[name="0-1/produto"][value="Smart Locker"]'
+        )
+        if (checkbox && !checkbox.checked) checkbox.click()
+      }
+      aplicarRotulo(container)
+    }
+
+    const aoFicarPronto = (evento: Event) => {
+      marcarProduto(api()?.getFormFromEvent(evento as CustomEvent))
+    }
+
+    if (container.id) {
+      const jaPronto = api()
+        ?.getForms()
+        .find((f) => f.getInstanceId() === container.id)
+      if (jaPronto) marcarProduto(jaPronto)
+    }
+
+    container.addEventListener('hs-form-event:on-ready', aoFicarPronto)
+    return () => container.removeEventListener('hs-form-event:on-ready', aoFicarPronto)
+  }, [montado])
+
+  // Relabel assim que o HTML chega (antes da hidratacao), pra nao piscar o
+  // rotulo original; o on-ready acima reaplica caso a hidratacao o reverta.
   useEffect(() => {
     const container = refFormContainer.current
     if (!container || !formPronto) return
-
-    const campoEmpresa = container.querySelector<HTMLInputElement>('input[name="0-1/company"]')
-    const rotulo = campoEmpresa
-      ?.closest('[data-hsfc-id="TextField"]')
-      ?.querySelector<HTMLElement>('label span > span')
-    if (rotulo && rotulo.textContent !== 'Nome do condomínio') {
-      rotulo.textContent = 'Nome do condomínio'
-    }
-
-    const checkboxProduto = container.querySelector<HTMLInputElement>(
-      'input[name="0-1/produto"][value="Smart Locker"]'
-    )
-    if (checkboxProduto && !checkboxProduto.checked) checkboxProduto.click()
+    aplicarRotulo(container)
   }, [formPronto])
 
   // ── Deteccao de carregamento e envio ─────────────────────────────────────────
