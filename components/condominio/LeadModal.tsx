@@ -69,6 +69,8 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
   const [montado, setMontado] = useState(false)
   const [enviado, setEnviado] = useState(false)
   const [formPronto, setFormPronto] = useState(false)
+  // Trocar a key do container recria o <div class="hs-form-html"> do zero.
+  const [versaoForm, setVersaoForm] = useState(0)
 
   const refModal = useRef<HTMLDivElement>(null)
   const refFechar = useRef<HTMLButtonElement>(null)
@@ -87,11 +89,23 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
 
   // Sem isto o modal reabriria preso na tela "Recebido!". O atraso deixa a
   // animacao de saida terminar antes do formulario reaparecer.
+  //
+  // Depois de um envio, o container do HubSpot fica com a mensagem de
+  // agradecimento no lugar do form. O script "developer" so injeta o form em
+  // elementos .hs-form-html recem-inseridos (o MutationObserver dele checa o
+  // proprio no adicionado, nao descendentes) e marca data-fetched no container.
+  // Por isso, ao fechar apos um envio, trocamos a key do container: o React
+  // insere um .hs-form-html novo e o HubSpot injeta um form limpo nele.
   useEffect(() => {
-    if (aberto) return
-    const id = window.setTimeout(() => setEnviado(false), 300)
+    if (aberto || !enviado) return
+    const id = window.setTimeout(() => {
+      setEnviado(false)
+      setFormPronto(false)
+      setVersaoForm((v) => v + 1)
+      refFormIniciado.current = false
+    }, 300)
     return () => window.clearTimeout(id)
-  }, [aberto])
+  }, [aberto, enviado])
 
   // Sempre montado no DOM; fechado, fica inert (fora do foco/leitor de tela).
   useEffect(() => {
@@ -142,7 +156,7 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
 
     container.addEventListener('hs-form-event:on-ready', aoFicarPronto)
     return () => container.removeEventListener('hs-form-event:on-ready', aoFicarPronto)
-  }, [montado])
+  }, [montado, versaoForm])
 
   // Relabel assim que o HTML chega (antes da hidratacao), pra nao piscar o
   // rotulo original; o on-ready acima reaplica caso a hidratacao o reverta.
@@ -179,7 +193,7 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
 
     observer.observe(container, { childList: true, subtree: true })
     return () => observer.disconnect()
-  }, [montado, enviado])
+  }, [montado, enviado, versaoForm])
 
   const aoFocarFormulario = () => {
     if (refFormIniciado.current) return
@@ -368,7 +382,7 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
               <X size={18} strokeWidth={1.8} aria-hidden="true" />
             </button>
 
-            {enviado ? (
+            {enviado && (
               <div
                 ref={refConcluido}
                 tabIndex={-1}
@@ -388,64 +402,67 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
                   Um especialista da Stoom vai entrar em contato pelo WhatsApp que você informou.
                 </p>
               </div>
-            ) : (
-              <div>
-                <Eyebrow className="mb-3.5">Proposta sem custo</Eyebrow>
-                <h3
-                  id="mTitle"
-                  className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
-                >
-                  Receba uma proposta para o seu condomínio
-                </h3>
-
-                <div className="relative min-h-[420px]" onFocus={aoFocarFormulario}>
-                  <div
-                    ref={refFormContainer}
-                    className="hs-form-html stoom-hs-form-lp"
-                    data-region="na1"
-                    data-form-id={HUBSPOT.formGuid}
-                    data-portal-id={HUBSPOT.portalId}
-                  />
-
-                  {/* Skeleton: cobre o container enquanto o HubSpot ainda nao
-                      injetou os campos, pra evitar o "pulo" de o modal abrir so
-                      com o titulo e depois expandir de repente. */}
-                  {!formPronto && (
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 flex flex-col gap-4 bg-white"
-                    >
-                      <div className="flex gap-4">
-                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                      </div>
-                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="flex gap-4">
-                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                      </div>
-                      <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
-                    </div>
-                  )}
-                </div>
-
-                <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
-                  Seus dados estão protegidos conforme a LGPD.{' '}
-                  <a
-                    href={POLITICA_PRIVACIDADE}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      'rounded-sm underline underline-offset-[3px] transition-colors hover:text-brand-primary',
-                      focoVisivel
-                    )}
-                  >
-                    Política de privacidade
-                  </a>
-                </p>
-              </div>
             )}
+
+            {/* Sempre montado: esconder em vez de desmontar, senao o HubSpot
+                nao reinjeta o form no container (ver efeito de reset acima). */}
+            <div className={enviado ? 'hidden' : undefined}>
+              <Eyebrow className="mb-3.5">Proposta sem custo</Eyebrow>
+              <h3
+                id="mTitle"
+                className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
+              >
+                Receba uma proposta para o seu condomínio
+              </h3>
+
+              <div className="relative min-h-[420px]" onFocus={aoFocarFormulario}>
+                <div
+                  key={versaoForm}
+                  ref={refFormContainer}
+                  className="hs-form-html stoom-hs-form-lp"
+                  data-region="na1"
+                  data-form-id={HUBSPOT.formGuid}
+                  data-portal-id={HUBSPOT.portalId}
+                />
+
+                {/* Skeleton: cobre o container enquanto o HubSpot ainda nao
+                    injetou os campos, pra evitar o "pulo" de o modal abrir so
+                    com o titulo e depois expandir de repente. */}
+                {!formPronto && (
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 flex flex-col gap-4 bg-white"
+                  >
+                    <div className="flex gap-4">
+                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                    </div>
+                    <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="flex gap-4">
+                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                    </div>
+                    <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
+                  </div>
+                )}
+              </div>
+
+              <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
+                Seus dados estão protegidos conforme a LGPD.{' '}
+                <a
+                  href={POLITICA_PRIVACIDADE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'rounded-sm underline underline-offset-[3px] transition-colors hover:text-brand-primary',
+                    focoVisivel
+                  )}
+                >
+                  Política de privacidade
+                </a>
+              </p>
+            </div>
           </m.div>
         </div>,
         document.body

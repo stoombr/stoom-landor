@@ -41,6 +41,8 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
   const [montado, setMontado] = useState(false)
   const [enviado, setEnviado] = useState(false)
   const [formPronto, setFormPronto] = useState(false)
+  // Trocar a key do container recria o <div class="hs-form-html"> do zero.
+  const [versaoForm, setVersaoForm] = useState(0)
 
   const refModal = useRef<HTMLDivElement>(null)
   const refFechar = useRef<HTMLButtonElement>(null)
@@ -57,11 +59,22 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
 
   // Sem isto o modal reabriria preso na tela "Mensagem enviada!". O atraso
   // deixa a animação de saída terminar antes do formulário reaparecer.
+  //
+  // Depois de um envio, o container do HubSpot fica com a mensagem de
+  // agradecimento no lugar do form. O script "developer" so injeta o form em
+  // elementos .hs-form-html recem-inseridos (o MutationObserver dele checa o
+  // proprio no adicionado, nao descendentes) e marca data-fetched no container.
+  // Por isso, ao fechar apos um envio, trocamos a key do container: o React
+  // insere um .hs-form-html novo e o HubSpot injeta um form limpo nele.
   useEffect(() => {
-    if (aberto) return
-    const id = window.setTimeout(() => setEnviado(false), 300)
+    if (aberto || !enviado) return
+    const id = window.setTimeout(() => {
+      setEnviado(false)
+      setFormPronto(false)
+      setVersaoForm((v) => v + 1)
+    }, 300)
     return () => window.clearTimeout(id)
-  }, [aberto])
+  }, [aberto, enviado])
 
   // O modal fica sempre montado no DOM (nunca desmonta) — assim o script do
   // HubSpot só precisa injetar o formulário uma vez, e fechar/reabrir não
@@ -121,7 +134,7 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
 
     observer.observe(container, { childList: true, subtree: true })
     return () => observer.disconnect()
-  }, [montado, enviado])
+  }, [montado, enviado, versaoForm])
 
   // ── Trava de scroll, inert no fundo e devolução do foco ─────────────────
   useEffect(() => {
@@ -281,7 +294,7 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
               <X size={18} strokeWidth={1.8} aria-hidden="true" />
             </button>
 
-            {enviado ? (
+            {enviado && (
               <div role="status" className="py-4 text-center">
                 <span className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-brand-primary text-white">
                   <CheckCircle size={24} strokeWidth={2.4} aria-hidden="true" />
@@ -296,55 +309,58 @@ export default function ContactModal({ aberto, aoFechar }: ContactModalProps) {
                   Nossa equipe entrará em contato em breve.
                 </p>
               </div>
-            ) : (
-              <div>
-                <p className="mb-3.5 inline-flex items-center gap-3 font-roboto text-xs font-medium uppercase tracking-[0.14em] text-gray-500">
-                  <span aria-hidden="true" className="h-0.5 w-6 flex-shrink-0 bg-brand-highlight" />
-                  Fale com a Stoom
-                </p>
-                <h3
-                  id="contatoTitulo"
-                  className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
-                >
-                  Fale com um especialista
-                </h3>
-
-                <div className="relative min-h-[460px]">
-                  <div
-                    ref={refFormContainer}
-                    className="hs-form-html stoom-hs-form-modal"
-                    data-region="na1"
-                    data-form-id={HUBSPOT_FORM_ID}
-                    data-portal-id={HUBSPOT_PORTAL_ID}
-                  />
-
-                  {/* Skeleton: cobre o container enquanto o HubSpot ainda não
-                      injetou os campos, pra evitar o "pulo" de o modal abrir só
-                      com o título e o rodapé de LGPD e depois expandir de repente. */}
-                  {!formPronto && (
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 flex flex-col gap-4 bg-white"
-                    >
-                      <div className="flex gap-4">
-                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                        <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                      </div>
-                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[100px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
-                    </div>
-                  )}
-                </div>
-
-                <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
-                  Seus dados estão protegidos conforme a LGPD.
-                </p>
-              </div>
             )}
+
+            {/* Sempre montado: esconder em vez de desmontar, senao o HubSpot
+                nao reinjeta o form no container (ver efeito de reset acima). */}
+            <div className={enviado ? 'hidden' : undefined}>
+              <p className="mb-3.5 inline-flex items-center gap-3 font-roboto text-xs font-medium uppercase tracking-[0.14em] text-gray-500">
+                <span aria-hidden="true" className="h-0.5 w-6 flex-shrink-0 bg-brand-highlight" />
+                Fale com a Stoom
+              </p>
+              <h3
+                id="contatoTitulo"
+                className="mb-6 font-outfit text-[28px] font-bold leading-[1.12] tracking-[-0.02em] text-brand-primary"
+              >
+                Fale com um especialista
+              </h3>
+
+              <div className="relative min-h-[460px]">
+                <div
+                  key={versaoForm}
+                  ref={refFormContainer}
+                  className="hs-form-html stoom-hs-form-modal"
+                  data-region="na1"
+                  data-form-id={HUBSPOT_FORM_ID}
+                  data-portal-id={HUBSPOT_PORTAL_ID}
+                />
+
+                {/* Skeleton: cobre o container enquanto o HubSpot ainda não
+                    injetou os campos, pra evitar o "pulo" de o modal abrir só
+                    com o título e o rodapé de LGPD e depois expandir de repente. */}
+                {!formPronto && (
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 flex flex-col gap-4 bg-white"
+                  >
+                    <div className="flex gap-4">
+                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
+                    </div>
+                    <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[100px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[70px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
+                  </div>
+                )}
+              </div>
+
+              <p className="mt-4 text-center font-roboto text-[13px] text-gray-500">
+                Seus dados estão protegidos conforme a LGPD.
+              </p>
+            </div>
           </m.div>
         </div>,
         document.body
