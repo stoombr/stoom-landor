@@ -1,10 +1,7 @@
 /* Overrides para o form embutido do HubSpot dentro dos modais de /condominio e
-   /varejo. Copia de components/hubspot-form-modal.css (mesmo form, mesmo
-   layout), com uma regra a mais: o campo obrigatorio "Produto de interesse"
-   fica oculto, porque estas LPs sao especificas de Smart Locker e o valor e
-   marcado via JS assim que o form renderiza (ver LeadModal.tsx). !important
-   pelo mesmo motivo do arquivo irmao: o <style> de tema do HubSpot e injetado
-   depois do nosso CSS. */
+   /varejo (form proprio destas LPs: Nome, E-mail, WhatsApp). Mesmo visual de
+   components/hubspot-form-modal.css. !important pelo mesmo motivo do arquivo
+   irmao: o <style> de tema do HubSpot e injetado depois do nosso CSS. */
 
 .stoom-hs-form-lp,
 .stoom-hs-form-lp [data-hsfc-id='FormWrapper'],
@@ -37,12 +34,18 @@
   gap: 1rem !important;
 }
 
-/* "Nome/Sobrenome" e "Nome da empresa"/"Numero de telefone do WhatsApp" ficam
-   lado a lado; o resto do formulario segue empilhado em largura total. */
-.stoom-hs-form-lp [data-hsfc-id='Row']:has([name='firstname']),
-.stoom-hs-form-lp [data-hsfc-id='Row']:has([name='0-1/company']),
+/* Nome em linha inteira; E-mail e WhatsApp lado a lado. */
+.stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='EmailField']),
 .stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='PhoneField']) {
   width: calc(50% - 0.5rem) !important;
+}
+
+/* No celular nao cabem lado a lado: empilha. */
+@media (max-width: 639px) {
+  .stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='EmailField']),
+  .stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='PhoneField']) {
+    width: 100% !important;
+  }
 }
 
 .stoom-hs-form-lp [data-hsfc-id='Row'] > * {
@@ -51,12 +54,6 @@
 }
 
 .stoom-hs-form-lp [data-hsfc-id='Row']:has([data-hsfc-id='HiddenField']) {
-  display: none !important;
-}
-
-/* "Produto de interesse": oculto nestas LPs, o valor "Smart Locker" e
-   marcado via JS assim que o form renderiza (ver LeadModal.tsx). */
-.stoom-hs-form-lp [data-hsfc-id='Row']:has([name='0-1/produto']) {
   display: none !important;
 }
 

@@ -14,12 +14,11 @@ export const LP_ID = 'stoom-smart-locker-varejo'
 
 /**
  * Portal e formulario do HubSpot.
- * Reaproveita o mesmo form "Solicite uma demonstracao" do /condominio.
- * CONFIRMAR com a Stoom se querem um form dedicado para leads de varejo.
+ * formGuid = form dedicado as LPs /condominio e /varejo (Nome, E-mail, WhatsApp).
  */
 export const HUBSPOT: { portalId: string; formGuid: string } = {
   portalId: '51547160',
-  formGuid: '6c33c565-d83e-41e5-80e7-75e316ad7c36',
+  formGuid: 'c7e3c4ad-48c3-43ea-960e-542afd53f80f',
 }
 
 /**
