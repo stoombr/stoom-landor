@@ -292,7 +292,7 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
               scale: reduzir ? 1 : aberto ? 1 : 0.98,
             }}
             transition={{ duration: aberto ? duracaoEntrada : duracaoSaida, ease: 'easeOut' }}
-            className="relative w-full max-w-[520px] max-h-[calc(100dvh_-_32px)] overflow-auto rounded-2xl bg-white px-5 py-6 text-brand-primary shadow-[0_30px_80px_rgb(0_0_0/0.45)] sm:p-8"
+            className="relative w-full max-w-[440px] max-h-[calc(100dvh_-_32px)] overflow-auto rounded-2xl bg-white px-5 py-6 text-brand-primary shadow-[0_30px_80px_rgb(0_0_0/0.45)] sm:p-8"
           >
             <button
               ref={refFechar}
@@ -340,7 +340,7 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
                 Receba uma proposta para o seu condomínio
               </h3>
 
-              <div className="relative min-h-[260px]" onFocus={aoFocarFormulario}>
+              <div className="relative min-h-[340px]" onFocus={aoFocarFormulario}>
                 <div
                   key={versaoForm}
                   ref={refFormContainer}
@@ -359,10 +359,8 @@ export default function LeadModal({ aberto, aoFechar }: LeadModalProps) {
                     className="absolute inset-0 flex flex-col gap-4 bg-white"
                   >
                     <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
-                    <div className="flex flex-col gap-4 sm:flex-row">
-                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                      <div className="h-[46px] flex-1 animate-pulse rounded-xl bg-gray-100" />
-                    </div>
+                    <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
+                    <div className="h-[46px] animate-pulse rounded-xl bg-gray-100" />
                     <div className="h-[52px] animate-pulse rounded-full bg-gray-200" />
                   </div>
                 )}
