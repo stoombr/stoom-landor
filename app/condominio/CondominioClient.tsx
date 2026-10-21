@@ -56,7 +56,7 @@ const POLITICA_PRIVACIDADE = 'https://www.stoom.com.br/institucional/politica-de
 
 /** Linhas legais do rodape, verbatim do HTML fonte. */
 const RODAPE_GRUPO = 'A Stoom é uma empresa do grupo Landor, The Tech Group.'
-const RODAPE_COPYRIGHT = '© 2026 Stoom. Todos os direitos reservados.'
+const RODAPE_COPYRIGHT = '© Landor Soluções em Tecnologia Ltda. Todos os direitos reservados.'
 
 // ─── Cabecalho ────────────────────────────────────────────────────────────────
 

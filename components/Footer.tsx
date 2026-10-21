@@ -44,7 +44,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/50 font-roboto text-sm">
-            © 2026 Stoom. Todos os direitos reservados.
+            © Landor Soluções em Tecnologia Ltda. Todos os direitos reservados.
           </p>
           <a
             href="/institucional/politica-de-privacidade"
