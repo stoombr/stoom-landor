@@ -53,9 +53,9 @@ export default function Navbar() {
       }`}
       aria-label="Navegação principal"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-8 h-20">
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Image
               src={isScrolled ? '/stoom-primario.svg' : '/stoom-secundario.svg'}
               alt="Stoom"
@@ -67,8 +67,8 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop */}
-          <div className="hidden md:flex items-center space-x-8">
-            <ul className="flex items-center space-x-8">
+          <div className="hidden xl:flex items-center space-x-6 2xl:space-x-8">
+            <ul className="flex items-center space-x-6 2xl:space-x-8">
               {/* Dropdown Institucional */}
               <li
                 className="relative"
@@ -120,20 +120,21 @@ export default function Navbar() {
               <li><a href="/#segmentos" className={linkClass}>Segmentos</a></li>
               <li><Link href="/cases" className={linkClass}>Cases</Link></li>
               <li><Link href="/conteudos" className={linkClass}>Conteúdos</Link></li>
+              <li><Link href="/carreiras" className={linkClass}>Carreiras</Link></li>
             </ul>
 
             {modal ? (
               <button
                 type="button"
                 onClick={() => modal.abrirContato()}
-                className="px-6 py-3 bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
+                className="px-6 py-3 whitespace-nowrap bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
               >
                 Solicite uma demonstração
               </button>
             ) : (
               <a
                 href="/#contato"
-                className="px-6 py-3 bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
+                className="px-6 py-3 whitespace-nowrap bg-brand-secondary text-black font-roboto font-medium rounded-sm hover:bg-brand-secondary/90 transition-all hover:scale-105"
               >
                 Solicite uma demonstração
               </a>
@@ -141,7 +142,7 @@ export default function Navbar() {
 
             <div className={`w-px h-6 ${isScrolled ? 'bg-gray-200' : 'bg-white/20'}`} />
 
-            <a href="https://www.landor.com.br/" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.landor.com.br/" target="_blank" rel="noopener noreferrer" className="flex-shrink-0">
               <Image
                 src={isScrolled ? '/selo-landor-black.svg' : '/selo-landor-white.svg'}
                 alt="Selo de Qualidade"
@@ -154,7 +155,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden ${isScrolled ? 'text-brand-primary' : 'text-white'}`}
+            className={`xl:hidden ${isScrolled ? 'text-brand-primary' : 'text-white'}`}
             aria-label="Abrir menu"
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -169,7 +170,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-200"
+            className="xl:hidden bg-white border-t border-gray-200"
           >
             <div className="px-6 py-4 space-y-4">
               {/* Institucional mobile */}
@@ -237,6 +238,14 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Conteúdos
+              </Link>
+
+              <Link
+                href="/carreiras"
+                className="block text-brand-primary hover:text-brand-highlight font-roboto font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Carreiras
               </Link>
 
               {modal ? (
