@@ -43,6 +43,10 @@ export default function Navbar() {
     isScrolled ? 'text-brand-primary hover:text-brand-highlight' : 'text-white hover:text-brand-highlight'
   }`;
 
+  // Carreiras em destaque: laranja da marca nos dois estados do header (o hover
+  // escurece para orange-600, o tom seguinte da mesma escala de brand-secondary).
+  const destaqueClass = 'font-roboto font-medium transition-colors text-brand-secondary hover:text-orange-600';
+
   return (
     <m.nav
       initial={{ y: -100 }}
@@ -120,7 +124,7 @@ export default function Navbar() {
               <li><a href="/#segmentos" className={linkClass}>Segmentos</a></li>
               <li><Link href="/cases" className={linkClass}>Cases</Link></li>
               <li><Link href="/conteudos" className={linkClass}>Conteúdos</Link></li>
-              <li><Link href="/carreiras" className={linkClass}>Carreiras</Link></li>
+              <li><Link href="/carreiras" className={destaqueClass}>Carreiras</Link></li>
             </ul>
 
             {modal ? (
@@ -242,7 +246,7 @@ export default function Navbar() {
 
               <Link
                 href="/carreiras"
-                className="block text-brand-primary hover:text-brand-highlight font-roboto font-medium"
+                className={`block ${destaqueClass}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Carreiras
