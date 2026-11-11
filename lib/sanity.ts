@@ -13,6 +13,13 @@ export interface Categoria {
   slug: { current: string }
 }
 
+/**
+ * Filtro GROQ do que está no ar: status "publicado" e data de publicação já
+ * alcançada. Post publicado com data futura fica agendado: some do site até a
+ * data, e a revalidação de 60s das páginas o coloca no ar sozinha.
+ */
+export const NO_AR = `status == "publicado" && (!defined(dataPublicacao) || dataPublicacao <= now())`
+
 export interface Conteudo {
   _id: string
   titulo: string
@@ -32,7 +39,7 @@ export async function getCategorias(): Promise<Categoria[]> {
 
 export async function getConteudos(): Promise<Conteudo[]> {
   return client.fetch(`
-    *[_type == "conteudo" && status == "publicado"] | order(dataPublicacao desc) {
+    *[_type == "conteudo" && ${NO_AR}] | order(dataPublicacao desc) {
       _id, titulo, slug, dataPublicacao, palavrasChave,
       "heroImage": heroImage { asset->{ url }, hotspot },
       "categoria": categoria->{ _id, titulo, slug }
@@ -42,7 +49,7 @@ export async function getConteudos(): Promise<Conteudo[]> {
 
 export async function getConteudo(slug: string): Promise<Conteudo | null> {
   return client.fetch(
-    `*[_type == "conteudo" && slug.current == $slug][0] {
+    `*[_type == "conteudo" && slug.current == $slug && ${NO_AR}][0] {
       _id, titulo, slug, dataPublicacao, status, descricao, palavrasChave,
       "heroImage": heroImage { asset->{ url }, hotspot },
       "categoria": categoria->{ _id, titulo, slug },

@@ -95,6 +95,8 @@ export default defineType({
       name: 'dataPublicacao',
       title: 'Data de Publicação',
       type: 'datetime',
+      description:
+        'Para agendar: status "Publicado" + data futura + Publish. O post só aparece no site a partir desta data (em até 1 min).',
     },
   ] as any[],
   preview: {

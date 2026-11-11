@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getConteudos } from '@/lib/sanity'
 
+export const revalidate = 60
+
 export async function GET() {
   const conteudos = await getConteudos()
 

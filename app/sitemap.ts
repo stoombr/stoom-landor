@@ -1,13 +1,13 @@
 import { MetadataRoute } from 'next'
-import { client } from '@/lib/sanity'
+import { client, NO_AR } from '@/lib/sanity'
 
 const SITE_URL = 'https://stoom.com.br'
 
 async function getConteudoSlugs(): Promise<{ slug: string; updatedAt?: string }[]> {
   return client.fetch(
-    `*[_type == "conteudo" && status == "publicado"] { "slug": slug.current, "updatedAt": _updatedAt }`,
+    `*[_type == "conteudo" && ${NO_AR}] { "slug": slug.current, "updatedAt": _updatedAt }`,
     {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 60 } }
   )
 }
 
