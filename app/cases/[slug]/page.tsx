@@ -10,11 +10,8 @@ export async function generateStaticParams() {
   return cases.map(c => ({ slug: c.slug.current }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params
   const item = await getCase(params.slug)
   if (!item) return { title: 'Case não encontrado | Stoom' }
 
@@ -38,7 +35,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function CasePage({ params }: { params: { slug: string } }) {
+export default async function CasePage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params
   const item = await getCase(params.slug)
   if (!item || item.status !== 'publicado') notFound()
   return <CaseSlugClient item={item} />

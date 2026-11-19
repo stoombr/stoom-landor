@@ -105,7 +105,7 @@ export default defineType({
       status: 'status',
       categoria: 'categoria.titulo',
     },
-    prepare({ title, status, categoria }: { title: string; status: string; categoria?: string }) {
+    prepare({ title, status, categoria }: Record<string, any>) {
       return {
         title: `${status === 'publicado' ? '✅' : '📝'} ${title}`,
         subtitle: categoria,

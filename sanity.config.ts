@@ -8,7 +8,6 @@ export default defineConfig({
   title: 'Stoom — CMS',
   projectId: 'lyajz0yy',
   dataset: 'production',
-  apiVersion: '2024-01-01',
   basePath: '/studio-content',
   plugins: [structureTool(), visionTool()],
   schema: {
