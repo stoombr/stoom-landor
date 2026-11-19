@@ -11,8 +11,20 @@ const nextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
   },
   transpilePackages: ['sanity', 'next-sanity', '@sanity/ui', '@sanity/icons', 'styled-components'],
+  poweredByHeader: false,
   async headers() {
     return [
+      {
+        // Headers de segurança em todas as rotas. Sem CSP de propósito: os
+        // scripts do HubSpot/GTM/Meta/LinkedIn quebrariam sem uma lista longa.
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
       {
         source: '/',
         headers: [
