@@ -157,7 +157,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${outfit.variable} ${roboto.variable}`}>
+    <html lang="pt-BR" className={`${outfit.variable} ${roboto.variable}`} data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
